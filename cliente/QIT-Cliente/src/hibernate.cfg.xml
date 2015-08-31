@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+    <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+    <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/qit</property>
+    <property name="hibernate.connection.username">postgres</property>
+    <property name="hibernate.connection.password">postgres</property>
+    <mapping resource="modelo/Script"/>
+    <mapping resource="modelo/InstalacaoSoftware"/>
+    <mapping resource="modelo/MaquinasExecucaoInstalacao"/>
+    <mapping resource="modelo/Predio"/>
+    <mapping resource="modelo/Grupo"/>
+    <mapping resource="modelo/Dependencia"/>
+    <mapping resource="modelo/ExecucaoScript"/>
+    <mapping resource="modelo/Tela"/>
+    <mapping resource="modelo/Maquina"/>
+    <mapping resource="modelo/Usuario"/>
+    <mapping resource="modelo/SoftwaresMaquina"/>
+    <mapping resource="modelo/MaquinasExecutarScript"/>
+    <mapping resource="modelo/Software"/>
+    <mapping resource="modelo/ExecucaoInstalacao"/>
+    <mapping resource="modelo/PlacaRede"/>
+    <mapping resource="modelo/Auditoria"/>
+    <mapping resource="modelo/Tipo"/>
+    <mapping resource="modelo/Permissao"/>
+    <mapping resource="modelo/Particao"/>
+    <mapping resource="modelo/Sala"/>
+  </session-factory>
+</hibernate-configuration>
