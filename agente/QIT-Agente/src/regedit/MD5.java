@@ -25,10 +25,10 @@ public class MD5 {
     public static void main(String[] args) {
 
         File f = new File("c:\\IMAGEX.exe");
-        System.out.println(geraHash(f));
+        System.out.println(md5(f));
     }
 
-    public static String geraHash(File f) {
+    public static String md5(File f) {
         MessageDigest digest = null;
         InputStream is = null;
         try {

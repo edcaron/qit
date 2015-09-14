@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import controle.Software;
 import java.util.ArrayList;
 
 /**

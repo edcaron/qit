@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelo;
+package controle;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -20,12 +20,7 @@ public class QITPrintStream extends PrintStream {
 
     @Override
     public void print(String s) {
-        super.print(modelo.Util.getCurrentDate() + s);
-    }
-
-    @Override
-    public void println(String x) {
-        super.println(modelo.Util.getCurrentDate() + x);
+        super.print(controle.Util.getCurrentTimestamp() +" " + s);
     }
 
 }

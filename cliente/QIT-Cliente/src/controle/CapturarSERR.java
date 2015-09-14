@@ -3,22 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package regedit;
+package controle;
+
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+
 
 /**
  *
  * @author eduar_000
  */
-public class CapturarSOUT {
-    
-    
-//            OutputStream output = new FileOutputStream("D:/out.txt", true);
-//
-//        PrintStream out = new QITPrintStream(output);
-//
-//        System.setOut(out);
-//        System.setErr(out);
-//
-//        String[] a = new String[1];
-//        a[2] = "a";
+public class CapturarSERR implements Runnable {
+
+
+    @Override
+    public void run() {
+        try {
+            OutputStream output = new FileOutputStream("C:\\QIT\\QIT-Agente\\logs\\errorLog.txt", true);
+
+            PrintStream out = new QITPrintStream(output);
+//Captura o system.out
+//            System.setOut(out);
+            
+//Captura o system.err
+            System.setErr(out);
+      
+        } catch (Exception e) {
+            System.out.println("Erro em CapturarSOUT: " + e);
+        }
+    }
 }

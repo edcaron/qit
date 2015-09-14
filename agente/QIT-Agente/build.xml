@@ -7,8 +7,8 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="Regedit" default="default" basedir=".">
-    <description>Builds, tests, and runs the project Regedit.</description>
+<project name="QIT-Agente" default="default" basedir=".">
+    <description>Builds, tests, and runs the project QIT-Agente.</description>
     <import file="nbproject/build-impl.xml"/>
     <!--
 
@@ -58,7 +58,7 @@
 
     An example of overriding the target for project execution could look like this:
 
-        <target name="run" depends="Regedit-impl.jar">
+        <target name="run" depends="QIT-Agente-impl.jar">
             <exec dir="bin" executable="launcher.exe">
                 <arg file="${dist.jar}"/>
             </exec>

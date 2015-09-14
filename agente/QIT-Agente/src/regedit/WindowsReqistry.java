@@ -1,7 +1,8 @@
 package regedit;
 
-import modelo.Software;
 import com.thoughtworks.xstream.XStream;
+import controle.CapturarSERR;
+import controle.Software;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -99,8 +100,9 @@ public class WindowsReqistry {
         }
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException {    
 
+        //teste escrita em xml
         XStream xstream = new XStream();
 
         try {
@@ -462,7 +464,7 @@ public class WindowsReqistry {
         ArrayList<Particao> listaParticoes = obterParticoes();
         ArrayList<PlacaRede> listaPlacaRede = obterPlacaRede();
         Maquina maquina = obterMaquina();
-        String dataAtual = modelo.Util.getCurrentDate();
+        String dataAtual = controle.Util.getCurrentTimestamp();
         Inventario inventario = new Inventario(maquina, dataAtual, listaParticoes, listaPlacaRede, listaSoftwares);
 
         return inventario;
