@@ -46,16 +46,18 @@ public class UsuarioDAO {
 
     public ArrayList<Usuario> listar(Usuario usuario) {
         List resultado = null;
+
         ArrayList<Usuario> listaUsuarios = null;
         try {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
 
-            org.hibernate.Query q = sessao.createQuery("from Usuario where id = " + usuario.getId());
+            org.hibernate.Query q = sessao.createQuery("from Usuario u, Grupo g where u.id = " + usuario.getId());
             resultado = q.list();
 
             for (Object o : resultado) {
-                Usuario s = (Usuario) o;
+                Usuario s = ((Usuario) ((Object[]) o)[0]);
+                System.out.println("id: " + s.getGrupo().getId());
                 listaUsuarios.add(s);
             }
 
@@ -66,27 +68,28 @@ public class UsuarioDAO {
     }
 
     /**
-     * 
+     *
      * @param usuario
-     * @return 
+     * @return Usuario
      */
-    public boolean consultar(Usuario usuario) {
-        List resultado = null;
-        boolean retorno = false;
+    public Usuario consultar(Usuario usuario) {
+        List resultado = null;        
+        Usuario user_local =  new Usuario();
         try {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-
-            org.hibernate.Query q = sessao.createQuery("from Usuario where id = " + usuario.getId());
+            System.out.println("id do user:"+ usuario.getId());
+            org.hibernate.Query q = sessao.createQuery("from Usuario u, Grupo g, Permissao p where u.id = " + usuario.getId());
             resultado = q.list();
 
             for (Object o : resultado) {
-                usuario = (Usuario) o;
+                user_local = ((Usuario) ((Object[]) o)[0]);
             }
 
+            usuario = user_local;
         } catch (HibernateException he) {
             he.printStackTrace();
         }
-        return retorno;
+        return user_local;
     }
 }

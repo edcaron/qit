@@ -5,11 +5,11 @@
  */
 package dao;
 
+import java.util.List;
+import modelo.Usuario;
 import controle.HibernateUtil;
 import java.util.ArrayList;
-import java.util.List;
 import modelo.Permissao;
-import modelo.Usuario;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -30,24 +30,24 @@ public class PermissaoDAO {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
 
-//            if (usuario.getTipoPermissao() == 'I') {
-                query = "from Permissao where id_usuario = " + usuario.getId();
-//            } else if (usuario.getTipoPermissao() == 'G') {
-//                query = "from Permissao where id_grupo = " + usuario.getGrupo().getId();
-//            }
+            if (usuario.getTipoPermissao() == 'I') {
+                query = "from Permissao p, Usuariou, Tela t WHERE  u.id = " + usuario.getId();
+            } else if (usuario.getTipoPermissao() == 'G') {
+                query = "from Permissao p, Grupo g, Tela t WHERE g.id = " + usuario.getGrupo().getId();
+            }
+
+            System.out.println("Query = " + query);
 
             org.hibernate.Query q = sessao.createQuery(query);
             resultadoBanco = q.list();
 
-            for (Object o : resultadoBanco) {               
-                Permissao s = (Permissao) o;
+            for (Object o : resultadoBanco) {
+                Permissao s = ((Permissao) ((Object[]) o)[0]);
                 System.out.println("id: " + s.getId() + " ");
-                System.out.println("idtela " + s.getIdTela());
                 System.out.println("ler " + s.getLer());
                 System.out.println("editar " + s.isEditar());
                 System.out.println("inativar " + s.isInativar());
                 System.out.println("inserir " + s.isInserir());
-                System.out.println("inserir " + s.getGrupo().getId());
             }
 
         } catch (HibernateException he) {

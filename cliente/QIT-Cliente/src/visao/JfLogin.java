@@ -5,9 +5,7 @@
  */
 package visao;
 
-import controle.CapturarSERR;
-import dao.PermissaoDAO;
-import dao.UsuarioDAO;
+import controle.ControleUsuario;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import modelo.Usuario;
@@ -26,7 +24,7 @@ public class JfLogin extends javax.swing.JFrame {
         this.setTitle("QIT - Login");
         this.setLocation(400, 200);
 
-        //thread para captura de logs 
+//        thread para captura de logs 
 //        CapturarSERR log = new CapturarSERR();
 //        log.run();
     }
@@ -40,7 +38,6 @@ public class JfLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        qITJFormattedTextField1 = new qitmain.QITJFormattedTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jpfSenha = new javax.swing.JPasswordField();
@@ -90,7 +87,7 @@ public class JfLogin extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(72, 72, 72)
                                 .addComponent(jLabel3))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(33, 33, 33)
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -133,19 +130,16 @@ public class JfLogin extends javax.swing.JFrame {
     private void jbEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEntrarActionPerformed
         Usuario usuario = new Usuario();
         boolean ret;
+        ControleUsuario cu = new ControleUsuario();
 
         usuario.setLogin(jftLogin.getText());
         usuario.setSenha(jpfSenha.getText());
         //autenticar
-        ret = controle.ControleLogin.logar(usuario);
+        ret = cu.logar(usuario);
         if (ret) {
 //        consultar demais colunas do usuário    
-            new UsuarioDAO().consultar(usuario);
 
-//            new PermissaoDAO().consultar(usuario, 0);
-            
-//            System.out.println("id do grupo deste user:" +usuario.getGrupo().getId());
-            
+            usuario = cu.consultar(usuario);
 
             new JfMain(usuario).setVisible(true);
             this.dispose();
@@ -198,7 +192,6 @@ public class JfLogin extends javax.swing.JFrame {
     private javax.swing.JButton jbEntrar;
     private javax.swing.JFormattedTextField jftLogin;
     private javax.swing.JPasswordField jpfSenha;
-    private qitmain.QITJFormattedTextField qITJFormattedTextField1;
     // End of variables declaration//GEN-END:variables
 
 }
