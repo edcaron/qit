@@ -5,15 +5,18 @@
  */
 package visao;
 
+
 /**
  *
  * @author eduar_000
  */
 public interface ITelas {
     
-    public boolean salvar();
+    public boolean inserir();
     public boolean ler();
     public boolean editar();
-    public boolean inativar();
+    public boolean inativar();  
+    public void limparCampos();
+    public void popularCampos();
 }
 

@@ -47,7 +47,7 @@ public class UsuarioDAO {
     public ArrayList<Usuario> listar(Usuario usuario) {
         List resultado = null;
 
-        ArrayList<Usuario> listaUsuarios = null;
+        ArrayList<Usuario> listaUsuarios = new ArrayList<>();
         try {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
@@ -56,8 +56,7 @@ public class UsuarioDAO {
             resultado = q.list();
 
             for (Object o : resultado) {
-                Usuario s = ((Usuario) ((Object[]) o)[0]);
-                System.out.println("id: " + s.getGrupo().getId());
+                Usuario s = ((Usuario) ((Object[]) o)[0]);                
                 listaUsuarios.add(s);
             }
 
@@ -79,7 +78,7 @@ public class UsuarioDAO {
             Session sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
             System.out.println("id do user:"+ usuario.getId());
-            org.hibernate.Query q = sessao.createQuery("from Usuario u, Grupo g, Permissao p where u.id = " + usuario.getId());
+            org.hibernate.Query q = sessao.createQuery("from Usuario u inner join u.grupo inner join u.permissaosForIdUsuario as p inner join p.tela where u.id = " + usuario.getId());
             resultado = q.list();
 
             for (Object o : resultado) {

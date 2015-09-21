@@ -13,13 +13,14 @@ import modelo.Usuario;
  */
 public class JfMain extends javax.swing.JFrame {
 
-    /**
-     * Creates new form NewJFrame
-     */
+    protected Usuario usuario;
+
     public JfMain() {
         initComponents();
     }
-     public JfMain(Usuario usuario) {
+
+    public JfMain(Usuario usuario) {
+        this.usuario = usuario;
         initComponents();
         this.setLocation(0, 0);
     }
@@ -115,7 +116,7 @@ public class JfMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jimSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jimSalaActionPerformed
-        new JfSala().setVisible(true);
+        new JfSala(usuario);
     }//GEN-LAST:event_jimSalaActionPerformed
 
     /**

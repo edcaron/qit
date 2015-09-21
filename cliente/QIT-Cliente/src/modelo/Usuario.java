@@ -34,13 +34,16 @@ public class Usuario implements java.io.Serializable {
     private boolean ativo;
     private Date dtCriacao;
     private char tipoPermissao;
+    
     private Set<Permissao> permissaosForIdUsuarioModificador = new HashSet<Permissao>(0);
+    private Set<Permissao> permissaosForIdUsuario = new HashSet<Permissao>(0);
+    
     private Set<InstalacaoSoftware> instalacaoSoftwares = new HashSet<InstalacaoSoftware>(0);
     private Set<Maquina> maquinas = new HashSet<Maquina>(0);
     private Set<ExecucaoInstalacao> execucaoInstalacaos = new HashSet<ExecucaoInstalacao>(0);
     private Set<Software> softwares = new HashSet<Software>(0);
     private Set<ExecucaoScript> execucaoScripts = new HashSet<ExecucaoScript>(0);
-    private Set<Permissao> permissaosForIdUsuario = new HashSet<Permissao>(0);
+    
 
     public Usuario() {
     }

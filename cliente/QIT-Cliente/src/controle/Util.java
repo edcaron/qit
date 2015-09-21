@@ -65,5 +65,5 @@ public class Util {
             System.err.println("Erro em definePadroesJFrame " + e);
         }
 
-    }
+    }         
 }

@@ -44,7 +44,7 @@ public class PermissaoDAO {
             for (Object o : resultadoBanco) {
                 Permissao s = ((Permissao) ((Object[]) o)[0]);
                 System.out.println("id: " + s.getId() + " ");
-                System.out.println("ler " + s.getLer());
+                System.out.println("ler " + s.isLer());
                 System.out.println("editar " + s.isEditar());
                 System.out.println("inativar " + s.isInativar());
                 System.out.println("inserir " + s.isInserir());

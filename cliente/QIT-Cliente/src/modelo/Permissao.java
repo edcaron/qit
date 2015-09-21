@@ -30,7 +30,7 @@ public class Permissao  implements java.io.Serializable {
      private boolean inserir;
      private boolean editar;
      private boolean inativar;
-     private Boolean ler;
+     private boolean ler;
 
     public Permissao() {
     }
@@ -136,14 +136,13 @@ public class Permissao  implements java.io.Serializable {
     public void setInativar(boolean inativar) {
         this.inativar = inativar;
     }
-
     
     @Column(name="ler")
-    public Boolean getLer() {
+    public boolean isLer() {
         return this.ler;
     }
     
-    public void setLer(Boolean ler) {
+    public void setLer(boolean ler) {
         this.ler = ler;
     }
 
