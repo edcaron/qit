@@ -1,8 +1,7 @@
 package regedit;
 
 import com.thoughtworks.xstream.XStream;
-import controle.CapturarSERR;
-import controle.Software;
+import modelo.Software;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,10 +11,13 @@ import java.io.StringWriter;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import modelo.Inventario;
 import modelo.Maquina;
 import modelo.Particao;
 import modelo.PlacaRede;
+import modelo.SoftwaresMaquina;
 
 public class WindowsReqistry {
 
@@ -100,7 +102,7 @@ public class WindowsReqistry {
         }
     }
 
-    public static void main(String[] args) throws FileNotFoundException {    
+    public static void main(String[] args) throws FileNotFoundException {
 
         //teste escrita em xml
         XStream xstream = new XStream();
@@ -110,64 +112,8 @@ public class WindowsReqistry {
                 xstream.toXML(fazerInventario(), output);
             }
         } catch (IOException e) {
-            System.err.println(""+e);            
+            System.err.println("" + e);
         }
-//        ArrayList<PlacaRede> listaPlacaRede = obterPlacaRede();
-//        for (int i = 0; i < listaPlacaRede.size(); i++) {
-//            System.out.println("{ ");
-//            System.out.println("nome " + listaPlacaRede.get(i).getNome());
-//            System.out.println("mac " + listaPlacaRede.get(i).getMac());
-//            System.out.println("ipv4 " + listaPlacaRede.get(i).getIpv4());
-//            System.out.println("ipv6 " + listaPlacaRede.get(i).getIpv6());
-//            System.out.println("}");
-//        }
-//        ArrayList<Particao> listaParticoes = obterParticoes();
-//        for (int i = 0; i < listaParticoes.size(); i++) {
-//            System.out.println("{ ");
-//            System.out.println("hd " + listaParticoes.get(i).getNomeHd());
-//            System.out.println("letra " + listaParticoes.get(i).getLetra());
-//            System.out.println("volume " + listaParticoes.get(i).getNomeVolume());
-//            System.out.println("formato " + listaParticoes.get(i).getFormato());
-//            System.out.println("tamanho " + listaParticoes.get(i).getEspaco());
-//            System.out.println("livre " + listaParticoes.get(i).getEspacoLivre());
-//            System.out.println("}");
-//        }
-//        ArrayList<Software> softwares = new ArrayList<>();
-//        softwares = obterSoftwares();
-        //
-//        System.out.println("user " + mq.getUsuarioConectado());
-//        System.out.println("dominio " + mq.getDominio());
-//        System.out.println("host " + mq.getHost());
-//        System.out.println("memoria " + mq.getMemoriaTotal());
-//        System.out.println("faricantePC " + mq.getFabicantePc());
-//        System.out.println("modeloPC " + mq.getModeloPc());
-//        System.out.println("so " + mq.getSo());
-//        System.out.println("arquit " + mq.getArquiteturaso());
-//        System.out.println("versao " + mq.getVersaoSo());
-//        System.out.println("sp " + mq.getSpSo());
-//        System.out.println("fabSO " + mq.getFabricanteSo());
-//        System.out.println("rootso " + mq.getRootSo());
-//        System.out.println("bios " + mq.getBios());
-//        System.out.println("cpu " + mq.getCpu());
-//        System.out.println("nucleos " + mq.getNucleosCpu());
-//        System.out.println("fabCPU " + mq.getFabricanteCpu());
-//        for (int i = 0; i < softwares.size(); i++) {
-//            System.out.println("{ ");
-//            System.out.println("nome " + softwares.get(i).getDisplayName());
-//            System.out.println("versao " + softwares.get(i).getDisplayVersion());
-//            System.out.println("helpkink " + softwares.get(i).getHelpLink());
-//            if (softwares.get(i).getInstallDate() != null) {
-//                System.out.println("dt_inst " + softwares.get(i).getInstallDate().toString());
-//            } else {
-//                System.out.println("dt_inst = null");
-//            }
-//
-//            System.out.println("publisher " + softwares.get(i).getPublisher());
-//            System.out.println("comando Normal " + softwares.get(i).getUninstallString());
-//            System.out.println("comando Silent " + softwares.get(i).getQuietUninstallString());
-//            System.out.println("info " + softwares.get(i).getUrlInfoAbout());
-//            System.out.println("}");
-//        }
     }
 
     /**
@@ -200,7 +146,7 @@ public class WindowsReqistry {
                     mq.setMemoriaTotal(clean);
                 } else if (item.contains("fabricante_pc")) {
                     String clean = item.replaceAll("fabricante_pc: ", "");
-                    mq.setFabicantePc(clean);
+                    mq.setFabricantePc(clean);
                 } else if (item.contains("modelo")) {
                     String clean = item.replaceAll("modelo: ", "");
                     mq.setModeloPc(clean);
@@ -209,7 +155,7 @@ public class WindowsReqistry {
                     mq.setSo(clean);
                 } else if (item.contains("arquitetura")) {
                     String clean = item.replaceAll("arquitetura: ", "");
-                    mq.setArquiteturaso(clean);
+                    mq.setArquiteturaSo(clean);
                 } else if (item.contains("versao")) {
                     String clean = item.replaceAll("versao: ", "");
                     mq.setVersaoSo(clean);
@@ -242,22 +188,25 @@ public class WindowsReqistry {
     }
 
     /**
-     * Funcao para obter uma lista com particoes da maquina local.
+     *  * Funcao para obter uma lista com particoes da maquina local.
      *
+     * @param maquina
      * @return ArrayList com objetos Particao preenchido.
+     *
      */
-    protected static ArrayList<Particao> obterParticoes() {
+    protected static Set<Particao> obterParticoes(Maquina maquina) {
         //executar o script VBS que obtem informacoes sobre o pc e colocar em uam string
         String strParticoes = executarComando("cscript C:\\QIT\\QIT-Agente\\vbs\\obterParticoes.vbs", "");
 
         String[] lines = strParticoes.split("___");//divide cada particao em uma posicao do vetor. Quando encontrar o carac '___' inicia uma nova particao
 
-        ArrayList<Particao> listaParticoes = new ArrayList();
+        Set<Particao> listaParticoes = new HashSet<Particao>();
 
         for (String line : lines) {
             String[] s = line.split("\n"); //divide cada linha de cada posição do vetor de particoes em uma posicao de outro vetor, para poder pegar os dados
             if (s.length > 0) {
                 Particao part = new Particao();
+                part.setMaquina(maquina);
                 for (int j = 1; j < s.length; j++) {
                     if (s[j].contains("nome_hd")) {
                         String clean = s[j].replaceAll("nome_hd: ", "");
@@ -273,13 +222,13 @@ public class WindowsReqistry {
                         part.setFormato(clean);
                     } else if (s[j].contains("tamanho")) {
                         String clean = s[j].replaceAll("tamanho: ", "");
-                        part.setEspaco(clean);
+                        part.setEspacoLivreMb(Double.parseDouble(clean));
                     } else if (s[j].contains("espaco_livre")) {
                         String clean = s[j].replaceAll("espaco_livre: ", "");
-                        part.setEspacoLivre(clean);
+                        part.setEspacoLivreMb(Double.parseDouble(clean));
                     }
                 }
-                if (part.getNomeHd() != null) { //se o nome não estiver nulo, adicionamos a uma lista
+                if (part.getNomeHd() != null) { //se o nome não estiver nulo, adicionamos a uma lista                    
                     listaParticoes.add(part);
                 }
             }
@@ -292,18 +241,19 @@ public class WindowsReqistry {
      *
      * @return ArrayList com objetos Maquina preenchida.
      */
-    protected static ArrayList<PlacaRede> obterPlacaRede() {
+    protected static Set<PlacaRede> obterPlacaRede(Maquina maquina) {
         //executar o script VBS que obtem informacoes sobre o pc e colocar em uam string
         String strParticoes = executarComando("cscript C:\\QIT\\QIT-Agente\\vbs\\obterRede.vbs", "");
 
         String[] lines = strParticoes.split("___");//divide cada particao em uma posicao do vetor. Quando encontrar o carac '___' inicia uma nova particao
 
-        ArrayList<PlacaRede> listaPlacaRede = new ArrayList();
+        Set<PlacaRede> listaPlacaRede = new HashSet<PlacaRede>();
 
         for (String line : lines) {
             String[] s = line.split("\n"); //divide cada linha de cada posição do vetor de particoes em uma posicao de outro vetor, para poder pegar os dados
             if (s.length > 0) {
                 PlacaRede pr = new PlacaRede();
+                pr.setMaquina(maquina);
                 for (int j = 1; j < s.length; j++) {
                     if (s[j].contains("nome")) {
                         String clean = s[j].replaceAll("nome: ", "");
@@ -333,25 +283,25 @@ public class WindowsReqistry {
      *
      * @return ArrayList com objetos Software preenchidos.
      */
-    protected static ArrayList<Software> obterSoftwares() {
+    protected static Set<SoftwaresMaquina> obterSoftwares(Maquina maquina) {
 
-        ArrayList<Software> lista_softwares32;
-        ArrayList<Software> lista_softwares64;
+        Set<SoftwaresMaquina> lista_softwares32;
+        Set<SoftwaresMaquina> lista_softwares64;
 
         //consultar os softwares x64 no registro do windows
         String softwares64 = WindowsReqistry.readRegistry("HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", " /s /reg:64");
 
         //preencher objetos Software
-        lista_softwares64 = obterListaDeSoftwares(softwares64);
+        lista_softwares64 = obterListaDeSoftwares(softwares64, maquina);
 
         //consultar os softwares x32 no registro do windows
         String softwares32 = WindowsReqistry.readRegistry("HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", " /s /reg:32");
 
         //preencher objetos Software
-        lista_softwares32 = obterListaDeSoftwares(softwares32);
+        lista_softwares32 = obterListaDeSoftwares(softwares32, maquina);
 
         //adicionar os resultados em um vetor so
-        ArrayList<Software> lista_softwares = new ArrayList<>();
+        Set<SoftwaresMaquina> lista_softwares = new HashSet<>();
         lista_softwares.addAll(lista_softwares32);
         lista_softwares.addAll(lista_softwares64);
 
@@ -365,53 +315,55 @@ public class WindowsReqistry {
      * @param softwareStr string com arquivo de registro contendo softwares
      * @return ArrayList com objetos Software preenchidos.
      */
-    protected static ArrayList<Software> obterListaDeSoftwares(String softwareStr) {
+    protected static Set<SoftwaresMaquina> obterListaDeSoftwares(String softwareStr, Maquina maquina) {
 
         String[] lines = softwareStr.split("HKEY_LOCAL_MACHINE"); //divide cada chave (software) em uma posicao do vetor
 
-        ArrayList<Software> softwares = new ArrayList<>();
+        Set<SoftwaresMaquina> softwares = new HashSet<SoftwaresMaquina>() {
+        };
 
         for (int i = 0; i < lines.length; i++) {
             String[] s = lines[i].split("\n"); //divide cada linha do software em uma posicao do vetor, para poder pegar os dados
             if (s.length > 1) {
                 Software sf = new Software();
+                SoftwaresMaquina sm = new SoftwaresMaquina();
                 for (int j = 1; j < s.length; j++) {
-                    if (s[j].contains("QuietUninstallString")) {
-                        String clean = s[j].replaceAll("QuietUninstallString", "");
+                    if (s[j].contains("UninstallString")) {
+                        String clean = s[j].replaceAll("UninstallString", "");
                         s[j] = clean; //cleaning the QuietUninstallString line because conflict with UninstallString
-                        sf.setQuietUninstallString(cleanTrash((clean)));
+                        sf.setComandoDesinstalacao(cleanTrash((clean)));
                     }
                     if (s[j].contains("DisplayName")) {
                         String clean = s[j].replaceAll("DisplayName", "");
-                        sf.setDisplayName(cleanTrash((clean)));
+                        sf.setNome(cleanTrash((clean)));
                     }
                     if (s[j].contains("DisplayVersion")) {
                         String clean = s[j].replaceAll("DisplayVersion", "");
-                        sf.setDisplayVersion(cleanTrash((clean)));
+                        sf.setVersao(cleanTrash((clean)));
                     }
                     if (s[j].contains("Publisher")) {
                         String clean = s[j].replaceAll("Publisher", "");
-                        sf.setPublisher(cleanTrash((clean)));
-                    }
-                    if (s[j].contains("UninstallString")) {
-                        String clean = s[j].replaceAll("UninstallString", "");
-                        sf.setUninstallString(cleanTrash((clean)));
+                        sf.setDesenvolvedor(cleanTrash((clean)));
                     }
                     if (s[j].contains("URLInfoAbout")) {
                         String clean = s[j].replaceAll("URLInfoAbout", "");
-                        sf.setUrlInfoAbout(cleanTrash((clean)));
+                        sf.setSiteDesenvolvedor(cleanTrash((clean)));
                     }
                     if (s[j].contains("HelpLink")) {
                         String clean = s[j].replaceAll("HelpLink", "");
-                        sf.setHelpLink(cleanTrash((clean)));
+                        sf.setSiteSoftware(cleanTrash((clean)));
                     }
                     if (s[j].contains("InstallDate")) {
                         String clean = s[j].replaceAll("InstallDate", "");
-                        sf.setInstallDate(formataDataCmd(cleanTrash((clean))));
+                        sm.setDtInstalacao(formataDataCmd(cleanTrash((clean))));
                     }
                 }
-                if (sf.getDisplayName() != null) { //se o nome não estiver nulo, adicionamos o software obtidos a uma lista de softwares
-                    softwares.add(sf);
+                if (sf.getNome() != null) { //se o nome não estiver nulo, adicionamos o software obtidos a uma lista de softwares                    
+                    sm.setSoftware(sf);
+                    sm.setInstalado(true);
+                    sm.setDtUltimaDeteccao(controle.Util.getCurrentDate());
+                    sm.setMaquina(maquina);
+                    softwares.add(sm);
                 }
             }
 
@@ -460,12 +412,16 @@ public class WindowsReqistry {
      */
     private static Inventario fazerInventario() {
         //obter softwares
-        ArrayList<Software> listaSoftwares = obterSoftwares();
-        ArrayList<Particao> listaParticoes = obterParticoes();
-        ArrayList<PlacaRede> listaPlacaRede = obterPlacaRede();
-        Maquina maquina = obterMaquina();
         String dataAtual = controle.Util.getCurrentTimestamp();
-        Inventario inventario = new Inventario(maquina, dataAtual, listaParticoes, listaPlacaRede, listaSoftwares);
+        Maquina maquina = obterMaquina();
+
+        maquina.setSoftwaresMaquinas(obterSoftwares(maquina));
+
+        maquina.setParticaos(obterParticoes(maquina));
+        maquina.setPlacaRedes(obterPlacaRede(maquina));
+                
+
+        Inventario inventario = new Inventario(maquina, dataAtual);
 
         return inventario;
     }

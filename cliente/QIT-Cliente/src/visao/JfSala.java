@@ -2,6 +2,7 @@ package visao;
 
 import controle.ControleSala;
 import controle.ControleUsuario;
+import controle.ProxyTelas;
 import dao.SalaDAO;
 import javax.swing.JOptionPane;
 import modelo.Predio;
@@ -15,15 +16,16 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
     protected Tela tela;
     protected Sala sala;
     protected Predio predio;
+    protected ProxyTelas proxy;
 
-    public JfSala(Usuario usuario) {
+    public JfSala(Usuario usuario) {        
         initComponents();
-        this.usuario = usuario;
+        this.usuario = usuario;        
         this.tela = new Tela();
         tela.setId(1);
         this.sala = new Sala();
         this.predio = new Predio();
-
+        
         jftfNomePredio.setEditable(false);
         jftfNomePredio.setFocusable(false);
 
@@ -35,6 +37,7 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
         qftfNome.setMaxLenght(100);
         qftfNome.setNotNull(true);
 
+        proxy = new ProxyTelas(this, this.usuario, this.tela);
 //        Verificar permissao da operacao ler
         this.ler();
 
@@ -331,7 +334,8 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
 
     @Override
     public boolean ler() {
-        boolean permissaoUser = new ControleUsuario().verificarPermissao(usuario, tela, "ler");
+//        boolean permissaoUser = new ControleUsuario().verificarPermissao(usuario, tela, "ler");
+        boolean permissaoUser = proxy.ler();
 
         System.out.println("Permisssao desse cara: " + permissaoUser);
         if (permissaoUser) {
