@@ -57,7 +57,7 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
         jpCadastro = new javax.swing.JPanel();
         btSalvar = new javax.swing.JButton();
         btCancelar1 = new javax.swing.JButton();
-        qftfNome = new controle.QITJFormattedTextField();
+        qftfNome = new qitjftf.QITJFormattedTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -65,12 +65,12 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        qftfIdPredio = new controle.QITJFormattedTextField();
+        qftfIdPredio = new qitjftf.QITJFormattedTextField();
         jftfNomePredio = new javax.swing.JFormattedTextField();
         jpConsulta = new javax.swing.JPanel();
         btCancelar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        qftfNome1 = new controle.QITJFormattedTextField();
+        qftfNome1 = new qitjftf.QITJFormattedTextField();
         jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -407,9 +407,9 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
     private javax.swing.JPanel jpConsulta;
     private javax.swing.JTextArea jtDescricao;
     private javax.swing.JTabbedPane jtpMain;
-    private controle.QITJFormattedTextField qftfIdPredio;
-    private controle.QITJFormattedTextField qftfNome;
-    private controle.QITJFormattedTextField qftfNome1;
+    private qitjftf.QITJFormattedTextField qftfIdPredio;
+    private qitjftf.QITJFormattedTextField qftfNome;
+    private qitjftf.QITJFormattedTextField qftfNome1;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -1,4 +1,4 @@
-package controle;
+package qitjftf;
 
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
@@ -25,10 +25,7 @@ public class QITJFormattedTextField extends JFormattedTextField {
     private final String PHONE_MASK = "(##) ####-####";
     private final String CNPJ_MASK = "##.###.###/####-##";
     private final String DATE_MASK = "##/##/####";
-    private final String TIMESTAMP_MASK = "##/##/#### ##:##:##";
-    private final String UPPER_CASE_LETTERS_MASK = "U";
-    private final String LOWER_CASE_LETTERS_MASK = "L";
-    private final String NUMBERS_MASK = "#";
+    private final String TIMESTAMP_MASK = "##/##/#### ##:##:##";    
 
     public QITJFormattedTextField() {
         contrucaoPadrao();

@@ -5,6 +5,7 @@
  */
 package controle;
 
+import qitjftf.QITJFormattedTextField;
 import java.awt.Component;
 import java.awt.Container;
 import javax.swing.JCheckBox;

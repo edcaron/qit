@@ -143,7 +143,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btCancelar1ActionPerformed"/>
               </Events>
             </Component>
-            <Component class="controle.QITJFormattedTextField" name="qftfNome">
+            <Component class="qitjftf.QITJFormattedTextField" name="qftfNome">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
@@ -197,7 +197,7 @@
                 <Property name="text" type="java.lang.String" value="*Campos obrigat&#xf3;rios"/>
               </Properties>
             </Component>
-            <Component class="controle.QITJFormattedTextField" name="qftfIdPredio">
+            <Component class="qitjftf.QITJFormattedTextField" name="qftfIdPredio">
             </Component>
             <Component class="javax.swing.JFormattedTextField" name="jftfNomePredio">
             </Component>
@@ -283,7 +283,7 @@
                 <Property name="text" type="java.lang.String" value="Nome:"/>
               </Properties>
             </Component>
-            <Component class="controle.QITJFormattedTextField" name="qftfNome1">
+            <Component class="qitjftf.QITJFormattedTextField" name="qftfNome1">
             </Component>
             <Component class="javax.swing.JButton" name="jButton2">
               <Properties>
