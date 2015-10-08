@@ -17,15 +17,16 @@ public class QITJFormattedTextField extends JFormattedTextField {
     private String dataType;
     private boolean notNull;
     private int maxLenght;
-    private boolean isValid;
+    private boolean isValid;    
     private Color colorError = Color.CYAN;
     private Color colorDefault = Color.white;
 
+    private final Color COLOR_EDITABLE_FALSE = new Color(240,240,240);
     private final String CPF_MASK = "###.###.###-##";
     private final String PHONE_MASK = "(##) ####-####";
     private final String CNPJ_MASK = "##.###.###/####-##";
     private final String DATE_MASK = "##/##/####";
-    private final String TIMESTAMP_MASK = "##/##/#### ##:##:##";    
+    private final String TIMESTAMP_MASK = "##/##/#### ##:##:##";
 
     public QITJFormattedTextField() {
         contrucaoPadrao();
@@ -43,7 +44,7 @@ public class QITJFormattedTextField extends JFormattedTextField {
         this.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                validateDataType();
+//                validateDataType();
             }
         });
     }
@@ -88,7 +89,7 @@ public class QITJFormattedTextField extends JFormattedTextField {
     }
 
     public void validateDataType() {
-        boolean valido = true;
+        boolean valido = true;        
         try {
             //verificar se pode ser nulo
             if (this.isNotNull() && this.getText().trim().isEmpty()) {
@@ -122,7 +123,11 @@ public class QITJFormattedTextField extends JFormattedTextField {
     private void setBackgroundIfInvalid() {
         try {
             if (isValid) {
-                this.setBackground(colorDefault);
+                if (this.isEditable()) {
+                    this.setBackground(colorDefault);
+                } else {
+                    this.setBackground(COLOR_EDITABLE_FALSE);
+                }
                 System.out.println("validou");
             } else {
                 System.out.println("invalidou");

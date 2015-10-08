@@ -1,5 +1,7 @@
 package visao;
 
+import controle.ControlePredio;
+import controle.ITela;
 import controle.ControleSala;
 import controle.ControleUsuario;
 import controle.ProxyTelas;
@@ -10,22 +12,25 @@ import modelo.Sala;
 import modelo.Tela;
 import modelo.Usuario;
 
-public class JfSala extends javax.swing.JFrame implements ITelas {
+public class JfSala extends javax.swing.JFrame implements ITela {
 
     protected Usuario usuario;
     protected Tela tela;
     protected Sala sala;
     protected Predio predio;
     protected ProxyTelas proxy;
+    protected ControleSala controleSala;
 
-    public JfSala(Usuario usuario) {        
+    public JfSala(Usuario usuario) {
         initComponents();
-        this.usuario = usuario;        
+        this.usuario = usuario;
         this.tela = new Tela();
         tela.setId(1);
         this.sala = new Sala();
         this.predio = new Predio();
-        
+        this.controleSala = new ControleSala();
+
+        qftfIdPredio.setEditable(false);
         jftfNomePredio.setEditable(false);
         jftfNomePredio.setFocusable(false);
 
@@ -62,7 +67,7 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtDescricao = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        btBuscarPredio = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         qftfIdPredio = new qitjftf.QITJFormattedTextField();
@@ -70,12 +75,12 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
         jpConsulta = new javax.swing.JPanel();
         btCancelar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        qftfNome1 = new qitjftf.QITJFormattedTextField();
-        jButton2 = new javax.swing.JButton();
+        qftfConsultaNome = new qitjftf.QITJFormattedTextField();
+        btConsultarTabela = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jtResultados = new javax.swing.JTable();
+        btInativar = new javax.swing.JButton();
+        btVerEditar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -104,7 +109,12 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
         jtDescricao.setRows(5);
         jScrollPane1.setViewportView(jtDescricao);
 
-        jButton1.setText("Buscar");
+        btBuscarPredio.setText("Buscar");
+        btBuscarPredio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBuscarPredioActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Prédio:*");
@@ -143,7 +153,7 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(jftfNomePredio)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jButton1)))))
+                                            .addComponent(btBuscarPredio)))))
                             .addComponent(jLabel4))
                         .addGap(0, 310, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -161,7 +171,7 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btBuscarPredio)
                     .addComponent(jLabel3)
                     .addComponent(qftfIdPredio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jftfNomePredio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -186,14 +196,14 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Nome:");
 
-        jButton2.setText("Buscar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btConsultarTabela.setText("Buscar");
+        btConsultarTabela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btConsultarTabelaActionPerformed(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtResultados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -204,17 +214,27 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jtResultados.getTableHeader().setReorderingAllowed(false);
+        jtResultados.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                jtResultadosMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(jtResultados);
 
-        jButton3.setText("Inativar selecionado");
+        btInativar.setText("Ativar/Inativar selecionado");
+        btInativar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btInativarActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Ver/Editar selecionado");
+        btVerEditar.setText("Ver/Editar selecionado");
+        btVerEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btVerEditarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpConsultaLayout = new javax.swing.GroupLayout(jpConsulta);
         jpConsulta.setLayout(jpConsultaLayout);
@@ -226,9 +246,9 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
                     .addGroup(jpConsultaLayout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(qftfNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(qftfConsultaNome, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
+                        .addComponent(btConsultarTabela)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpConsultaLayout.createSequentialGroup()
@@ -236,9 +256,9 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
                         .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpConsultaLayout.createSequentialGroup()
-                                .addComponent(jButton4)
+                                .addComponent(btVerEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3)))))
+                                .addComponent(btInativar)))))
                 .addContainerGap())
         );
         jpConsultaLayout.setVerticalGroup(
@@ -247,14 +267,14 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
                 .addContainerGap()
                 .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(qftfNome1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(qftfConsultaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btConsultarTabela))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(btInativar)
+                    .addComponent(btVerEditar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btCancelar)
                 .addContainerGap())
@@ -289,37 +309,84 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
         btCancelar1ActionPerformed(evt);
     }//GEN-LAST:event_btCancelarActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void jtResultadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtResultadosMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_jtResultadosMouseClicked
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        predio.setId(Integer.parseInt(qftfIdPredio.getText()));        
-        sala.setAtivo(true);
-        sala.setDescricao(jtDescricao.getText());
-        sala.setNome(qftfNome.getText());
-        sala.setPredio(predio);
+        if (controle.Formatacao.verificarNulos(jpCadastro)) {
+            predio.setId(Integer.parseInt(qftfIdPredio.getText()));
+            sala.setAtivo(true);
+            sala.setDescricao(jtDescricao.getText());
+            sala.setNome(qftfNome.getText());
+            sala.setPredio(predio);
 
-        if (sala.getId() == 0) {
-            this.inserir();
+            if (sala.getId() == 0) {
+                this.inserir();
+            } else {
+                this.editar();
+            }
         } else {
-            this.editar();
+
         }
+
     }//GEN-LAST:event_btSalvarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btConsultarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarTabelaActionPerformed
         Sala s = new Sala();
-        s.setNome(qftfNome1.getText());
-        new ControleSala().popularTabelaSala(jTable1, s);
-    }//GEN-LAST:event_jButton2ActionPerformed
+        s.setNome(qftfConsultaNome.getText());
+        controleSala.popularTabela(jtResultados, s, false);
+    }//GEN-LAST:event_btConsultarTabelaActionPerformed
+
+    private void btVerEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVerEditarActionPerformed
+        try {
+            limparCampos();
+
+            if (jtResultados.getSelectedRowCount() != 0) {
+                int idRegistroSelecionado = (int) jtResultados.getValueAt(jtResultados.getSelectedRow(), 0);
+                sala.setId(idRegistroSelecionado);
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecione um registro da tabela");
+            }
+
+            sala = controleSala.consultar(sala);
+
+            popularCampos();
+            jtpMain.setSelectedIndex(0);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Problemas ao selecionar!\nMensagem técnica:\n" + e);
+            System.out.println("" + e);
+        }
+    }//GEN-LAST:event_btVerEditarActionPerformed
+
+    private void btBuscarPredioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarPredioActionPerformed
+        try {
+            Predio predioPModal = new Predio();
+            ControlePredio cPPModal = new ControlePredio();
+            new JdlgGenerico(this, cPPModal, predioPModal, 1).setVisible(true);
+        } catch (Exception e) {
+            System.err.println("Erro em btBuscarPredioActionPerformed " + e);
+        }
+    }//GEN-LAST:event_btBuscarPredioActionPerformed
+
+    private void btInativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInativarActionPerformed
+        if (jtResultados.getSelectedRowCount() != 0) { //verifica se tem 1 linha selecionada
+            int i = JOptionPane.showConfirmDialog(null, "Deseja alterar o status desde registro?", "Confirmar", JOptionPane.YES_NO_OPTION);
+            if (i == 0) { //confirma se o usuario realmente quer inativar
+                this.inativar();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um registro da tabela");
+        }
+    }//GEN-LAST:event_btInativarActionPerformed
 
     @Override
     public boolean inserir() {
-        boolean permissaoUser = new ControleUsuario().verificarPermissao(usuario, tela, "inserir");
+        boolean permissaoUser = proxy.inserir();
 
         System.out.println("Permisssao desse cara: " + permissaoUser);
         if (permissaoUser) {
-            boolean retorno = new SalaDAO().salvar(sala);
+            boolean retorno = controleSala.salvar(sala);
             if (retorno) {
                 JOptionPane.showMessageDialog(rootPane, "Operação Realizada com sucesso");
                 this.limparCampos();
@@ -334,7 +401,6 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
 
     @Override
     public boolean ler() {
-//        boolean permissaoUser = new ControleUsuario().verificarPermissao(usuario, tela, "ler");
         boolean permissaoUser = proxy.ler();
 
         System.out.println("Permisssao desse cara: " + permissaoUser);
@@ -349,7 +415,7 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
 
     @Override
     public boolean editar() {
-        boolean permissaoUser = new ControleUsuario().verificarPermissao(usuario, tela, "editar");
+        boolean permissaoUser = proxy.editar();
 
         System.out.println("Permisssao desse cara: " + permissaoUser);
         if (permissaoUser) {
@@ -368,7 +434,27 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
 
     @Override
     public boolean inativar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean permissaoUser = proxy.inativar();
+        System.out.println("Permisssao para ler: " + permissaoUser);
+
+        if (permissaoUser) {
+            int id = 0;
+            try {
+                id = ((int) jtResultados.getValueAt(jtResultados.getSelectedRow(), 0));
+                boolean retorno = controleSala.inativar(id);
+                if (retorno) {
+                    JOptionPane.showMessageDialog(rootPane, "Operação Realizada com sucesso");
+                    btConsultarTabelaActionPerformed(null);
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Não foi posssíel realizar esta operação, consulte o log de erros");
+                }
+            } catch (Exception e) {
+                System.err.println("erro ao alterar status " + e.getLocalizedMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Você não possui permissão para realizar essa operação");
+        }
+        return true;
     }
 
     @Override
@@ -377,23 +463,56 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
         this.sala = new Sala();
         this.predio = null;
         this.predio = new Predio();
-        controle.Formatacao.limparCampos(jpCadastro);
+        new controle.Formatacao().limparCampos(jpCadastro);
     }
 
     @Override
     public void popularCampos() {
+        try {
+            qftfNome.setText(sala.getNome());
+            jtDescricao.setText(sala.getDescricao());
+            qftfIdPredio.setText("" + sala.getPredio().getId());
+            jftfNomePredio.setText(sala.getPredio().getNome());
+        } catch (Exception e) {
+            System.err.println("Erro em popular campos da sala \n" + e);
+        }
+    }
+
+    /**
+     * Metodo para alterar os atributos do relacionamento Predio, no objeto sala
+     *
+     * @param id do predio
+     * @param nome do predio
+     */
+    @Override
+    public void setRelacionado1(String id, String nome) {
+        try {
+            qftfIdPredio.setText(id);
+            jftfNomePredio.setText(nome);
+        } catch (Exception e) {
+            System.err.println("Erro em setRelacionado1: " + e);
+        }
+    }
+
+    @Override
+    public void setRelacionado2(String id, String nome) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setRelacionado3(String id, String nome) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btBuscarPredio;
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btCancelar1;
+    private javax.swing.JButton btConsultarTabela;
+    private javax.swing.JButton btInativar;
     private javax.swing.JButton btSalvar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btVerEditar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -401,15 +520,15 @@ public class JfSala extends javax.swing.JFrame implements ITelas {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JFormattedTextField jftfNomePredio;
     private javax.swing.JPanel jpCadastro;
     private javax.swing.JPanel jpConsulta;
     private javax.swing.JTextArea jtDescricao;
+    private javax.swing.JTable jtResultados;
     private javax.swing.JTabbedPane jtpMain;
+    private qitjftf.QITJFormattedTextField qftfConsultaNome;
     private qitjftf.QITJFormattedTextField qftfIdPredio;
     private qitjftf.QITJFormattedTextField qftfNome;
-    private qitjftf.QITJFormattedTextField qftfNome1;
     // End of variables declaration//GEN-END:variables
 
 }

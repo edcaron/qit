@@ -5,22 +5,20 @@
  */
 package controle;
 
-import javax.swing.JOptionPane;
 import modelo.Tela;
 import modelo.Usuario;
-import visao.ITelas;
 
 /**
  *
  * @author eduar_000
  */
-public class ProxyTelas implements ITelas {
+public class ProxyTelas implements ITela {
 
-    private ITelas telaReal;
+    private ITela telaReal;
     private Usuario usuario;
     private Tela tela;
 
-    public ProxyTelas(ITelas telaReal, Usuario usuario, Tela tela) {
+    public ProxyTelas(ITela telaReal, Usuario usuario, Tela tela) {
         this.telaReal = telaReal;
         this.usuario = usuario;
         this.tela = tela;
@@ -28,33 +26,50 @@ public class ProxyTelas implements ITelas {
 
     @Override
     public boolean inserir() {
-        return false;
+        boolean permissaoUser = new ControleUsuario().verificarPermissao(usuario, tela, "inserir");
+        return permissaoUser;
     }
 
     @Override
     public boolean ler() {
         boolean permissaoUser = new ControleUsuario().verificarPermissao(usuario, tela, "ler");
-        
         return permissaoUser;
     }
 
     @Override
     public boolean editar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean permissaoUser = new ControleUsuario().verificarPermissao(usuario, tela, "editar");
+        return permissaoUser;
     }
 
     @Override
     public boolean inativar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean permissaoUser = new ControleUsuario().verificarPermissao(usuario, tela, "inativar");
+        return permissaoUser;
     }
 
     @Override
     public void limparCampos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.  
     }
 
     @Override
     public void popularCampos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setRelacionado1(String id, String nome) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setRelacionado2(String id, String nome) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setRelacionado3(String id, String nome) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

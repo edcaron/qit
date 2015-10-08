@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package controle;
 
 /**
  *
  * @author eduar_000
  */
-public class GrupoUsuarioDAO {
+public interface IModelo {
+    
+    public int getId();
+    public String getNome();
+    public void setNome(String nome);        
     
 }

@@ -5,75 +5,74 @@
  */
 package controle;
 
-import dao.SalaDAO;
+import dao.PredioDAO;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import modelo.Sala;
+import modelo.Predio;
 
 /**
  *
  * @author eduar_000
  */
-public class ControleSala implements IControle {
+public class ControlePredio implements IControle {
 
-    SalaDAO sdao;
+    private PredioDAO dao;
 
-    public ControleSala() {
-        sdao = new SalaDAO();
+    public ControlePredio() {
+        dao = new PredioDAO();
     }
 
-    public boolean salvar(Sala sala) {
-        return sdao.salvar(sala);
+    public boolean salvar(Predio predio) {
+        return dao.salvar(predio);
     }
 
-    public Sala consultar(Sala sala) {
-        Sala salaLocal = new Sala();
+    public Predio consultar(Predio predio) {
+        Predio objLocal = new Predio();
         try {
-            salaLocal = sdao.consultar(sala);
+            objLocal = dao.consultar(predio);
         } catch (Exception e) {
             System.err.println("" + e);
         }
-        return salaLocal;
+        return objLocal;
     }
 
     @Override
-    public Object[][] popularTabela(JTable tabela, IModelo sala, boolean isModal) {
+    public Object[][] popularTabela(JTable tabela, IModelo objModelo, boolean isModal) {
         Object[][] dadosTabela = null;
         try {
             int colunasTabela = 0;
 
-            if (!isModal) {
-                colunasTabela = 5;
+            if (isModal) {
+                colunasTabela = 2; //se modal for verdadeiro, a tabela vai ter so 2 colunas para ser usado no JDialog para consulta
             } else {
-                colunasTabela = 3; //se modal for verdadeiro, a tabela vai ter 3 colunas para ser usado no JDialog para consulta
+                colunasTabela = 4; 
             }
 
             Object[] cabecalho = new Object[colunasTabela];
 
-            cabecalho[0] = "Cód. Sala";
-            cabecalho[1] = "Sala";
-            cabecalho[2] = "Cód. Predio";
-            if (!isModal) { //se modal for verdadeiro, a tabela vai ter 3 colunas para ser usado no JDialog para consulta
-                cabecalho[3] = "Predio";
-                cabecalho[4] = "Status";
+            cabecalho[0] = "Cód.";
+            cabecalho[1] = "Predio";            
+            
+            if (!isModal) { //se modal for verdadeiro, a tabela vai ter so 2 colunas para ser usado no JDialog para consulta                
+                cabecalho[2] = "Descricao";
+                cabecalho[3] = "Status";
             }
 
-            // cria matriz de acordo com nº de registros da tabela
-            ArrayList<Sala> listaSalas = sdao.listar(sala);
+            // cria matriz de acordo com n de registros da tabela
+            ArrayList<Predio> listaPredio = dao.listar(objModelo);
 
-            dadosTabela = new Object[listaSalas.size()][colunasTabela];
+            dadosTabela = new Object[listaPredio.size()][colunasTabela];
 
-            for (int i = 0; i < listaSalas.size(); i++) {
-                dadosTabela[i][0] = listaSalas.get(i).getId();
-                dadosTabela[i][1] = listaSalas.get(i).getNome();
-                dadosTabela[i][2] = listaSalas.get(i).getPredio().getId();
-                if (!isModal) { //se modal for verdadeiro, a tabela vai ter 3 colunas para ser usado no JDialog para consulta
-                    dadosTabela[i][3] = listaSalas.get(i).getPredio().getNome();
-                    dadosTabela[i][4] = controle.Util.binarioParaString(listaSalas.get(i).isAtivo());
+            for (int i = 0; i < listaPredio.size(); i++) {
+                dadosTabela[i][0] = listaPredio.get(i).getId();
+                dadosTabela[i][1] = listaPredio.get(i).getNome();
+                if (!isModal) { //se modal for verdadeiro, a tabela vai ter so 2 colunas para ser usado no JDialog para consulta
+                    dadosTabela[i][2] = listaPredio.get(i).getDescricao();    
+                    dadosTabela[i][4] = controle.Util.binarioParaString(listaPredio.get(i).isAtivo());
                 }
             }
 
@@ -107,8 +106,7 @@ public class ControleSala implements IControle {
             direita.setHorizontalAlignment(SwingConstants.RIGHT);
 
             tabela.getColumnModel().getColumn(0).setCellRenderer(direita);
-            tabela.getColumnModel().getColumn(1).setCellRenderer(direita);
-            tabela.getColumnModel().getColumn(2).setCellRenderer(direita);
+            tabela.getColumnModel().getColumn(1).setCellRenderer(direita);            
             tabela.getTableHeader().setResizingAllowed(true);
 
             // redimensiona as colunas de uma tabela
@@ -144,23 +142,6 @@ public class ControleSala implements IControle {
             System.err.println("Erro ao popular tabela: " + e + "\n" + e.getCause());
         }
         return dadosTabela;
-    }
-
-    public boolean inativar(int id) {
-        Sala objLocal = new Sala();
-        boolean retorno = false;
-
-        objLocal.setId(id);
-
-//        consulta o obj sala no banco de dados com o id que vem como paramentro na funcao
-        objLocal = this.consultar(objLocal);
-
-//        inverte o valor do status no obj que veio do banco
-        objLocal.setAtivo(controle.Util.inverteValorBinario(objLocal.isAtivo()));
-
-//        salva novamente no banco
-        retorno = this.salvar(objLocal);
-        return retorno;
     }
 
 }

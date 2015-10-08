@@ -47,9 +47,10 @@ public class ControleUsuario {
     public boolean verificarPermissao(Usuario usuario, Tela tela, String operacao) {
         boolean temPermissao = false;
         Set lista = null;
+
         if (usuario.getTipoPermissao() == 'I') {
             lista = usuario.getPermissaosForIdUsuario();
-        }else {
+        } else {
             lista = usuario.getGrupo().getPermissaos();
         }
 

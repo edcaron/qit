@@ -65,5 +65,47 @@ public class Util {
             System.err.println("Erro em definePadroesJFrame " + e);
         }
 
-    }         
+    }
+
+    /**
+     * Recebe um binario: se for verdadeiro, retorna falso e vice-versa.
+     *
+     * @param parametro
+     * @return
+     */
+    public static boolean inverteValorBinario(boolean parametro) {
+        boolean retorno = true;
+        if (parametro) {
+            retorno = false;
+        }
+        return retorno;
+    }
+
+    /**
+     * Recebe um boolean retorna Ativo ou Inativo
+     *
+     * @param parametro
+     * @return String
+     */
+    public static String binarioParaString(boolean parametro) {
+        String retorno = "Ativo";
+        if (!parametro) {
+            retorno = "Inativo";
+        }
+        return retorno;
+    }
+
+    /**
+     * Recebe um String e retorna seu valor booleano boolean
+     *
+     * @param parametro
+     * @return
+     */
+    public static boolean stringParaBinario(String parametro) {
+        boolean retorno = true;
+        if (parametro.equals("Inativo")) {
+            retorno = false;
+        }
+        return retorno;
+    }
 }

@@ -19,15 +19,19 @@ import org.hibernate.Session;
  */
 public class PermissaoDAO {
 
+    private Session sessao = null;
+
     public PermissaoDAO() {
+        sessao = HibernateUtil.getSessionFactory().openSession();
     }
 
     public ArrayList<Permissao> consultar(Usuario usuario, int id_tela) {
         List resultadoBanco = null;
         ArrayList<Permissao> listaPermissoes = null;
         String query = "";
+
         try {
-            Session sessao = HibernateUtil.getSessionFactory().openSession();
+            sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
 
             if (usuario.getTipoPermissao() == 'I') {

@@ -21,6 +21,9 @@ import javax.swing.JTextField;
  */
 public class Formatacao {
 
+    public Formatacao() {
+    }
+
     /**
      * Funcao para limpar o texto dos campos de entrada dos usuarios
      *
@@ -56,6 +59,25 @@ public class Formatacao {
         } catch (Exception e) {
             System.err.println("Erro em limparCampos: " + e);
         }
+    }
 
+    public static boolean verificarNulos(Container container) {
+        boolean retorno = true;
+        Component c[] = container.getComponents();
+        try {
+            for (int i = 0; (i < c.length && retorno); i++) {
+                if (c[i] instanceof QITJFormattedTextField) {
+                    QITJFormattedTextField field = (QITJFormattedTextField) c[i];
+                    field.validateDataType();
+                    if (!field.isIsValid()) {
+                        retorno = false;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Erro em limparCampos: " + e);
+        }
+        
+        return retorno;
     }
 }

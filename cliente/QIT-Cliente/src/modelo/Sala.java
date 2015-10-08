@@ -1,6 +1,7 @@
 package modelo;
 // Generated 17/09/2015 16:32:25 by Hibernate Tools 4.3.1
 
+import controle.IModelo;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -21,7 +22,7 @@ import org.hibernate.annotations.Generated;
 @Entity
 @Table(name = "sala", schema = "public"
 )
-public class Sala implements java.io.Serializable {
+public class Sala implements java.io.Serializable, IModelo {
 
     private int id;
     private Predio predio;
@@ -52,6 +53,7 @@ public class Sala implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
+    @Override
     public int getId() {
         return this.id;
     }
@@ -71,10 +73,12 @@ public class Sala implements java.io.Serializable {
     }
 
     @Column(name = "nome", nullable = false, length = 50)
+    @Override
     public String getNome() {
         return this.nome;
     }
-
+    
+    @Override
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -105,5 +109,6 @@ public class Sala implements java.io.Serializable {
     public void setMaquinas(Set<Maquina> maquinas) {
         this.maquinas = maquinas;
     }
+  
 
 }

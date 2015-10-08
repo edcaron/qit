@@ -9,7 +9,7 @@ import controle.HibernateUtil;
 import java.util.ArrayList;
 import java.util.List;
 import controle.IModelo;
-import modelo.Sala;
+import modelo.Predio;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -18,21 +18,21 @@ import org.hibernate.Transaction;
  *
  * @author eduar_000
  */
-public class SalaDAO {
+public class PredioDAO {
 
-    Session sessao = null;
+    private Session sessao = null;
 
-    public SalaDAO() {
+    public PredioDAO() {
         sessao = HibernateUtil.getSessionFactory().openSession();
     }
 
-    public boolean salvar(Sala s) {
+    public boolean salvar(Predio predio) {
         boolean retorno = false;
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
 
-            sessao.saveOrUpdate(s);
+            sessao.saveOrUpdate(predio);
             t.commit();
             retorno = true;
         } catch (HibernateException he) {
@@ -43,24 +43,24 @@ public class SalaDAO {
         return retorno;
     }
 
-    public ArrayList<Sala> listar(IModelo sala) {
+    public ArrayList<Predio> listar(IModelo predio) {
         List resultado = null;
 
-        ArrayList<Sala> lista = new ArrayList<>();
+        ArrayList<Predio> lista = new ArrayList<>();
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            String sql = "from Sala s inner join s.predio p where lower(s.nome) like lower('%" + sala.getNome() + "%') order by s.id desc";
+            String sql = "from Predio p where lower(p.nome) like lower('%" + predio.getNome() + "%') order by p.id desc";
 
-            if (sala.getNome().equals("")) {
-                sql = "from Sala s inner join s.predio order by s.id desc";
+            if (predio.getNome().equals("")) {
+                sql = "from Predio p order by p.id desc";
             }
 
             org.hibernate.Query q = sessao.createQuery(sql);
             resultado = q.list();
 
             for (Object o : resultado) {
-                Sala s = ((Sala) ((Object[]) o)[0]);
+                Predio s = ((Predio) ((Object) o));
                 lista.add(s);
             }
 
@@ -69,33 +69,30 @@ public class SalaDAO {
         } finally {
             sessao.close();
         }
-
         return lista;
     }
 
     /**
      *
-     * @param sala
+     * @param predio
      * @return Usuario
      */
-    public Sala consultar(Sala sala) {
+    public Predio consultar(Predio predio) {
         List resultado = null;
-        Sala salaLocal = new Sala();
+        Predio predioLocal = new Predio();
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            System.out.println("id:" + sala.getId());
-            org.hibernate.Query q = sessao.createQuery("from Sala s inner join s.predio where s.id = " + sala.getId());
+            org.hibernate.Query q = sessao.createQuery("from Predio p where p.id = " + predio.getId());
             resultado = q.list();
 
-            salaLocal = ((Sala) ((Object[]) resultado.get(0))[0]);
+            predioLocal = ((Predio) ((Object[]) resultado.get(0))[0]);
 
         } catch (HibernateException he) {
-            System.err.println("Erro em consultar sala \n" + he);
+            System.err.println("Erro em consultar predio \n" + he);
         } finally {
             sessao.close();
         }
-        return salaLocal;
+        return predioLocal;
     }
-
 }
