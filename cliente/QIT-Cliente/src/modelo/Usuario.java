@@ -1,6 +1,7 @@
 package modelo;
 // Generated 17/09/2015 16:32:25 by Hibernate Tools 4.3.1
 
+import controle.IModelo;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +24,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "usuario", schema = "public"
 )
-public class Usuario implements java.io.Serializable {
+public class Usuario implements java.io.Serializable, IModelo {
 
     private int id;
     private Grupo grupo;
@@ -34,16 +35,15 @@ public class Usuario implements java.io.Serializable {
     private boolean ativo;
     private Date dtCriacao;
     private char tipoPermissao;
-    
+
     private Set<Permissao> permissaosForIdUsuarioModificador = new HashSet<Permissao>(0);
     private Set<Permissao> permissaosForIdUsuario = new HashSet<Permissao>(0);
-    
+
     private Set<InstalacaoSoftware> instalacaoSoftwares = new HashSet<InstalacaoSoftware>(0);
     private Set<Maquina> maquinas = new HashSet<Maquina>(0);
     private Set<ExecucaoInstalacao> execucaoInstalacaos = new HashSet<ExecucaoInstalacao>(0);
     private Set<Software> softwares = new HashSet<Software>(0);
     private Set<ExecucaoScript> execucaoScripts = new HashSet<ExecucaoScript>(0);
-    
 
     public Usuario() {
     }
@@ -81,13 +81,14 @@ public class Usuario implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "id", unique = true, nullable = false)
+    @Override
     public int getId() {
         return this.id;
     }
 
     public void setId(int id) {
+        System.out.println("cheguei nessa porra tnc");
         this.id = id;
     }
 

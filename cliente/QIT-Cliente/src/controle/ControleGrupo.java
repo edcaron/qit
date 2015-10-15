@@ -5,35 +5,35 @@
  */
 package controle;
 
-import dao.PredioDAO;
+import dao.GrupoDAO;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import modelo.Predio;
+import modelo.Grupo;
 
 /**
  *
- * @author eduar_000
+ * @author Tiago
  */
-public class ControlePredio implements IControle {
+public class ControleGrupo implements  IControle {
 
-    private PredioDAO dao;
+    private GrupoDAO dao;
 
-    public ControlePredio() {
-        dao = new PredioDAO();
+    public ControleGrupo() {
+        dao = new GrupoDAO();
     }
 
-    public boolean salvar(Predio predio) {
-        return dao.salvar(predio);
+    public boolean salvar(Grupo grupo) {
+        return dao.salvar(grupo);
     }
 
-    public Predio consultar(Predio predio) {
-        Predio objLocal = new Predio();
+    public Grupo consultar(Grupo grupo) {
+        Grupo objLocal = new Grupo();
         try {
-            objLocal = dao.consultar(predio);
+            objLocal = dao.consultar(grupo);
         } catch (Exception e) {
             System.err.println("" + e);
         }
@@ -63,7 +63,7 @@ public class ControlePredio implements IControle {
             }
 
             // cria matriz de acordo com n de registros da tabela
-            ArrayList<Predio> listaPredio = dao.listar(objModelo);
+            ArrayList<Grupo> listaPredio = dao.listar(objModelo);
 
             dadosTabela = new Object[listaPredio.size()][colunasTabela];
 

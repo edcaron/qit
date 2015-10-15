@@ -2,6 +2,7 @@ package modelo;
 // Generated 17/09/2015 16:32:25 by Hibernate Tools 4.3.1
 
 
+import controle.IModelo;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -20,7 +21,7 @@ import javax.persistence.Table;
 @Table(name="grupo"
     ,schema="public"
 )
-public class Grupo  implements java.io.Serializable {
+public class Grupo  implements java.io.Serializable, IModelo {
 
 
      private int id;

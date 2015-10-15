@@ -49,12 +49,16 @@ public class JfMain extends javax.swing.JFrame {
         jimSala = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1355, 120));
         setResizable(false);
 
         jmUsuario.setText("Usuarios");
 
         jimUsuario.setText("Usuarios");
+        jimUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jimUsuarioActionPerformed(evt);
+            }
+        });
         jmUsuario.add(jimUsuario);
 
         jimGrupoUsuario.setText("Grupos de Usuários");
@@ -118,6 +122,10 @@ public class JfMain extends javax.swing.JFrame {
     private void jimSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jimSalaActionPerformed
         new JfSala(usuario);
     }//GEN-LAST:event_jimSalaActionPerformed
+
+    private void jimUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jimUsuarioActionPerformed
+        new JfUsuario(usuario);        // TODO add your handling code here:
+    }//GEN-LAST:event_jimUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
