@@ -25,17 +25,17 @@ import modelo.Usuario;
  */
 public class ControleUsuario implements IControle {
 
-
-
     UsuarioDAO udao;
 
-     public boolean salvar(Usuario usuario) {
+    public boolean salvar(Usuario usuario) {
         return udao.salvar(usuario);
     }
-         public boolean inativar(int id) {
+
+    public boolean inativar(int id) {
+       
         Usuario objLocal = new Usuario();
         boolean retorno = false;
-
+   
         objLocal.setId(id);
 
 //        consulta o obj sala no banco de dados com o id que vem como paramentro na funcao
@@ -48,7 +48,7 @@ public class ControleUsuario implements IControle {
         retorno = this.salvar(objLocal);
         return retorno;
     }
-    
+
     public ControleUsuario() {
         udao = new UsuarioDAO();
     }
@@ -62,7 +62,7 @@ public class ControleUsuario implements IControle {
         return ret;
     }
 
-    public Usuario consultar(Usuario usuario) {
+    public Usuario consultar(Usuario usuario) { // somente para sessao
         Usuario usuarioLocal = new Usuario();
         try {
             usuarioLocal = udao.consultar(usuario);
@@ -73,10 +73,22 @@ public class ControleUsuario implements IControle {
         return usuarioLocal;
     }
 
+    public Usuario consultarPesquisa(Usuario usuario) {
+        Usuario usuarioLocal = new Usuario();
+        try {
+            usuarioLocal = udao.consultarTESTE(usuario);
+        } catch (Exception e) {
+            System.err.println("" + e);
+
+        } finally {
+        }
+        return usuarioLocal;
+    }
+
     public boolean verificarPermissao(Usuario usuario, Tela tela, String operacao) {
         boolean temPermissao = false;
         Set lista = null;
-        System.out.println("o tipo de permissao é "+usuario.getTipoPermissao());
+        System.out.println("o tipo de permissao é " + usuario.getTipoPermissao());
         if (usuario.getTipoPermissao() == 'I') {
             lista = usuario.getPermissaosForIdUsuario();
         } else {
@@ -117,17 +129,16 @@ public class ControleUsuario implements IControle {
         return temPermissao;
     }
 
-    
     @Override
-    public  Object[][] popularTabela(JTable tabela, IModelo modelo, boolean isModal) {
-  Object[][] dadosTabela = null;
+    public Object[][] popularTabela(JTable tabela, IModelo modelo, boolean isModal) {
+        Object[][] dadosTabela = null;
         try {
-            int colunasTabela = 9;
+            int colunasTabela = 3;
 
             if (!isModal) {
                 colunasTabela = 5;
             } else {
-                colunasTabela = 9; //se modal for verdadeiro, a tabela vai ter 3 colunas para ser usado no JDialog para consulta
+                colunasTabela = 3; //se modal for verdadeiro, a tabela vai ter 3 colunas para ser usado no JDialog para consulta
             }
 
             Object[] cabecalho = new Object[colunasTabela];
@@ -136,16 +147,16 @@ public class ControleUsuario implements IControle {
             cabecalho[1] = "Nome";
             cabecalho[2] = "Login";
             if (!isModal) { //se modal for verdadeiro, a tabela vai ter 3 colunas para ser usado no JDialog para consulta
-                cabecalho[3] = "Predio";
+                cabecalho[3] = "Email";
                 cabecalho[4] = "Status";
             }
 
             // cria matriz de acordo com nº de registros da tabela
             ArrayList<Usuario> listaSalas = udao.listar(modelo);
-            System.out.println("passei do array list");
+        
 
             dadosTabela = new Object[listaSalas.size()][colunasTabela];
-            System.out.println("passou do dados tabela");
+        
             for (int i = 0; i < listaSalas.size(); i++) {
                 dadosTabela[i][0] = listaSalas.get(i).getId();
                 dadosTabela[i][1] = listaSalas.get(i).getNome();
@@ -155,7 +166,6 @@ public class ControleUsuario implements IControle {
                     dadosTabela[i][4] = controle.Util.binarioParaString(listaSalas.get(i).isAtivo());
                 }
             }
-            System.out.println("acbaoyu o for");
             // configuracoes adicionais no componente tabela
             tabela.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
                 @Override
@@ -222,6 +232,7 @@ public class ControleUsuario implements IControle {
         } catch (Exception e) {
             System.err.println("Erro ao popular tabela usuario: " + e + "\n" + e.getCause());
         }
-        return dadosTabela;    }
+        return dadosTabela;
+    }
 
 }

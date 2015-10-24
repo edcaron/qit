@@ -51,6 +51,13 @@ public class JfMain extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
+        jButton1.setText("AUDITORIA");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         jmUsuario.setText("Usuarios");
 
         jimUsuario.setText("Usuarios");
@@ -62,9 +69,19 @@ public class JfMain extends javax.swing.JFrame {
         jmUsuario.add(jimUsuario);
 
         jimGrupoUsuario.setText("Grupos de Usuários");
+        jimGrupoUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jimGrupoUsuarioActionPerformed(evt);
+            }
+        });
         jmUsuario.add(jimGrupoUsuario);
 
         jimPermissao.setText("Permissão");
+        jimPermissao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jimPermissaoActionPerformed(evt);
+            }
+        });
         jmUsuario.add(jimPermissao);
 
         jMenuBar1.add(jmUsuario);
@@ -78,6 +95,11 @@ public class JfMain extends javax.swing.JFrame {
         jmInventario.add(jimSoftware);
 
         jimPredio.setText("Prédio");
+        jimPredio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jimPredioActionPerformed(evt);
+            }
+        });
         jmInventario.add(jimPredio);
 
         jimSala.setText("Sala");
@@ -98,12 +120,12 @@ public class JfMain extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1102, Short.MAX_VALUE))
+                .addContainerGap(1090, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,6 +148,22 @@ public class JfMain extends javax.swing.JFrame {
     private void jimUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jimUsuarioActionPerformed
         new JfUsuario(usuario);        // TODO add your handling code here:
     }//GEN-LAST:event_jimUsuarioActionPerformed
+
+    private void jimPredioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jimPredioActionPerformed
+        new JfPredio(usuario);
+    }//GEN-LAST:event_jimPredioActionPerformed
+
+    private void jimGrupoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jimGrupoUsuarioActionPerformed
+        new JfGrupo(usuario);
+    }//GEN-LAST:event_jimGrupoUsuarioActionPerformed
+
+    private void jimPermissaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jimPermissaoActionPerformed
+        new JfPermissao(usuario);
+    }//GEN-LAST:event_jimPermissaoActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        new JfAuditoria(usuario);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

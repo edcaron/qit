@@ -33,6 +33,7 @@ public class ControlePredio implements IControle {
     public Predio consultar(Predio predio) {
         Predio objLocal = new Predio();
         try {
+      //      System.out.println("o predio consultado e o "+predio.getId());
             objLocal = dao.consultar(predio);
         } catch (Exception e) {
             System.err.println("" + e);
@@ -43,13 +44,14 @@ public class ControlePredio implements IControle {
     @Override
     public Object[][] popularTabela(JTable tabela, IModelo objModelo, boolean isModal) {
         Object[][] dadosTabela = null;
+     //   System.out.println("populando tabela");
         try {
-            int colunasTabela = 0;
+            int colunasTabela = 2;
 
             if (isModal) {
                 colunasTabela = 2; //se modal for verdadeiro, a tabela vai ter so 2 colunas para ser usado no JDialog para consulta
             } else {
-                colunasTabela = 4; 
+                colunasTabela = 2; 
             }
 
             Object[] cabecalho = new Object[colunasTabela];
@@ -57,10 +59,7 @@ public class ControlePredio implements IControle {
             cabecalho[0] = "Cód.";
             cabecalho[1] = "Predio";            
             
-            if (!isModal) { //se modal for verdadeiro, a tabela vai ter so 2 colunas para ser usado no JDialog para consulta                
-                cabecalho[2] = "Descricao";
-                cabecalho[3] = "Status";
-            }
+     
 
             // cria matriz de acordo com n de registros da tabela
             ArrayList<Predio> listaPredio = dao.listar(objModelo);
@@ -70,10 +69,7 @@ public class ControlePredio implements IControle {
             for (int i = 0; i < listaPredio.size(); i++) {
                 dadosTabela[i][0] = listaPredio.get(i).getId();
                 dadosTabela[i][1] = listaPredio.get(i).getNome();
-                if (!isModal) { //se modal for verdadeiro, a tabela vai ter so 2 colunas para ser usado no JDialog para consulta
-                    dadosTabela[i][2] = listaPredio.get(i).getDescricao();    
-                    dadosTabela[i][4] = controle.Util.binarioParaString(listaPredio.get(i).isAtivo());
-                }
+       
             }
 
             // configuracoes adicionais no componente tabela
@@ -143,5 +139,21 @@ public class ControlePredio implements IControle {
         }
         return dadosTabela;
     }
+
+    public boolean inativar(int id) {
+       Predio objLocal = new Predio();
+        boolean retorno = false;
+
+        objLocal.setId(id);
+
+//        consulta o obj sala no banco de dados com o id que vem como paramentro na funcao
+        objLocal = this.consultar(objLocal);
+
+//        inverte o valor do status no obj que veio do banco
+        objLocal.setAtivo(controle.Util.inverteValorBinario(objLocal.isAtivo()));
+
+//        salva novamente no banco
+        retorno = this.salvar(objLocal);
+        return retorno; }
 
 }

@@ -93,7 +93,7 @@ public class UsuarioDAO {
             sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
             System.out.println("id do user:" + usuario.getId());
-                org.hibernate.Query q = sessao.createQuery("from Usuario u inner join u.grupo where u.id = " + usuario.getId());
+            org.hibernate.Query q = sessao.createQuery("from Usuario u inner join u.grupo where u.id = " + usuario.getId());
             resultado = q.list();
 
             for (Object o : resultado) {
@@ -109,15 +109,40 @@ public class UsuarioDAO {
         return user_local;
     }
 
+    public Usuario consultarTESTE(Usuario usuario) {
+        List resultado = null;
+        Usuario user_local = new Usuario();
+        try {
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+            System.out.println("id do user:" + usuario.getId());
+            org.hibernate.Query q = sessao.createQuery("from Usuario u inner join u.grupo where u.id = " + usuario.getId());
+            resultado = q.list();
+
+            for (Object o : resultado) {
+                System.out.println("no forzim");
+                user_local = ((Usuario) ((Object[]) o)[0]);
+
+            }
+
+            usuario = user_local;
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        } finally 
+            {
+                sessao.close();
+            }
+            return user_local;
+        }
+    
+    
+
     public boolean salvar(Usuario usuario) {
         boolean retorno = false;
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
-            System.out.println(usuario.getDtCriacao());
-            System.out.println(usuario.getEmail());
-            System.out.println(usuario.getSenha());
-            System.out.println(usuario.getNome());
+      
             sessao.saveOrUpdate(usuario);
             t.commit();
             retorno = true;

@@ -320,6 +320,7 @@ public class JfSala extends javax.swing.JFrame implements ITela {
             sala.setDescricao(jtDescricao.getText());
             sala.setNome(qftfNome.getText());
             sala.setPredio(predio);
+            sala.setUsuario(usuario);
 
             if (sala.getId() == 0) {
                 this.inserir();

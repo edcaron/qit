@@ -31,7 +31,7 @@ public class PredioDAO {
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
-
+      
             sessao.saveOrUpdate(predio);
             t.commit();
             retorno = true;
@@ -86,7 +86,7 @@ public class PredioDAO {
             org.hibernate.Query q = sessao.createQuery("from Predio p where p.id = " + predio.getId());
             resultado = q.list();
 
-            predioLocal = ((Predio) ((Object[]) resultado.get(0))[0]);
+            predioLocal = (Predio) resultado.get(0);
 
         } catch (HibernateException he) {
             System.err.println("Erro em consultar predio \n" + he);

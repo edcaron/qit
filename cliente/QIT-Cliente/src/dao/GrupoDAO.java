@@ -31,12 +31,19 @@ public class GrupoDAO {
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
-
+            System.out.println("O grupo e ");
+            System.out.println(""+grupo.getId());
+            System.out.println(""+grupo.getNome());
+            System.out.println(""+grupo.getDescricao());
+            System.out.println(""+grupo.getUsuario().getId());
+     
             sessao.saveOrUpdate(grupo);
             t.commit();
             retorno = true;
         } catch (HibernateException he) {
+            System.out.println("deu pau"+he);
             he.printStackTrace();
+            return false;
         } finally {
             sessao.close();
         }
@@ -79,20 +86,20 @@ public class GrupoDAO {
      */
     public Grupo consultar(Grupo grupo) {
         List resultado = null;
-        Grupo predioLocal = new Grupo();
+        Grupo grupoLocal = new Grupo();
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            org.hibernate.Query q = sessao.createQuery("from Predio p where p.id = " + grupo.getId());
+            org.hibernate.Query q = sessao.createQuery("from Grupo g where g.id = " + grupo.getId());
             resultado = q.list();
 
-            predioLocal = ((Grupo) ((Object[]) resultado.get(0))[0]);
+            grupoLocal = (Grupo) resultado.get(0);
 
         } catch (HibernateException he) {
-            System.err.println("Erro em consultar predio \n" + he);
+            System.err.println("Erro em consultar grupo \n" + he);
         } finally {
             sessao.close();
         }
-        return predioLocal;
+        return grupoLocal;
     }
 }

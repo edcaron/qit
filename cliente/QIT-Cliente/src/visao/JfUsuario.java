@@ -51,16 +51,14 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
         qftfNome.setDataType("text");
         qftfNome.setMaxLenght(100);
         qftfNome.setNotNull(true);
-        
+
         qtfLogin.setDataType("text");
         qtfLogin.setMaxLenght(20);
         qtfLogin.setNotNull(true);
-        
-        
+
         qtfEmail.setDataType("text");
         qtfEmail.setMaxLenght(20);
         qtfEmail.setNotNull(true);
-
 
         proxy = new ProxyTelas(this, this.usuario, this.tela);
 //        Verificar permissao da operacao ler
@@ -96,12 +94,14 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
         jftfNomeGrupo = new javax.swing.JFormattedTextField();
         qtfLogin = new qitjftf.QITJFormattedTextField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jLabelSenha = new javax.swing.JLabel();
         jPsenha = new javax.swing.JPasswordField();
         jLabel7 = new javax.swing.JLabel();
         qtfEmail = new qitjftf.QITJFormattedTextField();
         jLabel8 = new javax.swing.JLabel();
         jCBAtivo = new javax.swing.JComboBox();
+        jLabel9 = new javax.swing.JLabel();
+        jCBPermissao = new javax.swing.JComboBox();
         jpConsulta = new javax.swing.JPanel();
         btCancelar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -114,7 +114,16 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jtpMain.setMinimumSize(new java.awt.Dimension(700, 550));
+        jtpMain.setMinimumSize(new java.awt.Dimension(60, 44));
+        jtpMain.setPreferredSize(new java.awt.Dimension(700, 550));
+        jtpMain.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtpMainFocusGained(evt);
+            }
+        });
+
+        jpCadastro.setMinimumSize(new java.awt.Dimension(700, 550));
+        jpCadastro.setPreferredSize(new java.awt.Dimension(60, 44));
 
         btSalvar.setText("Salvar");
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -149,13 +158,30 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Login:*");
 
-        jLabel6.setText("Senha:*");
+        jLabelSenha.setText("Senha:*");
 
         jLabel7.setText("Email:*");
 
         jLabel8.setText("Situação:");
 
         jCBAtivo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ativo", "Inativo" }));
+
+        jLabel9.setText("Tipo de Permissão:");
+
+        jCBPermissao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Grupo", "Individual" }));
+        jCBPermissao.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jCBPermissaoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jCBPermissaoFocusLost(evt);
+            }
+        });
+        jCBPermissao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBPermissaoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpCadastroLayout = new javax.swing.GroupLayout(jpCadastro);
         jpCadastro.setLayout(jpCadastroLayout);
@@ -175,33 +201,41 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(qftfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jpCadastroLayout.createSequentialGroup()
-                                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addGroup(jpCadastroLayout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(20, 20, 20)
-                                        .addComponent(qftfIdGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jftfNomeGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btBuscarPredio)))
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCadastroLayout.createSequentialGroup()
-                                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7))
+                                .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(qtfLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                                    .addComponent(jPsenha)
-                                    .addComponent(qtfEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(qtfLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jpCadastroLayout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(0, 248, Short.MAX_VALUE)))
                         .addGap(0, 311, Short.MAX_VALUE))
                     .addGroup(jpCadastroLayout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCBAtivo, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jpCadastroLayout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addGap(20, 20, 20)
+                                    .addComponent(qftfIdGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jftfNomeGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btBuscarPredio))
+                                .addGroup(jpCadastroLayout.createSequentialGroup()
+                                    .addComponent(jLabel9)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jCBPermissao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(jpCadastroLayout.createSequentialGroup()
+                                    .addComponent(jLabel8)
+                                    .addGap(48, 48, 48)
+                                    .addComponent(jCBAtivo, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jpCadastroLayout.createSequentialGroup()
+                                    .addComponent(jLabel7)
+                                    .addGap(30, 30, 30)
+                                    .addComponent(qtfEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jpCadastroLayout.createSequentialGroup()
+                                .addComponent(jLabelSenha)
+                                .addGap(18, 18, 18)
+                                .addComponent(jPsenha, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -216,10 +250,6 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
                 .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(qtfLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jPsenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -230,11 +260,19 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
                     .addComponent(qftfIdGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jftfNomeGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btBuscarPredio))
-                .addGap(18, 18, 18)
+                .addGap(14, 14, 14)
+                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jCBPermissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jCBAtivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 260, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelSenha)
+                    .addComponent(jPsenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(3, 3, 3)
                 .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -244,6 +282,9 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
         );
 
         jtpMain.addTab("Cadastro", jpCadastro);
+
+        jpConsulta.setMinimumSize(new java.awt.Dimension(700, 550));
+        jpConsulta.setName(""); // NOI18N
 
         btCancelar.setText("Cancelar");
         btCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -329,7 +370,7 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
                     .addComponent(qftfConsultaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btConsultarTabela))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btInativar)
@@ -356,19 +397,26 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        if (controle.Formatacao.verificarNulos(jpCadastro)) {
+      if (!jPsenha.isVisible())
+      {
+          jPsenha.setText(usuario.getSenha());
+      }
+        
+        if (controle.Formatacao.verificarNulos(jpCadastro) && jPsenha.getText().length() > 3) {
+        
             usuariocadastrado.setNome(qftfNome.getText());
             usuariocadastrado.setLogin(qtfLogin.getText());
-            usuariocadastrado.setSenha(jPsenha.getText());
+
             usuariocadastrado.setEmail(qtfEmail.getText());
             grupo.setId(Integer.parseInt(qftfIdGrupo.getText()));
             usuariocadastrado.setGrupo(grupo);
-            
-         
-            
-            
-            
-            
+
+            if (jCBPermissao.getSelectedIndex() == 0) {
+                usuariocadastrado.setTipoPermissao('G');
+            } else {
+                usuariocadastrado.setTipoPermissao('I');
+            }
+
             if (jCBAtivo.getSelectedIndex() == 0) // ativo
             {
                 usuariocadastrado.setAtivo(true);
@@ -376,17 +424,39 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
                 usuariocadastrado.setAtivo(false);
             }
             usuariocadastrado.setDtCriacao(new Date(System.currentTimeMillis()));
-            System.out.println("a data de hohe e" +usuariocadastrado.getDtCriacao());
-            usuariocadastrado.setTipoPermissao('I'); //arrumar isso
-
+          
+            //  System.out.println("a data de hoje e" + usuariocadastrado.getDtCriacao());
+            usuariocadastrado.setUsuario(usuario);
             if (usuariocadastrado.getId() == 0) {
-                System.out.println("inserindo");
+                usuariocadastrado.setSenha(jPsenha.getText());
+
+//                usuariocadastrado.setConfiguracaos(null);
+//                usuariocadastrado.setDependencias(null);
+//                usuariocadastrado.setExecucaoInstalacaos(null);
+//                usuariocadastrado.setExecucaoScripts(null);
+//                usuariocadastrado.setGrupos(null);
+//                usuariocadastrado.setInstalacaoSoftwares(null);
+//                usuariocadastrado.setMaquinas(null);
+//                usuariocadastrado.setParticaos(null);
+//                usuariocadastrado.setPermissaosForIdUsuario(null);
+//                usuariocadastrado.setPermissaosForIdUsuarioModificador(null);
+//                usuariocadastrado.setPlacaRedes(null);
+//                usuariocadastrado.setPredios(null);
+//                usuariocadastrado.setSalas(null);
+//                usuariocadastrado.setScripts(null);
+//                usuariocadastrado.setSoftwares(null);
+//                usuariocadastrado.setTelas(null);
+//                usuariocadastrado.setUsuarios(null);
+
                 this.inserir();
             } else {
+
                 this.editar();
             }
         } else {
-
+            if (jPsenha.getText().length() <= 3 && usuario.getId() == 0) {
+                JOptionPane.showMessageDialog(null, "Campo senha é obrigatório");
+            }
         }
     }//GEN-LAST:event_btSalvarActionPerformed
 
@@ -437,23 +507,17 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
     private void btVerEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVerEditarActionPerformed
         try {
             limparCampos();
-            System.out.println("passei limpa campos");
             if (jtResultados.getSelectedRowCount() != 0) {
-                System.out.println("entrtrei if");
-                System.out.println("isso e int "+jtResultados.getValueAt(jtResultados.getSelectedRow(), 0));
                 int idRegistroSelecionado = (int) jtResultados.getValueAt(jtResultados.getSelectedRow(), 0);
-                System.out.println("DA PAU AKI EU SABIA");
-                //usuariocadastrado.setId(idRegistroSelecionado);
-                System.out.println("id do registro selecionad e "+idRegistroSelecionado);
-                usuariocadastrado.setId(idRegistroSelecionado); // DA PAU EXATAMENTE NESSA LINHA, NAO ENTENDO PQ
-          //      usuariocadastrado.setId(1);
-                System.out.println("PASSOU DA PORRA DA LINHA");
+                usuariocadastrado.setId(idRegistroSelecionado);
+                jLabelSenha.setVisible(false);
+                jPsenha.setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(null, "Selecione um registro da tabela");
             }
 
-            usuariocadastrado = controleUsuario.consultar(usuariocadastrado);
-            System.out.println("cheguei no popular campos");
+            usuariocadastrado = controleUsuario.consultarPesquisa(usuariocadastrado);
+
             popularCampos();
             jtpMain.setSelectedIndex(0);
         } catch (Exception e) {
@@ -461,6 +525,25 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
             System.out.println("" + e);
         }
     }//GEN-LAST:event_btVerEditarActionPerformed
+
+    private void jCBPermissaoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jCBPermissaoFocusGained
+
+// TODO add your handling code here:
+    }//GEN-LAST:event_jCBPermissaoFocusGained
+
+    private void jCBPermissaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jCBPermissaoFocusLost
+
+    }//GEN-LAST:event_jCBPermissaoFocusLost
+
+    private void jCBPermissaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBPermissaoActionPerformed
+
+    }//GEN-LAST:event_jCBPermissaoActionPerformed
+
+    private void jtpMainFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtpMainFocusGained
+        Usuario u = new Usuario();
+        u.setNome(qftfConsultaNome.getText());
+        controleUsuario.popularTabela(jtResultados, u, false);        // TODO add your handling code here:
+    }//GEN-LAST:event_jtpMainFocusGained
 
     /**
      * @param args the command line arguments
@@ -506,14 +589,16 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
     private javax.swing.JButton btSalvar;
     private javax.swing.JButton btVerEditar;
     private javax.swing.JComboBox jCBAtivo;
+    private javax.swing.JComboBox jCBPermissao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelSenha;
     private javax.swing.JPasswordField jPsenha;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JFormattedTextField jftfNomeGrupo;
@@ -589,6 +674,7 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
             int id = 0;
             try {
                 id = ((int) jtResultados.getValueAt(jtResultados.getSelectedRow(), 0));
+                //System.out.println("o id que esta indo no inativar e " + id);
                 boolean retorno = controleUsuario.inativar(id);
                 if (retorno) {
                     JOptionPane.showMessageDialog(rootPane, "Operação Realizada com sucesso");
@@ -607,8 +693,10 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
 
     @Override
     public void limparCampos() {
-        this.usuariocadastrado = null;
+        this.usuariocadastrado = new Usuario();
         this.grupo = new Grupo();
+        jLabelSenha.setVisible(true);
+        jPsenha.setVisible(true);
 
         new controle.Formatacao().limparCampos(jpCadastro);
     }
@@ -616,8 +704,23 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
     @Override
     public void popularCampos() {
         try {
+
             qftfNome.setText(usuariocadastrado.getNome());
-            qtfLogin.setText(usuariocadastrado.getEmail());
+            qtfLogin.setText(usuariocadastrado.getLogin());
+            qtfEmail.setText(usuariocadastrado.getEmail());
+            qftfIdGrupo.setText("" + usuariocadastrado.getGrupo().getId());
+            jftfNomeGrupo.setText(usuariocadastrado.getGrupo().getNome());
+            if (usuariocadastrado.isAtivo()) {
+                jCBAtivo.setSelectedIndex(0);
+            } else {
+                jCBAtivo.setSelectedIndex(1);
+            }
+            if (usuariocadastrado.getTipoPermissao() == 'I') {
+                jCBPermissao.setSelectedIndex(1);
+            } else {
+                jCBPermissao.setSelectedIndex(0);
+            }
+
         } catch (Exception e) {
             System.err.println("Erro em popular campos do usuario \n" + e);
         }
