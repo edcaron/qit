@@ -33,8 +33,8 @@ public class Util {
         Date dt = new Date();
         return dateFormat.format(dt);
     }
-    
-      /**
+
+    /**
      * Método para obter data e hora atual.
      *
      * @return Date do Java
@@ -44,7 +44,6 @@ public class Util {
         Date dt = new Date();
         return (dt);
     }
-    
 
     public static String getCurrentFile() {
         String retorno = "";
@@ -54,6 +53,26 @@ public class Util {
             System.err.println("Erro em getCurrentFile()");
         }
         return retorno;
+    }
+
+    /**
+     *
+     * @param data Sting com data vinda do cmd
+     * @return Date do java
+     */
+    protected static java.sql.Date formataDataCmd(String data) {
+        java.sql.Date date = null;
+        if ((data != null) && data.length() == 8) {
+            try {
+                String dataF = "" + data.charAt(6) + data.charAt(7) + "-" + data.charAt(4) + data.charAt(5) + "-" + data.charAt(0) + data.charAt(1) + data.charAt(2) + data.charAt(3);
+                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+                date = new java.sql.Date(format.parse(dataF).getTime());
+
+            } catch (Exception e) {
+                System.err.println("Erro em formataDataCmd: " + e);
+            }
+        }
+        return date;
     }
 
     /**
@@ -87,12 +106,12 @@ public class Util {
         try {
             digest = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException ex) {
-            System.err.println(""+ex);
+            System.err.println("" + ex);
         }
         try {
             is = new FileInputStream(file);
         } catch (FileNotFoundException ex) {
-            System.err.println(""+ex);
+            System.err.println("" + ex);
         }
         byte[] buffer = new byte[8192];
         int read = 0;
@@ -116,5 +135,4 @@ public class Util {
         return output;
     }
 
-    
 }

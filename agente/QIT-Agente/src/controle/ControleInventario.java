@@ -1,120 +1,24 @@
-package regedit;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package controle;
 
-import com.thoughtworks.xstream.XStream;
-import modelo.Software;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.StringWriter;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import modelo.Inventario;
 import modelo.Maquina;
 import modelo.Particao;
 import modelo.PlacaRede;
+import modelo.Software;
 import modelo.SoftwaresMaquina;
 
-public class WindowsReqistry {
-
-    /**
-     * Funcao para fazer uma pesquisa no arquivo de registro do windows
-     *
-     * @param location path in the registry
-     * @param parameters parameters for the reg query on cmd
-     * @return String com conteudo retornado pelo processo
-     */
-    public static String readRegistry(String location, String parameters) {
-        try {
-            // Run reg query, then read output with StreamReader (internal class)
-            String cmd = "reg query " + location + " " + parameters;
-            System.out.println("comando: " + cmd);
-            Process process = Runtime.getRuntime().exec(cmd);
-
-            StreamReader reader = new StreamReader(process.getInputStream());
-            reader.start();
-            process.waitFor();
-            reader.join();
-            String output = reader.getResult();
-
-            return output;
-        } catch (IOException | InterruptedException e) {
-            System.err.println("erro em readRegistry /n" + e);
-            return null;
-        }
-    }
-
-    /**
-     * Funcao para executar qualquer tipo de comando no CMD do windows
-     *
-     * @param comando programa ou comando a ser executado
-     * @param parametro parametros adicionais para o comando enviado
-     * anteriormente
-     * @return String com o retorno dado pelo cmd
-     */
-    protected static String executarComando(String comando, String parametro) {
-        try {
-
-            // executar comando no cmd
-            String cmd = comando + parametro;
-            System.out.println("comando: " + cmd);
-            Process process = Runtime.getRuntime().exec(cmd);
-
-            StreamReader reader = new StreamReader(process.getInputStream());
-            reader.start();
-            process.waitFor();
-            reader.join();
-            String output = reader.getResult();
-
-            return output;
-        } catch (IOException | InterruptedException e) {
-            System.err.println("erro em executarComando /n" + e);
-            return null;
-        }
-    }
-
-    protected static class StreamReader extends Thread {
-
-        private InputStream is;
-        private StringWriter sw = new StringWriter();
-
-        public StreamReader(InputStream is) {
-            this.is = is;
-        }
-
-        public void run() {
-            try {
-                int c;
-                while ((c = is.read()) != -1) {
-                    sw.write(c);
-                }
-            } catch (IOException e) {
-                System.err.println("erro em static class StreamReader extends Thread \n" + e);
-            }
-        }
-
-        public String getResult() {
-            return sw.toString();
-        }
-    }
-
-    public static void main(String[] args) throws FileNotFoundException {
-
-        //teste escrita em xml
-        XStream xstream = new XStream();
-
-        try {
-            try (OutputStream output = new FileOutputStream("C:\\QIT\\QIT-Agente\\inventario.xml")) {
-                xstream.toXML(fazerInventario(), output);
-            }
-        } catch (IOException e) {
-            System.err.println("" + e);
-        }
-    }
+/**
+ *
+ * @author eduar_000
+ */
+public class ControleInventario {
 
     /**
      * Funcao para obter informacoes sobre wardware e sistema operacional da
@@ -122,16 +26,17 @@ public class WindowsReqistry {
      *
      * @return Maquina com atributos preenchidos
      */
-    protected static Maquina obterMaquina() {
+    protected Maquina obterMaquina() {
         Maquina mq = new Maquina();
 
         //executar o script VBS que obtem informacoes sobre o pc e colocar em uam string
-        String strMaquina = executarComando("cscript C:\\QIT\\QIT-Agente\\vbs\\obterInventario.vbs", "");
+        String strMaquina = strMaquina = ComunicacaoSO.executarComando("cscript C:\\QIT\\QIT-Agente\\vbs\\obterInventario.vbs", "");
 
         //colocar as informacoes no objeto Maquina
         String[] s = strMaquina.split("\n");
         if (s.length > 1) {
             for (String item : s) {
+                item = item.replaceAll("\r", ""); //remover o caracter \r que esta presente em todas as linhas
                 if (item.contains("usuario:")) {
                     String clean = item.replaceAll("usuario: ", "");
                     mq.setUsuarioConectado(clean);
@@ -194,9 +99,9 @@ public class WindowsReqistry {
      * @return ArrayList com objetos Particao preenchido.
      *
      */
-    protected static Set<Particao> obterParticoes(Maquina maquina) {
+    protected Set<Particao> obterParticoes(Maquina maquina) {
         //executar o script VBS que obtem informacoes sobre o pc e colocar em uam string
-        String strParticoes = executarComando("cscript C:\\QIT\\QIT-Agente\\vbs\\obterParticoes.vbs", "");
+        String strParticoes = ComunicacaoSO.executarComando("cscript C:\\QIT\\QIT-Agente\\vbs\\obterParticoes.vbs", "");
 
         String[] lines = strParticoes.split("___");//divide cada particao em uma posicao do vetor. Quando encontrar o carac '___' inicia uma nova particao
 
@@ -208,6 +113,7 @@ public class WindowsReqistry {
                 Particao part = new Particao();
                 part.setMaquina(maquina);
                 for (int j = 1; j < s.length; j++) {
+                    s[j] = s[j].replaceAll("\r", ""); //remover o caracter \r que esta presente em todas as linhas
                     if (s[j].contains("nome_hd")) {
                         String clean = s[j].replaceAll("nome_hd: ", "");
                         part.setNomeHd(clean);
@@ -222,7 +128,7 @@ public class WindowsReqistry {
                         part.setFormato(clean);
                     } else if (s[j].contains("tamanho")) {
                         String clean = s[j].replaceAll("tamanho: ", "");
-                        part.setEspacoLivreMb(Double.parseDouble(clean));
+                        part.setEspacoMb(Double.parseDouble(clean));
                     } else if (s[j].contains("espaco_livre")) {
                         String clean = s[j].replaceAll("espaco_livre: ", "");
                         part.setEspacoLivreMb(Double.parseDouble(clean));
@@ -237,13 +143,13 @@ public class WindowsReqistry {
     }
 
     /**
-     * Funcao para obter uma lista com placas de rede da maquina local.
-     *
-     * @return ArrayList com objetos Maquina preenchida.
+     * * Funcao para obter uma lista com placas de rede da maquina local.
+     * @param maquina
+     * @return 
      */
-    protected static Set<PlacaRede> obterPlacaRede(Maquina maquina) {
+    protected Set<PlacaRede> obterPlacaRede(Maquina maquina) {
         //executar o script VBS que obtem informacoes sobre o pc e colocar em uam string
-        String strParticoes = executarComando("cscript C:\\QIT\\QIT-Agente\\vbs\\obterRede.vbs", "");
+        String strParticoes = ComunicacaoSO.executarComando("cscript C:\\QIT\\QIT-Agente\\vbs\\obterRede.vbs", "");
 
         String[] lines = strParticoes.split("___");//divide cada particao em uma posicao do vetor. Quando encontrar o carac '___' inicia uma nova particao
 
@@ -255,6 +161,7 @@ public class WindowsReqistry {
                 PlacaRede pr = new PlacaRede();
                 pr.setMaquina(maquina);
                 for (int j = 1; j < s.length; j++) {
+                    s[j] = s[j].replaceAll("\r", ""); //remover o caracter \r que esta presente em todas as linhas
                     if (s[j].contains("nome")) {
                         String clean = s[j].replaceAll("nome: ", "");
                         pr.setNome(clean);
@@ -280,22 +187,22 @@ public class WindowsReqistry {
     /**
      * Funcao para obter uma lista com todos os softwares instalados na maquina
      * local.(x64 e x32)
-     *
+     * @param maquina
      * @return ArrayList com objetos Software preenchidos.
      */
-    protected static Set<SoftwaresMaquina> obterSoftwares(Maquina maquina) {
+    protected Set<SoftwaresMaquina> obterSoftwares(Maquina maquina) {
 
         Set<SoftwaresMaquina> lista_softwares32;
         Set<SoftwaresMaquina> lista_softwares64;
 
         //consultar os softwares x64 no registro do windows
-        String softwares64 = WindowsReqistry.readRegistry("HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", " /s /reg:64");
+        String softwares64 = ComunicacaoSO.lerDoRegedit("HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", " /s /reg:64");
 
         //preencher objetos Software
         lista_softwares64 = obterListaDeSoftwares(softwares64, maquina);
 
         //consultar os softwares x32 no registro do windows
-        String softwares32 = WindowsReqistry.readRegistry("HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", " /s /reg:32");
+        String softwares32 = ComunicacaoSO.lerDoRegedit("HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", " /s /reg:32");
 
         //preencher objetos Software
         lista_softwares32 = obterListaDeSoftwares(softwares32, maquina);
@@ -315,7 +222,7 @@ public class WindowsReqistry {
      * @param softwareStr string com arquivo de registro contendo softwares
      * @return ArrayList com objetos Software preenchidos.
      */
-    protected static Set<SoftwaresMaquina> obterListaDeSoftwares(String softwareStr, Maquina maquina) {
+    protected Set<SoftwaresMaquina> obterListaDeSoftwares(String softwareStr, Maquina maquina) {
 
         String[] lines = softwareStr.split("HKEY_LOCAL_MACHINE"); //divide cada chave (software) em uma posicao do vetor
 
@@ -328,10 +235,15 @@ public class WindowsReqistry {
                 Software sf = new Software();
                 SoftwaresMaquina sm = new SoftwaresMaquina();
                 for (int j = 1; j < s.length; j++) {
+                    s[j] = s[j].replaceAll("\r", ""); //removing the \r from the line
+                    s[j] = s[j].replaceAll("%", "\\\\"); //removing the % from the line because he cause conficts with postgres
                     if (s[j].contains("UninstallString")) {
                         String clean = s[j].replaceAll("UninstallString", "");
                         s[j] = clean; //cleaning the QuietUninstallString line because conflict with UninstallString
                         sf.setComandoDesinstalacao(cleanTrash((clean)));
+                    }
+                    if (s[j].contains("DisplayName_Localized")) {
+                        s[j] = ""; // cleaning the DisplayName_Localized line because conflict with DisplayName                     
                     }
                     if (s[j].contains("DisplayName")) {
                         String clean = s[j].replaceAll("DisplayName", "");
@@ -355,7 +267,7 @@ public class WindowsReqistry {
                     }
                     if (s[j].contains("InstallDate")) {
                         String clean = s[j].replaceAll("InstallDate", "");
-                        sm.setDtInstalacao(formataDataCmd(cleanTrash((clean))));
+                        sm.setDtInstalacao(Util.formataDataCmd(cleanTrash((clean))));
                     }
                 }
                 if (sf.getNome() != null) { //se o nome não estiver nulo, adicionamos o software obtidos a uma lista de softwares                    
@@ -364,6 +276,9 @@ public class WindowsReqistry {
                     sm.setDtUltimaDeteccao(controle.Util.getCurrentDate());
                     sm.setMaquina(maquina);
                     softwares.add(sm);
+                    if (sf.getVersao() == null) {
+                        sf.setVersao("não informado");
+                    }
                 }
             }
 
@@ -377,7 +292,7 @@ public class WindowsReqistry {
      * regedit (REG_SZ,REG_EXPAND_SZ)
      * @return String com o valor em formato amigavel
      */
-    protected static String cleanTrash(String suja) {
+    protected String cleanTrash(String suja) {
         String retorno = suja.replaceAll("REG_SZ", "");
         retorno = retorno.replaceAll("REG_EXPAND_SZ", "");
         retorno = retorno.replaceAll("Parent", "");
@@ -386,31 +301,11 @@ public class WindowsReqistry {
     }
 
     /**
-     *
-     * @param data Sting com data vinda do cmd
-     * @return Date do java
-     */
-    protected static Date formataDataCmd(String data) {
-        Date date = null;
-        if ((data != null) && data.length() == 9) {
-            try {
-                String dataF = "" + data.charAt(6) + data.charAt(7) + "-" + data.charAt(4) + data.charAt(5) + "-" + data.charAt(0) + data.charAt(1) + data.charAt(2) + data.charAt(3);
-                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-                date = new Date(format.parse(dataF).getTime());
-
-            } catch (Exception e) {
-                System.err.println("Erro em formataDataCmd: " + e);
-            }
-        }
-        return date;
-    }
-
-    /**
      * Funcao para obter todas informacoes sobre a maquina local.
      *
      * @return Inventario
      */
-    private static Inventario fazerInventario() {
+    public Inventario fazerInventario() {
         //obter softwares
         String dataAtual = controle.Util.getCurrentTimestamp();
         Maquina maquina = obterMaquina();
@@ -419,7 +314,6 @@ public class WindowsReqistry {
 
         maquina.setParticaos(obterParticoes(maquina));
         maquina.setPlacaRedes(obterPlacaRede(maquina));
-                
 
         Inventario inventario = new Inventario(maquina, dataAtual);
 

@@ -1,6 +1,7 @@
 package modelo;
-// Generated 17/09/2015 16:32:25 by Hibernate Tools 4.3.1
+// Generated 17/10/2015 22:43:46 by Hibernate Tools 4.3.1
 
+import controle.IModelo;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -9,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -18,9 +21,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tela", schema = "public"
 )
-public class Tela implements java.io.Serializable {
+public class Tela implements java.io.Serializable, IModelo {
 
     private int id;
+    private Usuario usuario;
     private String descricao;
     private String nome;
     private Set<Permissao> permissaos = new HashSet<Permissao>(0);
@@ -34,22 +38,34 @@ public class Tela implements java.io.Serializable {
         this.nome = nome;
     }
 
-    public Tela(int id, String descricao, String nome, Set<Permissao> permissaos) {
+    public Tela(int id, Usuario usuario, String descricao, String nome, Set<Permissao> permissaos) {
         this.id = id;
+        this.usuario = usuario;
         this.descricao = descricao;
         this.nome = nome;
         this.permissaos = permissaos;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)    
     @Column(name = "id", unique = true, nullable = false)
+    @Override
     public int getId() {
         return this.id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario_modificador")
+    public Usuario getUsuario() {
+        return this.usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Column(name = "descricao", nullable = false, length = 45)
@@ -62,10 +78,12 @@ public class Tela implements java.io.Serializable {
     }
 
     @Column(name = "nome", nullable = false, length = 45)
+    @Override
     public String getNome() {
         return this.nome;
     }
 
+    @Override
     public void setNome(String nome) {
         this.nome = nome;
     }

@@ -78,12 +78,14 @@ public class UsuarioDAO {
             sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
             System.out.println("id do user:" + usuario.getId());
-            org.hibernate.Query q = sessao.createQuery("from Usuario u inner join u.grupo inner join u.permissaosForIdUsuario as p inner join p.tela where u.id = " + usuario.getId());
+            
+            org.hibernate.Query q = sessao.createQuery("from Usuario where id = " + usuario.getId());
             resultado = q.list();
 
             for (Object o : resultado) {
                 user_local = ((Usuario) ((Object[]) o)[0]);
             }
+//            user_local = (Usuario) sessao.get(Usuario.class, usuario.getId());
 
             usuario = user_local;
         } catch (HibernateException he) {
