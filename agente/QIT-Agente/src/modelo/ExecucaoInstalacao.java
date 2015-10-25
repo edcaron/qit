@@ -1,5 +1,5 @@
 package modelo;
-// Generated 17/10/2015 22:43:46 by Hibernate Tools 4.3.1
+// Generated 17/09/2015 16:32:25 by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -48,7 +48,6 @@ public class ExecucaoInstalacao implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "id", unique = true, nullable = false)
     public int getId() {
         return this.id;

@@ -1,5 +1,5 @@
 package modelo;
-// Generated 17/10/2015 22:43:46 by Hibernate Tools 4.3.1
+// Generated 17/09/2015 16:32:25 by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,7 +24,6 @@ public class Dependencia implements java.io.Serializable {
 
     private int id;
     private Script script;
-    private Usuario usuario;
     private String nome;
     private String diretorio;
     private String md5;
@@ -39,10 +38,9 @@ public class Dependencia implements java.io.Serializable {
         this.diretorio = diretorio;
     }
 
-    public Dependencia(int id, Script script, Usuario usuario, String nome, String diretorio, String md5, Set<Software> softwares) {
+    public Dependencia(int id, Script script, String nome, String diretorio, String md5, Set<Software> softwares) {
         this.id = id;
         this.script = script;
-        this.usuario = usuario;
         this.nome = nome;
         this.diretorio = diretorio;
         this.md5 = md5;
@@ -51,7 +49,6 @@ public class Dependencia implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "id", unique = true, nullable = false)
     public int getId() {
         return this.id;
@@ -69,16 +66,6 @@ public class Dependencia implements java.io.Serializable {
 
     public void setScript(Script script) {
         this.script = script;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario_modificador")
-    public Usuario getUsuario() {
-        return this.usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     @Column(name = "nome", nullable = false, length = 100)

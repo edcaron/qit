@@ -1,7 +1,6 @@
 package modelo;
-// Generated 17/10/2015 22:43:46 by Hibernate Tools 4.3.1
+// Generated 17/09/2015 16:32:25 by Hibernate Tools 4.3.1
 
-import controle.IModelo;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,7 +23,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "instalacao_software", schema = "public"
 )
-public class InstalacaoSoftware implements java.io.Serializable, IModelo {
+public class InstalacaoSoftware implements java.io.Serializable {
 
     private int id;
     private Software software;
@@ -63,7 +62,6 @@ public class InstalacaoSoftware implements java.io.Serializable, IModelo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "id", unique = true, nullable = false)
-    @Override
     public int getId() {
         return this.id;
     }
@@ -93,12 +91,10 @@ public class InstalacaoSoftware implements java.io.Serializable, IModelo {
     }
 
     @Column(name = "nome", nullable = false, length = 100)
-    @Override
     public String getNome() {
         return this.nome;
     }
 
-    @Override
     public void setNome(String nome) {
         this.nome = nome;
     }

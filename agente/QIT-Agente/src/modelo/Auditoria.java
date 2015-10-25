@@ -1,7 +1,6 @@
 package modelo;
-// Generated 17/10/2015 22:43:46 by Hibernate Tools 4.3.1
+// Generated 17/09/2015 16:32:25 by Hibernate Tools 4.3.1
 
-import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,8 +27,6 @@ public class Auditoria implements java.io.Serializable {
     private String alteracoes;
     private Date dt;
     private int idConteudo;
-    private Serializable valoresNovos;
-    private Serializable valoresAntigos;
 
     public Auditoria() {
     }
@@ -41,7 +38,7 @@ public class Auditoria implements java.io.Serializable {
         this.idConteudo = idConteudo;
     }
 
-    public Auditoria(int id, String tabela, Integer idUsuario, Boolean alteradoSistema, char operacao, String alteracoes, Date dt, int idConteudo, Serializable valoresNovos, Serializable valoresAntigos) {
+    public Auditoria(int id, String tabela, Integer idUsuario, Boolean alteradoSistema, char operacao, String alteracoes, Date dt, int idConteudo) {
         this.id = id;
         this.tabela = tabela;
         this.idUsuario = idUsuario;
@@ -50,13 +47,11 @@ public class Auditoria implements java.io.Serializable {
         this.alteracoes = alteracoes;
         this.dt = dt;
         this.idConteudo = idConteudo;
-        this.valoresNovos = valoresNovos;
-        this.valoresAntigos = valoresAntigos;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)   
+    @Column(name = "id", unique = true, nullable = false)
     public int getId() {
         return this.id;
     }
@@ -128,24 +123,5 @@ public class Auditoria implements java.io.Serializable {
     public void setIdConteudo(int idConteudo) {
         this.idConteudo = idConteudo;
     }
-
-    @Column(name = "valores_novos")
-    public Serializable getValoresNovos() {
-        return this.valoresNovos;
-    }
-
-    public void setValoresNovos(Serializable valoresNovos) {
-        this.valoresNovos = valoresNovos;
-    }
-
-    @Column(name = "valores_antigos")
-    public Serializable getValoresAntigos() {
-        return this.valoresAntigos;
-    }
-
-    public void setValoresAntigos(Serializable valoresAntigos) {
-        this.valoresAntigos = valoresAntigos;
-    }
-  
 
 }

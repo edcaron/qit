@@ -1,7 +1,6 @@
 package modelo;
-// Generated 17/10/2015 22:43:46 by Hibernate Tools 4.3.1
+// Generated 17/09/2015 16:32:25 by Hibernate Tools 4.3.1
 
-import controle.IModelo;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,11 +23,10 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "usuario", schema = "public"
 )
-public class Usuario implements java.io.Serializable, IModelo {
+public class Usuario implements java.io.Serializable {
 
     private int id;
     private Grupo grupo;
-    private Usuario usuario;
     private String nome;
     private String login;
     private String senha;
@@ -36,23 +34,16 @@ public class Usuario implements java.io.Serializable, IModelo {
     private boolean ativo;
     private Date dtCriacao;
     private char tipoPermissao;
-    private Set<Script> scripts = new HashSet<Script>(0);
-    private Set<Particao> particaos = new HashSet<Particao>(0);
-    private Set<Dependencia> dependencias = new HashSet<Dependencia>(0);
-    private Set<Usuario> usuarios = new HashSet<Usuario>(0);
-    private Set<Maquina> maquinas = new HashSet<Maquina>(0);
-    private Set<PlacaRede> placaRedes = new HashSet<PlacaRede>(0);
-    private Set<ExecucaoScript> execucaoScripts = new HashSet<ExecucaoScript>(0);
-    private Set<Permissao> permissaosForIdUsuario = new HashSet<Permissao>(0);
-    private Set<Sala> salas = new HashSet<Sala>(0);
-    private Set<Configuracao> configuracaos = new HashSet<Configuracao>(0);
+    
     private Set<Permissao> permissaosForIdUsuarioModificador = new HashSet<Permissao>(0);
+    private Set<Permissao> permissaosForIdUsuario = new HashSet<Permissao>(0);
+    
     private Set<InstalacaoSoftware> instalacaoSoftwares = new HashSet<InstalacaoSoftware>(0);
+    private Set<Maquina> maquinas = new HashSet<Maquina>(0);
     private Set<ExecucaoInstalacao> execucaoInstalacaos = new HashSet<ExecucaoInstalacao>(0);
-    private Set<Predio> predios = new HashSet<Predio>(0);
     private Set<Software> softwares = new HashSet<Software>(0);
-    private Set<Tela> telas = new HashSet<Tela>(0);
-    private Set<Grupo> grupos = new HashSet<Grupo>(0);
+    private Set<ExecucaoScript> execucaoScripts = new HashSet<ExecucaoScript>(0);
+    
 
     public Usuario() {
     }
@@ -69,10 +60,9 @@ public class Usuario implements java.io.Serializable, IModelo {
         this.tipoPermissao = tipoPermissao;
     }
 
-    public Usuario(int id, Grupo grupo, Usuario usuario, String nome, String login, String senha, String email, boolean ativo, Date dtCriacao, char tipoPermissao, Set<Script> scripts, Set<Particao> particaos, Set<Dependencia> dependencias, Set<Usuario> usuarios, Set<Maquina> maquinas, Set<PlacaRede> placaRedes, Set<ExecucaoScript> execucaoScripts, Set<Permissao> permissaosForIdUsuario, Set<Sala> salas, Set<Configuracao> configuracaos, Set<Permissao> permissaosForIdUsuarioModificador, Set<InstalacaoSoftware> instalacaoSoftwares, Set<ExecucaoInstalacao> execucaoInstalacaos, Set<Predio> predios, Set<Software> softwares, Set<Tela> telas, Set<Grupo> grupos) {
+    public Usuario(int id, Grupo grupo, String nome, String login, String senha, String email, boolean ativo, Date dtCriacao, char tipoPermissao, Set<Permissao> permissaosForIdUsuarioModificador, Set<InstalacaoSoftware> instalacaoSoftwares, Set<Maquina> maquinas, Set<ExecucaoInstalacao> execucaoInstalacaos, Set<Software> softwares, Set<ExecucaoScript> execucaoScripts, Set<Permissao> permissaosForIdUsuario) {
         this.id = id;
         this.grupo = grupo;
-        this.usuario = usuario;
         this.nome = nome;
         this.login = login;
         this.senha = senha;
@@ -80,23 +70,13 @@ public class Usuario implements java.io.Serializable, IModelo {
         this.ativo = ativo;
         this.dtCriacao = dtCriacao;
         this.tipoPermissao = tipoPermissao;
-        this.scripts = scripts;
-        this.particaos = particaos;
-        this.dependencias = dependencias;
-        this.usuarios = usuarios;
-        this.maquinas = maquinas;
-        this.placaRedes = placaRedes;
-        this.execucaoScripts = execucaoScripts;
-        this.permissaosForIdUsuario = permissaosForIdUsuario;
-        this.salas = salas;
-        this.configuracaos = configuracaos;
         this.permissaosForIdUsuarioModificador = permissaosForIdUsuarioModificador;
         this.instalacaoSoftwares = instalacaoSoftwares;
+        this.maquinas = maquinas;
         this.execucaoInstalacaos = execucaoInstalacaos;
-        this.predios = predios;
         this.softwares = softwares;
-        this.telas = telas;
-        this.grupos = grupos;
+        this.execucaoScripts = execucaoScripts;
+        this.permissaosForIdUsuario = permissaosForIdUsuario;
     }
 
     @Id
@@ -119,16 +99,6 @@ public class Usuario implements java.io.Serializable, IModelo {
 
     public void setGrupo(Grupo grupo) {
         this.grupo = grupo;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario_modificador")
-    public Usuario getUsuario() {
-        return this.usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     @Column(name = "nome", nullable = false, length = 150)
@@ -195,96 +165,6 @@ public class Usuario implements java.io.Serializable, IModelo {
         this.tipoPermissao = tipoPermissao;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-    public Set<Script> getScripts() {
-        return this.scripts;
-    }
-
-    public void setScripts(Set<Script> scripts) {
-        this.scripts = scripts;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-    public Set<Particao> getParticaos() {
-        return this.particaos;
-    }
-
-    public void setParticaos(Set<Particao> particaos) {
-        this.particaos = particaos;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-    public Set<Dependencia> getDependencias() {
-        return this.dependencias;
-    }
-
-    public void setDependencias(Set<Dependencia> dependencias) {
-        this.dependencias = dependencias;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-    public Set<Usuario> getUsuarios() {
-        return this.usuarios;
-    }
-
-    public void setUsuarios(Set<Usuario> usuarios) {
-        this.usuarios = usuarios;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-    public Set<Maquina> getMaquinas() {
-        return this.maquinas;
-    }
-
-    public void setMaquinas(Set<Maquina> maquinas) {
-        this.maquinas = maquinas;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-    public Set<PlacaRede> getPlacaRedes() {
-        return this.placaRedes;
-    }
-
-    public void setPlacaRedes(Set<PlacaRede> placaRedes) {
-        this.placaRedes = placaRedes;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-    public Set<ExecucaoScript> getExecucaoScripts() {
-        return this.execucaoScripts;
-    }
-
-    public void setExecucaoScripts(Set<ExecucaoScript> execucaoScripts) {
-        this.execucaoScripts = execucaoScripts;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuarioByIdUsuario")
-    public Set<Permissao> getPermissaosForIdUsuario() {
-        return this.permissaosForIdUsuario;
-    }
-
-    public void setPermissaosForIdUsuario(Set<Permissao> permissaosForIdUsuario) {
-        this.permissaosForIdUsuario = permissaosForIdUsuario;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-    public Set<Sala> getSalas() {
-        return this.salas;
-    }
-
-    public void setSalas(Set<Sala> salas) {
-        this.salas = salas;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-    public Set<Configuracao> getConfiguracaos() {
-        return this.configuracaos;
-    }
-
-    public void setConfiguracaos(Set<Configuracao> configuracaos) {
-        this.configuracaos = configuracaos;
-    }
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuarioByIdUsuarioModificador")
     public Set<Permissao> getPermissaosForIdUsuarioModificador() {
         return this.permissaosForIdUsuarioModificador;
@@ -304,21 +184,21 @@ public class Usuario implements java.io.Serializable, IModelo {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
+    public Set<Maquina> getMaquinas() {
+        return this.maquinas;
+    }
+
+    public void setMaquinas(Set<Maquina> maquinas) {
+        this.maquinas = maquinas;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
     public Set<ExecucaoInstalacao> getExecucaoInstalacaos() {
         return this.execucaoInstalacaos;
     }
 
     public void setExecucaoInstalacaos(Set<ExecucaoInstalacao> execucaoInstalacaos) {
         this.execucaoInstalacaos = execucaoInstalacaos;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-    public Set<Predio> getPredios() {
-        return this.predios;
-    }
-
-    public void setPredios(Set<Predio> predios) {
-        this.predios = predios;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
@@ -331,21 +211,21 @@ public class Usuario implements java.io.Serializable, IModelo {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-    public Set<Tela> getTelas() {
-        return this.telas;
+    public Set<ExecucaoScript> getExecucaoScripts() {
+        return this.execucaoScripts;
     }
 
-    public void setTelas(Set<Tela> telas) {
-        this.telas = telas;
+    public void setExecucaoScripts(Set<ExecucaoScript> execucaoScripts) {
+        this.execucaoScripts = execucaoScripts;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-    public Set<Grupo> getGrupos() {
-        return this.grupos;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuarioByIdUsuario")
+    public Set<Permissao> getPermissaosForIdUsuario() {
+        return this.permissaosForIdUsuario;
     }
 
-    public void setGrupos(Set<Grupo> grupos) {
-        this.grupos = grupos;
+    public void setPermissaosForIdUsuario(Set<Permissao> permissaosForIdUsuario) {
+        this.permissaosForIdUsuario = permissaosForIdUsuario;
     }
 
 }
