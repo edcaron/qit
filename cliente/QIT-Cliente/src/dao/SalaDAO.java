@@ -84,7 +84,7 @@ public class SalaDAO {
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            System.out.println("id:" + sala.getId());
+          //  System.out.println("id:" + sala.getId());
             org.hibernate.Query q = sessao.createQuery("from Sala s inner join s.predio where s.id = " + sala.getId());
             resultado = q.list();
 

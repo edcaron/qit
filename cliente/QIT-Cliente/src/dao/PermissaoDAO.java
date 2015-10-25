@@ -8,10 +8,13 @@ package dao;
 import java.util.List;
 import modelo.Usuario;
 import controle.HibernateUtil;
+import controle.IModelo;
 import java.util.ArrayList;
+import java.util.Date;
 import modelo.Permissao;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -47,17 +50,66 @@ public class PermissaoDAO {
 
             for (Object o : resultadoBanco) {
                 Permissao s = ((Permissao) ((Object[]) o)[0]);
-                System.out.println("id: " + s.getId() + " ");
-                System.out.println("ler " + s.isLer());
-                System.out.println("editar " + s.isEditar());
-                System.out.println("inativar " + s.isInativar());
-                System.out.println("inserir " + s.isInserir());
+            }
+
+        } catch (HibernateException he) {
+
+            he.printStackTrace();
+        } finally {
+            sessao.close();
+        }
+        return listaPermissoes;
+    }
+
+    public boolean salvar(Permissao permissao) {
+        boolean retorno = false;
+        Transaction t = null;
+        try {
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            t = sessao.beginTransaction();
+
+            sessao.saveOrUpdate(permissao);
+            t.commit();
+
+            retorno = true;
+        } catch (HibernateException he) {
+            System.out.println("deu pau" + he);
+            he.printStackTrace();
+            t.rollback();
+            return false;
+        } finally {
+            sessao.close();
+        }
+        return retorno;
+    }
+
+    public ArrayList<Permissao> listar(Date datainicial, Date datafinal, String tabela, char operacao, Usuario usuario) {
+        List resultado = null;
+
+        ArrayList<Permissao> lista = new ArrayList<>();
+        try {
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+            String sql = "from Permissao p where lower(p.tablea) like lower('%" + tabela + "%') "
+                    + "and lower(p.operacao) like lower('%" + operacao + "%') "
+                    + "and p.dt >" + datainicial + ""
+                    + "and p.dt <" + datafinal + ""
+                    + " order by p.id ";
+
+            org.hibernate.Query q = sessao.createQuery(sql);
+            resultado = q.list();
+
+            for (Object o : resultado) {
+                Permissao s = ((Permissao) ((Object) o));
+                lista.add(s);
             }
 
         } catch (HibernateException he) {
             he.printStackTrace();
+        } finally {
+            sessao.close();
         }
-        return listaPermissoes;
+        return lista;
     }
 
 }

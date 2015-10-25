@@ -5,36 +5,37 @@
  */
 package controle;
 
-import dao.PredioDAO;
+import dao.GrupoDAO;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import modelo.Predio;
+import modelo.Grupo;
 
 /**
  *
- * @author eduar_000
+ * @author Tiago
  */
-public class ControlePredio implements IControle {
+public class ControleGrupo implements  IControle {
 
-    private PredioDAO dao;
+    private GrupoDAO dao;
 
-    public ControlePredio() {
-        dao = new PredioDAO();
+    public ControleGrupo() {
+        dao = new GrupoDAO();
     }
 
-    public boolean salvar(Predio predio) {
-        return dao.salvar(predio);
+    public boolean salvar(Grupo grupo) {
+  
+        return dao.salvar(grupo);
+
     }
 
-    public Predio consultar(Predio predio) {
-        Predio objLocal = new Predio();
+    public Grupo consultar(Grupo grupo) {
+        Grupo objLocal = new Grupo();
         try {
-      //      System.out.println("o predio consultado e o "+predio.getId());
-            objLocal = dao.consultar(predio);
+            objLocal = dao.consultar(grupo);
         } catch (Exception e) {
             System.err.println("" + e);
         }
@@ -43,7 +44,7 @@ public class ControlePredio implements IControle {
  
     @Override
     public Object[][] popularTabela(JTable tabela, IModelo objModelo, boolean isModal) {
-        Object[][] dadosTabela = null;
+           Object[][] dadosTabela = null;
      //   System.out.println("populando tabela");
         try {
             int colunasTabela = 2;
@@ -57,12 +58,12 @@ public class ControlePredio implements IControle {
             Object[] cabecalho = new Object[colunasTabela];
 
             cabecalho[0] = "Cód.";
-            cabecalho[1] = "Predio";            
+            cabecalho[1] = "Grupo";            
             
      
 
             // cria matriz de acordo com n de registros da tabela
-            ArrayList<Predio> listaPredio = dao.listar(objModelo);
+            ArrayList<Grupo> listaPredio = dao.listar(objModelo);
 
             dadosTabela = new Object[listaPredio.size()][colunasTabela];
 
@@ -139,9 +140,8 @@ public class ControlePredio implements IControle {
         }
         return dadosTabela;
     }
-
     public boolean inativar(int id) {
-       Predio objLocal = new Predio();
+       Grupo objLocal = new Grupo();
         boolean retorno = false;
 
         objLocal.setId(id);
@@ -155,5 +155,4 @@ public class ControlePredio implements IControle {
 //        salva novamente no banco
         retorno = this.salvar(objLocal);
         return retorno; }
-
 }
