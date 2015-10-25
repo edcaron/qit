@@ -31,11 +31,7 @@ public class GrupoDAO {
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
-            System.out.println("O grupo e ");
-            System.out.println(""+grupo.getId());
-            System.out.println(""+grupo.getNome());
-            System.out.println(""+grupo.getDescricao());
-            System.out.println(""+grupo.getUsuario().getId());
+   
      
             sessao.saveOrUpdate(grupo);
             t.commit();

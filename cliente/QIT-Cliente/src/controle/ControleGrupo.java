@@ -27,7 +27,7 @@ public class ControleGrupo implements  IControle {
     }
 
     public boolean salvar(Grupo grupo) {
-        System.out.println("cheguei no salvar");
+  
         return dao.salvar(grupo);
 
     }

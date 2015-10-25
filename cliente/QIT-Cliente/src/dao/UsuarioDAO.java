@@ -59,17 +59,17 @@ public class UsuarioDAO {
             if (usuario.getNome().equals("")) {
                 sql = "from Usuario u inner join u.grupo order by u.id desc";
             }
-            System.out.println("a query foi " + sql);
+   
             org.hibernate.Query q = sessao.createQuery(sql);
-            System.out.println("da erro nessa linha");
+ 
             resultado = q.list();
 
             for (Object o : resultado) {
-                System.out.println("entrei no for");
+           
                 Usuario s = ((Usuario) ((Object[]) o)[0]);
-                System.out.println("passei daki");
+           
                 lista.add(s);
-                System.out.println("pasei no for");
+       
             }
 
         } catch (HibernateException he) {
@@ -92,12 +92,12 @@ public class UsuarioDAO {
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            System.out.println("id do user:" + usuario.getId());
+
             org.hibernate.Query q = sessao.createQuery("from Usuario u inner join u.grupo where u.id = " + usuario.getId());
             resultado = q.list();
 
             for (Object o : resultado) {
-                System.out.println("no forzim");
+          
                 user_local = ((Usuario) ((Object[]) o)[0]);
 
             }
@@ -109,18 +109,18 @@ public class UsuarioDAO {
         return user_local;
     }
 
-    public Usuario consultarTESTE(Usuario usuario) {
+    public Usuario consultarPesquisa(Usuario usuario) {
         List resultado = null;
         Usuario user_local = new Usuario();
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            System.out.println("id do user:" + usuario.getId());
+           // System.out.println("id do user:" + usuario.getId());
             org.hibernate.Query q = sessao.createQuery("from Usuario u inner join u.grupo where u.id = " + usuario.getId());
             resultado = q.list();
 
             for (Object o : resultado) {
-                System.out.println("no forzim");
+           
                 user_local = ((Usuario) ((Object[]) o)[0]);
 
             }

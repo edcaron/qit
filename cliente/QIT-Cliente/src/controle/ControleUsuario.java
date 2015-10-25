@@ -76,7 +76,7 @@ public class ControleUsuario implements IControle {
     public Usuario consultarPesquisa(Usuario usuario) {
         Usuario usuarioLocal = new Usuario();
         try {
-            usuarioLocal = udao.consultarTESTE(usuario);
+            usuarioLocal = udao.consultarPesquisa(usuario);
         } catch (Exception e) {
             System.err.println("" + e);
 
