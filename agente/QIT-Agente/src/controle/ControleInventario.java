@@ -277,7 +277,7 @@ public class ControleInventario {
                     sm.setMaquina(maquina);
                     softwares.add(sm);
                     if (sf.getVersao() == null) {
-                        sf.setVersao("não informado");
+                        sf.setVersao("--");
                     }
                 }
             }

@@ -23,6 +23,7 @@ public class JfSala extends javax.swing.JFrame implements ITela {
 
     public JfSala(Usuario usuario) {
         initComponents();
+        this.setTitle("Salas");
         this.usuario = usuario;
         this.tela = new Tela();
         tela.setId(1);
@@ -84,6 +85,12 @@ public class JfSala extends javax.swing.JFrame implements ITela {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+
+        jtpMain.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtpMainFocusGained(evt);
+            }
+        });
 
         btSalvar.setText("Salvar");
         btSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -380,6 +387,13 @@ public class JfSala extends javax.swing.JFrame implements ITela {
             JOptionPane.showMessageDialog(null, "Selecione um registro da tabela");
         }
     }//GEN-LAST:event_btInativarActionPerformed
+
+    private void jtpMainFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtpMainFocusGained
+        Sala s = new Sala();
+        s.setNome(qftfConsultaNome.getText());
+        controleSala.popularTabela(jtResultados, s, false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtpMainFocusGained
 
     @Override
     public boolean inserir() {

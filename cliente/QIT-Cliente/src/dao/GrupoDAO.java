@@ -10,7 +10,10 @@ import controle.IModelo;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Grupo;
+import modelo.Usuario;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -31,13 +34,12 @@ public class GrupoDAO {
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             Transaction t = sessao.beginTransaction();
-   
-     
+
             sessao.saveOrUpdate(grupo);
             t.commit();
             retorno = true;
         } catch (HibernateException he) {
-            System.out.println("deu pau"+he);
+            System.out.println("deu pau" + he);
             he.printStackTrace();
             return false;
         } finally {
@@ -97,5 +99,55 @@ public class GrupoDAO {
             sessao.close();
         }
         return grupoLocal;
+    }
+
+    public List listaTodos2() {
+ List resultado = null;
+
+        ArrayList<Grupo> lista = new ArrayList<>();
+        try {
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+            String sql = "from Grupo g order by g.id desc";
+            
+
+            org.hibernate.Query q = sessao.createQuery(sql);
+            resultado = q.list();
+
+            for (Object o : resultado) {
+                Grupo s = ((Grupo) ((Object) o));
+                lista.add(s);
+            }
+
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        } finally {
+            sessao.close();
+        }
+        return lista;
+    }
+    
+
+    public List listaTodos() {
+
+        // Query query = sessao.createQuery("from Grupo"); 
+        Criteria ct = sessao.createCriteria(Grupo.class);
+        ct = sessao.createCriteria(Usuario.class);
+        // exemplo:
+//                createCriteria(Veiculo.class)
+//                .add(Restrictions.like("placa", letras, MatchMode.START))
+//                .createCriteria("pessoa")
+//                .add(Restrictions.between("idade", first, last))
+//                .list();
+
+        //ct.add(Restrictions.gt("id", (4)));
+        List listaUs = ct.list();
+        List teste = listaUs;
+        Grupo g = new Grupo();
+        for (int i = 0; i < listaUs.size(); i++) {
+            g = ((Grupo) listaUs.get(i));
+
+        }
+        return listaUs;
     }
 }

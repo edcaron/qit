@@ -34,6 +34,7 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
     public JfUsuario(Usuario usuario) {
         initComponents();
         this.usuario = usuario;
+        this.setTitle("Usuarios");
         this.tela = new Tela();
         tela.setId(2);
         this.grupo = new Grupo();
@@ -454,8 +455,8 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
                 this.editar();
             }
         } else {
-            if (jPsenha.getText().length() <= 3 && usuario.getId() == 0) {
-                JOptionPane.showMessageDialog(null, "Campo senha é obrigatório");
+            if (jPsenha.getText().length() <= 3 ) {
+                JOptionPane.showMessageDialog(null, "Campo senha é deve ter no minimo 4 caracteres");
             }
         }
     }//GEN-LAST:event_btSalvarActionPerformed
@@ -674,7 +675,7 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
             int id = 0;
             try {
                 id = ((int) jtResultados.getValueAt(jtResultados.getSelectedRow(), 0));
-                //System.out.println("o id que esta indo no inativar e " + id);
+                System.out.println("o id que esta indo no inativar e " + id);
                 boolean retorno = controleUsuario.inativar(id);
                 if (retorno) {
                     JOptionPane.showMessageDialog(rootPane, "Operação Realizada com sucesso");

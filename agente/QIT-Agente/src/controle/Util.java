@@ -23,6 +23,20 @@ import java.util.Date;
  */
 public class Util {
 
+    public static byte[] fileToByteArray(File file) {        
+        try {
+            FileInputStream fileInputStream = null;
+            byte[] bFile = new byte[(int) file.length()];           
+            fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bFile);
+            fileInputStream.close();
+            return  bFile;
+        } catch (IOException e) {
+            System.err.println("Erro em fileToByteArray:" + e);
+        }
+        return null;
+    }
+
     /**
      * Método para obter data e hora atual.
      *

@@ -14,6 +14,7 @@ import modelo.Inventario;
 import modelo.Maquina;
 import modelo.Particao;
 import modelo.PlacaRede;
+import modelo.Sala;
 import modelo.Software;
 import modelo.SoftwaresMaquina;
 
@@ -22,13 +23,13 @@ import modelo.SoftwaresMaquina;
  * @author eduar_000
  */
 public class ControleInventario {
-
+    
     private MaquinaDAO maqDAO;
     private PlacaRedeDAO placaDAO;
     private SoftwareDAO sfDAO;
     private SoftwareMaquinaDAO smDAO;
     private ParticaoDAO partDAO;
-
+    
     public ControleInventario() {
         maqDAO = new MaquinaDAO();
         placaDAO = new PlacaRedeDAO();
@@ -36,11 +37,19 @@ public class ControleInventario {
         smDAO = new SoftwareMaquinaDAO();
         partDAO = new ParticaoDAO();
     }
-
+    
     public boolean gravarInventario(Inventario inventario) {
 //gravar maquina
         Maquina maquina = inventario.getMaquina();
         maquina = maqDAO.procurarDuplicado(maquina);
+        maquina.setDtUltimaDeteccao(Util.stringParaDate(inventario.getDataAtual()));
+        if (maquina.getId() == 0) {
+//caso esta maquina ainda não esteja gravada no banco, marcamos como detectado para esta maquina na data que foi feito o inventario
+            maquina.setDtPrimeiraDeteccao(Util.stringParaDate(inventario.getDataAtual()));
+        }
+        Sala s = new Sala();
+        s.setId(1);
+        maquina.setSala(s);
         maqDAO.salvar(maquina);
 
 //        gravar placa de rede        
@@ -54,7 +63,7 @@ public class ControleInventario {
             particao = partDAO.procurarDuplicado(particao);
             placaDAO.salvar(particao);
         }
-        
+
 //        gravar softwares       
         smDAO.inativarSoftwaresMaquina(maquina);//inativar todos softwares vinculados a maquina q estamos trabalhando
 
@@ -65,8 +74,8 @@ public class ControleInventario {
 
 //            gravar softwares_maquina, a tabela relacionada
             softwaresMaquina = smDAO.procurarDuplicado(softwaresMaquina);
-            if (softwaresMaquina.getId() == 0) { // se o software vai ser registrado para essa maquina no momento, marcamos como detectado para esta maquina agora
-                softwaresMaquina.setDtDeteccao(Util.getCurrentDate());
+            if (softwaresMaquina.getId() == 0) { // se o software vai ser registrado para essa maquina no momento, marcamos como detectado para esta maquina na data que foi feito o inventario
+                softwaresMaquina.setDtDeteccao(Util.stringParaDate(inventario.getDataAtual()));
             }
             smDAO.salvar(softwaresMaquina);
         }

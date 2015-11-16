@@ -23,6 +23,45 @@ import java.util.Date;
  */
 public class Util {
 
+    
+    /**
+     * Converter uma string com uma marca de data e hora para um objeto date
+     * @param dtParametro string no formato dd/MM/yyyy HH:mm:ss 
+     * @return objeto Date
+     */
+    public static Date stringParaDate(String dtParametro) {
+        Date dtRetorno = null;
+        try {
+            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            dtRetorno = (Date) formatter.parse(dtParametro);
+        } catch (Exception e) {
+            System.err.println("Erro em stringParaDate");
+            e.printStackTrace();
+        }
+        return dtRetorno;
+    }
+
+    /**
+     * Transforma um objeto File em um array de bytes, para que possa ser
+     * transmitido por sockets byte[]
+     *
+     * @param f File a ser convertido
+     * @return byte[] resultante da conversao
+     */
+    public static byte[] fileToByteArray(File f) {
+        byte[] retorno = null;
+        try {
+            FileInputStream fis = new FileInputStream(f);
+            byte[] bFile = new byte[(int) f.length()];
+            fis.read(bFile);
+            fis.close();
+            retorno = bFile;
+        } catch (IOException e) {
+            System.err.println("Erro em fileToByteArray:" + e);
+        }
+        return retorno;
+    }
+
     /**
      * Método para obter data e hora atual.
      *
@@ -33,18 +72,32 @@ public class Util {
         Date dt = new Date();
         return dateFormat.format(dt);
     }
-    
-      /**
+
+    /**
+     * Método para obter data e hora atual.
+     *
+     * @return String com data no formato dd/MM/yyyy HH:mm:ss
+     */
+    public static String getCurrentTimestampCMD() {
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Date dt = new Date();
+        String retorno = dateFormat.format(dt);
+        retorno = retorno.replaceAll(" ", "-");
+        retorno = retorno.replaceAll(":", "");
+        System.out.println("Hora para retorno: " + retorno);
+        return retorno;
+    }
+
+    /**
      * Método para obter data e hora atual.
      *
      * @return Date do Java
      */
     public static Date getCurrentDate() {
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/zyyyy HH:mm:ss");
         Date dt = new Date();
         return (dt);
     }
-    
 
     public static String getCurrentFile() {
         String retorno = "";
@@ -87,12 +140,12 @@ public class Util {
         try {
             digest = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException ex) {
-            System.err.println(""+ex);
+            System.err.println("" + ex);
         }
         try {
             is = new FileInputStream(file);
         } catch (FileNotFoundException ex) {
-            System.err.println(""+ex);
+            System.err.println("" + ex);
         }
         byte[] buffer = new byte[8192];
         int read = 0;
@@ -116,5 +169,4 @@ public class Util {
         return output;
     }
 
-    
 }

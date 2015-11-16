@@ -28,8 +28,8 @@ public class Auditoria implements java.io.Serializable {
     private String alteracoes;
     private Date dt;
     private int idConteudo;
-    private Serializable valoresNovos;
-    private Serializable valoresAntigos;
+    private String valoresNovos;
+    private String valoresAntigos;
 
     public Auditoria() {
     }
@@ -41,7 +41,7 @@ public class Auditoria implements java.io.Serializable {
         this.idConteudo = idConteudo;
     }
 
-    public Auditoria(int id, String tabela, Integer idUsuario, Boolean alteradoSistema, char operacao, String alteracoes, Date dt, int idConteudo, Serializable valoresNovos, Serializable valoresAntigos) {
+    public Auditoria(int id, String tabela, Integer idUsuario, Boolean alteradoSistema, char operacao, String alteracoes, Date dt, int idConteudo, String valoresNovos, String valoresAntigos) {
         this.id = id;
         this.tabela = tabela;
         this.idUsuario = idUsuario;
@@ -130,20 +130,21 @@ public class Auditoria implements java.io.Serializable {
     }
 
     @Column(name = "valores_novos")
-    public Serializable getValoresNovos() {
+  
+    public String getValoresNovos() {
         return this.valoresNovos;
     }
 
-    public void setValoresNovos(Serializable valoresNovos) {
+    public void setValoresNovos(String valoresNovos) {
         this.valoresNovos = valoresNovos;
     }
 
     @Column(name = "valores_antigos")
-    public Serializable getValoresAntigos() {
+    public String getValoresAntigos() {
         return this.valoresAntigos;
     }
 
-    public void setValoresAntigos(Serializable valoresAntigos) {
+    public void setValoresAntigos(String valoresAntigos) {
         this.valoresAntigos = valoresAntigos;
     }
   

@@ -47,6 +47,7 @@ public class MaquinaDAO extends DAOPadrao{
         if (!resultados.get(0).equals(0)) {
             //setar o id do objeto com base no retorno da procedure
             maquinaLocal.setId((int) resultados.get(0));
+//            maquinaLocal = consultar(maquina);
             retorno = true;
         }
         return maquinaLocal;

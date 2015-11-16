@@ -5,8 +5,10 @@
  */
 package controle;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.StringWriter;
 
 /**
@@ -76,21 +78,34 @@ public class ComunicacaoSO {
      * @return String com o retorno dado pelo cmd
      */
     public static String executarComando(String comando, String parametro) {
+        String output = "";
         try {
 
-            // executar comando no cmd
-            String cmd = comando + parametro;
-            System.out.println("comando: " + cmd);
-            Process process = Runtime.getRuntime().exec(cmd);
-
-            StreamReader reader = new StreamReader(process.getInputStream());
-            reader.start();
-            process.waitFor();
-            reader.join();
-            String output = reader.getResult();
-
+//            // executar comando no cmd
+//            String cmd = comando + parametro;
+//            System.out.println("comando: " + cmd);
+//            Process process = Runtime.getRuntime().exec(cmd);
+//
+//            StreamReader reader = new StreamReader(process.getInputStream());
+//            reader.start();
+//            process.waitFor();
+//            reader.join();
+//            String output = reader.getResult();
+            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando);            
+            builder.redirectErrorStream(true);
+            Process p = builder.start();           
+            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while (true) {
+                line = r.readLine();
+                if (line == null) {
+                    break;
+                }
+                output += line;
+                output += "\n";
+            }
             return output;
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             System.err.println("erro em executarComando /n" + e);
             return null;
         }

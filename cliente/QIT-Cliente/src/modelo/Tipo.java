@@ -1,6 +1,7 @@
 package modelo;
 // Generated 17/10/2015 22:43:46 by Hibernate Tools 4.3.1
 
+import controle.IModelo;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -18,7 +19,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tipo", schema = "public"
 )
-public class Tipo implements java.io.Serializable {
+public class Tipo implements java.io.Serializable, IModelo {
 
     private int id;
     private String nome;

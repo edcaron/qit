@@ -10,7 +10,7 @@
     <mapping class="modelo.MaquinasExecutarScript"/>
     <mapping class="modelo.ExecucaoInstalacao"/>
     <mapping class="modelo.Permissao"/>
-    <mapping class="modelo.Sala"/>
+	<mapping class="modelo.Sala"/>
     <mapping class="modelo.Auditoria"/>
     <mapping class="modelo.Predio"/>
     <mapping class="modelo.Configuracao"/>

@@ -6,15 +6,19 @@
 package controle;
 
 import dao.UsuarioDAO;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import modelo.Grupo;
 import modelo.Permissao;
 import modelo.Tela;
 import modelo.Usuario;
@@ -32,10 +36,10 @@ public class ControleUsuario implements IControle {
     }
 
     public boolean inativar(int id) {
-       
+
         Usuario objLocal = new Usuario();
         boolean retorno = false;
-   
+
         objLocal.setId(id);
 
 //        consulta o obj sala no banco de dados com o id que vem como paramentro na funcao
@@ -153,10 +157,9 @@ public class ControleUsuario implements IControle {
 
             // cria matriz de acordo com nº de registros da tabela
             ArrayList<Usuario> listaSalas = udao.listar(modelo);
-        
 
             dadosTabela = new Object[listaSalas.size()][colunasTabela];
-        
+
             for (int i = 0; i < listaSalas.size(); i++) {
                 dadosTabela[i][0] = listaSalas.get(i).getId();
                 dadosTabela[i][1] = listaSalas.get(i).getNome();
@@ -233,6 +236,15 @@ public class ControleUsuario implements IControle {
             System.err.println("Erro ao popular tabela usuario: " + e + "\n" + e.getCause());
         }
         return dadosTabela;
+    }
+
+    public List listaTodos(Date minDate, Date maxDate) {
+        try {
+            return udao.listaTodos(minDate, maxDate);
+        } catch (ParseException ex) {
+            Logger.getLogger(ControleUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    return null;
     }
 
 }

@@ -7,6 +7,7 @@ package controle;
 
 import dao.GrupoDAO;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -155,4 +156,8 @@ public class ControleGrupo implements  IControle {
 //        salva novamente no banco
         retorno = this.salvar(objLocal);
         return retorno; }
+
+    public List listaTodos() {
+                return dao.listaTodos2();
+      }
 }
