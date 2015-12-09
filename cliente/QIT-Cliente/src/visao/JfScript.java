@@ -1,24 +1,24 @@
 package visao;
 
-import controle.ControlePredio;
+import controle.ControleDependência;
+import controle.ControleSamba;
 import controle.ITela;
-import controle.ControleSala;
 import controle.ControleScript;
 import controle.ControleTipo;
-import controle.ControleUsuario;
 import controle.ProxyTelas;
 import controle.Util;
-import dao.SalaDAO;
+import dao.DependenciaDAO;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.Date;
 import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import modelo.Dependencia;
-import modelo.ExecucaoScript;
-import modelo.Predio;
-import modelo.Sala;
 import modelo.Script;
 import modelo.Tela;
 import modelo.Tipo;
@@ -32,6 +32,7 @@ public class JfScript extends javax.swing.JFrame implements ITela {
     protected ProxyTelas proxy;
     protected ControleScript controleScript;
     protected Tipo tipo;
+    protected File[] listaAdicionarArquivos;
 
     public JfScript(Usuario usuario) {
         initComponents();
@@ -39,6 +40,7 @@ public class JfScript extends javax.swing.JFrame implements ITela {
         this.usuario = usuario;
         this.tela = new Tela();
         this.script = new Script();
+        this.listaAdicionarArquivos = new File[0];
         tipo = new Tipo();
         tipo.setId(1);
         tela.setId(1);
@@ -87,8 +89,11 @@ public class JfScript extends javax.swing.JFrame implements ITela {
         qftfIdTipo = new qitjftf.QITJFormattedTextField();
         jftTipo = new javax.swing.JFormattedTextField();
         jButton1 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        JlArquivo = new javax.swing.JLabel();
+        jtNomeArquivos = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jtDependencias = new javax.swing.JTable();
         jpConsulta = new javax.swing.JPanel();
         btCancelar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -152,63 +157,82 @@ public class JfScript extends javax.swing.JFrame implements ITela {
             }
         });
 
-        jButton1.setText("Selecionar");
+        jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jLabel6.setText("Arquivo:");
+        jtNomeArquivos.setEnabled(false);
 
-        JlArquivo.setText("Arquivo.bat");
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel7.setText("Arquivos:");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel8.setText("Adicionar arquivos:");
+
+        jtDependencias.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Nome"
+            }
+        ));
+        jtDependencias.getTableHeader().setReorderingAllowed(false);
+        jtDependencias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtDependenciasMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(jtDependencias);
+        if (jtDependencias.getColumnModel().getColumnCount() > 0) {
+            jtDependencias.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jtDependencias.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
 
         javax.swing.GroupLayout jpCadastroLayout = new javax.swing.GroupLayout(jpCadastro);
         jpCadastro.setLayout(jpCadastroLayout);
         jpCadastroLayout.setHorizontalGroup(
             jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpCadastroLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btCancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jpCadastroLayout.createSequentialGroup()
                 .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
                     .addGroup(jpCadastroLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btCancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpCadastroLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jpCadastroLayout.createSequentialGroup()
-                                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel6))
-                                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jpCadastroLayout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(JlArquivo)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
-                                        .addComponent(jButton1))
-                                    .addGroup(jpCadastroLayout.createSequentialGroup()
-                                        .addGap(5, 5, 5)
-                                        .addComponent(qftfIdTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jftTipo, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btBuscarPredio)))
-                                .addGap(30, 30, 30))
+                            .addComponent(jLabel3)
                             .addGroup(jpCadastroLayout.createSequentialGroup()
                                 .addGap(2, 2, 2)
-                                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jpCadastroLayout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(qftfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jpCadastroLayout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jScrollPane1))))
-                            .addComponent(jLabel4))
-                        .addGap(0, 311, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(jLabel1))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel7))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jpCadastroLayout.createSequentialGroup()
+                        .addComponent(jtNomeArquivos, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1))
+                    .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(qftfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jpCadastroLayout.createSequentialGroup()
+                            .addComponent(qftfIdTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jftTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btBuscarPredio))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(45, Short.MAX_VALUE))
+            .addGroup(jpCadastroLayout.createSequentialGroup()
+                .addComponent(jLabel4)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jpCadastroLayout.setVerticalGroup(
             jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,30 +241,33 @@ public class JfScript extends javax.swing.JFrame implements ITela {
                 .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(qftfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpCadastroLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addGap(11, 11, 11)
                 .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btBuscarPredio)
                     .addComponent(jLabel3)
                     .addComponent(qftfIdTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jftTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(JlArquivo)
-                    .addComponent(jButton1))
-                .addGap(97, 97, 97)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jtNomeArquivos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
-                .addGap(3, 3, 3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btCancelar1)
-                    .addComponent(btSalvar))
-                .addContainerGap())
+                    .addComponent(btSalvar)
+                    .addComponent(btCancelar1))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         jtpMain.addTab("Cadastro", jpCadastro);
@@ -329,7 +356,7 @@ public class JfScript extends javax.swing.JFrame implements ITela {
                     .addComponent(qftfConsultaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btConsultarTabela))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btInativar)
@@ -349,7 +376,7 @@ public class JfScript extends javax.swing.JFrame implements ITela {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jtpMain)
+            .addComponent(jtpMain, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -374,6 +401,9 @@ public class JfScript extends javax.swing.JFrame implements ITela {
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         if (controle.Formatacao.verificarNulos(jpCadastro)) {
+            boolean retornoInsercao;
+            Set<Dependencia> listaDependecias = new HashSet<>();
+            boolean vetorValido = false;
 
             script.setAtivo(true);
             script.setDtCriacao(Util.getCurrentTimestamp());
@@ -382,15 +412,67 @@ public class JfScript extends javax.swing.JFrame implements ITela {
             script.setTipo(tipo); //
             script.setUsuario(usuario);
 
-            if (script.getId() == 0) {
-                this.inserir();
-            } else {
-                this.editar();
+//          verificar  se vetor esta iniciado
+            try {
+                listaAdicionarArquivos[0].canExecute();
+                vetorValido = true;
+            } catch (Exception e) {
             }
-        } else {
 
-        }
+            if (vetorValido) {
+                for (File arquivo : listaAdicionarArquivos) {
+                    Dependencia d = new Dependencia();
+                    d.setNome(arquivo.getName());
+                    d.setMd5(controle.Util.md5(arquivo));
+                    d.setDiretorio("");
+                    d.setScript(script);
+                    listaDependecias.add(d);
+                    script.setDependencias(listaDependecias);
+                }
+            }
 
+            if (script.getId() == 0) {
+                retornoInsercao = this.inserir();
+            } else {
+                retornoInsercao = this.editar();
+            }
+
+//            enviar arquivos para o samba
+            System.out.println("Retorno da isnercao:" + retornoInsercao);
+
+            boolean retorno = false;
+            if (retornoInsercao == true) {
+                if (vetorValido) {
+                    for (File arquivo : listaAdicionarArquivos) {
+                        ControleSamba cs = new ControleSamba();
+                        byte[] arquivoEmBytes = cs.fileToByteArray(arquivo);
+
+//                    salvar dependencias no samba
+                        retorno = cs.save(arquivo.getName(), arquivoEmBytes, 2, script.getId());
+
+                        //                        salvar dependencias no bd
+                        if (retorno) {
+                            for (Dependencia d : script.getDependencias()) {
+                                retorno = new ControleDependência().salvar(d);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(rootPane, "Não foi posssíel realizar esta operação, consulte o log de erros");
+                        }
+                    }
+                } else {                    
+                    retorno = true;
+                }
+                if (retorno) {
+                    JOptionPane.showMessageDialog(rootPane, "Operação Realizada com sucesso");
+                    this.limparCampos();
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Não foi posssíel realizar esta operação, consulte o log de erros");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Não foi posssíel realizar esta operação, consulte o log de erros");
+            }
+        } 
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btConsultarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarTabelaActionPerformed
@@ -406,13 +488,12 @@ public class JfScript extends javax.swing.JFrame implements ITela {
             if (jtResultados.getSelectedRowCount() != 0) {
                 int idRegistroSelecionado = (int) jtResultados.getValueAt(jtResultados.getSelectedRow(), 0);
                 script.setId(idRegistroSelecionado);
+                popularCampos();
+                jtpMain.setSelectedIndex(0);
             } else {
                 JOptionPane.showMessageDialog(null, "Selecione um registro da tabela");
             }
 
-            script = controleScript.consultar(script);
-            popularCampos();
-            jtpMain.setSelectedIndex(0);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Problemas ao selecionar!\nMensagem técnica:\n" + e);
             System.out.println("" + e);
@@ -447,29 +528,19 @@ public class JfScript extends javax.swing.JFrame implements ITela {
     }//GEN-LAST:event_btBuscarPredioActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
         FileInputStream fis;
         try {
             JFileChooser chooser = new JFileChooser();
             chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            chooser.setDialogTitle("Escolha o arquivo");
+            chooser.setDialogTitle("Escolha os arquivos");
+            chooser.setMultiSelectionEnabled(true);
             if (chooser.showOpenDialog(this) == JFileChooser.OPEN_DIALOG) {
-                File fileSelected = chooser.getSelectedFile();
-                byte[] bFile = new byte[(int) fileSelected.length()];
-                fis = new FileInputStream(fileSelected);
-                fis.read(bFile);
-                fis.close();
-                long kbSize = fileSelected.length() / 1024;
-                JlArquivo.setText(fileSelected.getName());
-//                jLabelTamanho.setText(kbSize + " KB");
-//                arquivo = new Arquivo();
-//                arquivo.setConteudo(bFile);
-//                arquivo.setDataHoraUpload(new Date());
-//                arquivo.setNome(fileSelected.getName());
-//                arquivo.setTamanhoKB(kbSize);
-//                arquivo.setIpDestino(jTextFieldIP.getText());
-//                arquivo.setPortaDestino(jTextFieldPorta.getText());
-//                arquivo.setDiretorioDestino(jTextFieldDiretorio.getText().trim());
+                jtNomeArquivos.setText("");
+                listaAdicionarArquivos = null;
+                listaAdicionarArquivos = chooser.getSelectedFiles();
+                for (File file : listaAdicionarArquivos) {
+                    jtNomeArquivos.setText(jtNomeArquivos.getText() + file.getName() + ", ");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -481,24 +552,46 @@ public class JfScript extends javax.swing.JFrame implements ITela {
         // TODO add your handling code here:
     }//GEN-LAST:event_qftfIdTipoActionPerformed
 
+    private void jtDependenciasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtDependenciasMouseClicked
+        boolean retorno = false;
+        if (evt.getClickCount() == 2) {
+            if (jtDependencias.getSelectedRowCount() != 0) {
+                int retornoMsg = JOptionPane.showConfirmDialog(rootPane, "Deseja remover este arquivo do scrip? \n Não será possível desfazer ");
+                if (retornoMsg == 0) {
+                    int idRemover = (int) jtDependencias.getValueAt(jtDependencias.getSelectedRow(), 0);
+                    String nomeRemover = (String) jtDependencias.getValueAt(jtDependencias.getSelectedRow(), 1);
+                    Dependencia d = new Dependencia();
+                    d.setId(idRemover);
+                    d.setNome(nomeRemover);
+
+//                    apaga no bd
+                    retorno = new DependenciaDAO().apagar(d);
+
+//                    apaga no samba
+                    retorno = new ControleSamba().delete(d.getNome(), 2, script.getId());
+
+                    popularCampos();
+                    if (retorno) {
+                        JOptionPane.showMessageDialog(rootPane, "Arquivo apagado");
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "Não foi posssíel realizar esta operação, consulte o log de erros");
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jtDependenciasMouseClicked
+
     @Override
     public boolean inserir() {
         boolean permissaoUser = proxy.inserir();
-
+        boolean retorno = false;
         System.out.println("Permisssao desse cara: " + permissaoUser);
         if (permissaoUser) {
-
-            boolean retorno = controleScript.salvar(script);
-            if (retorno) {
-                JOptionPane.showMessageDialog(rootPane, "Operação Realizada com sucesso");
-                this.limparCampos();
-            } else {
-                JOptionPane.showMessageDialog(rootPane, "Não foi posssíel realizar esta operação, consulte o log de erros");
-            }
+            retorno = controleScript.salvar(script);
         } else {
             JOptionPane.showMessageDialog(rootPane, "Você não possui permissão para realizar essa operação");
         }
-        return true;
+        return retorno;
     }
 
     @Override
@@ -518,17 +611,11 @@ public class JfScript extends javax.swing.JFrame implements ITela {
     @Override
     public boolean editar() {
         boolean permissaoUser = proxy.editar();
-
+        boolean retorno = false;
         System.out.println("Permisssao desse cara: " + permissaoUser);
-       if (permissaoUser) {
+        if (permissaoUser) {
 
-            boolean retorno = controleScript.salvar(script);
-            if (retorno) {
-                JOptionPane.showMessageDialog(rootPane, "Operação Realizada com sucesso");
-                this.limparCampos();
-            } else {
-                JOptionPane.showMessageDialog(rootPane, "Não foi posssíel realizar esta operação, consulte o log de erros");
-            }
+            retorno = controleScript.salvar(script);
         } else {
             JOptionPane.showMessageDialog(rootPane, "Você não possui permissão para realizar essa operação");
         }
@@ -567,22 +654,24 @@ public class JfScript extends javax.swing.JFrame implements ITela {
         jtScript.setText("");
         qftfIdTipo.setText("");
         jftTipo.setText("");
+        listaAdicionarArquivos = null;
+        DefaultTableModel dtm = (DefaultTableModel) jtDependencias.getModel();
+        dtm.setNumRows(0);
         new controle.Formatacao().limparCampos(jpCadastro);
     }
 
     @Override
     public void popularCampos() {
         try {
+            script = controleScript.consultar(script);
             qftfNome.setText(script.getNome());
             jtScript.setText(script.getTexto());
             qftfIdTipo.setText("" + script.getTipo().getId());
             jftTipo.setText("" + script.getTipo().getNome());
-//            qftfNome.setText(sala.getNome());
-//            jtDescricao.setText(sala.getDescricao());
-//            qftfIdTipo.setText("" + sala.getPredio().getId());
-//            jftTipo.setText(sala.getPredio().getNome());
+            popularTabela();
         } catch (Exception e) {
             System.err.println("Erro em popular campos da sala \n" + e);
+            e.printStackTrace();
         }
     }
 
@@ -614,9 +703,67 @@ public class JfScript extends javax.swing.JFrame implements ITela {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    protected void popularTabela() {
+        Object[][] dadosTabela = null;
+        //   System.out.println("populando tabela");
+        try {
+            int colunasTabela = 2;
+
+            Object[] cabecalho = new Object[colunasTabela];
+
+            cabecalho[0] = "Código.";
+            cabecalho[1] = "Nome";
+
+            // cria matriz de acordo com n de registros da tabela
+            dadosTabela = new Object[script.getDependencias().size()][colunasTabela];
+
+            int i = 0;
+            for (Dependencia obj : script.getDependencias()) {
+                dadosTabela[i][0] = obj.getId();
+                dadosTabela[i][1] = obj.getNome();
+                i++;
+            }
+
+            // configuracoes adicionais no componente tabela
+            jtDependencias.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
+                @Override
+                // quando retorno for FALSE, a tabela nao é editavel
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+
+                @Override
+                public Class getColumnClass(int column) {
+                    return Object.class;
+                }
+            });
+
+//             permite seleção de apenas uma linha da tabela
+            jtDependencias.setSelectionMode(0);
+//Desabilitar arrastar e soltar
+            jtDependencias.getTableHeader().setReorderingAllowed(false);
+
+            //alinha valores da coluna de valores para a direita 
+            DefaultTableCellRenderer esquerda = new DefaultTableCellRenderer();
+            DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
+            DefaultTableCellRenderer direita = new DefaultTableCellRenderer();
+
+            esquerda.setHorizontalAlignment(SwingConstants.LEFT);
+            centralizado.setHorizontalAlignment(SwingConstants.CENTER);
+            direita.setHorizontalAlignment(SwingConstants.RIGHT);
+
+            jtDependencias.getColumnModel().getColumn(0).setCellRenderer(direita);
+            jtDependencias.getColumnModel().getColumn(1).setCellRenderer(esquerda);
+            jtDependencias.getTableHeader().setResizingAllowed(true);
+
+            // redimensiona as colunas de uma tabela
+            TableColumn column = null;
+        } catch (Exception e) {
+            System.err.println("Erro ao popular tabela: " + e + "\n" + e.getCause());
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel JlArquivo;
     private javax.swing.JButton btBuscarPredio;
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btCancelar1;
@@ -630,12 +777,16 @@ public class JfScript extends javax.swing.JFrame implements ITela {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JFormattedTextField jftTipo;
     private javax.swing.JPanel jpCadastro;
     private javax.swing.JPanel jpConsulta;
+    private javax.swing.JTable jtDependencias;
+    private javax.swing.JTextField jtNomeArquivos;
     private javax.swing.JTable jtResultados;
     private javax.swing.JTextArea jtScript;
     private javax.swing.JTabbedPane jtpMain;

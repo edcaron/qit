@@ -10,7 +10,7 @@ public class TarefaLimpaAuditoria implements Job {
     @Override
     public void execute(JobExecutionContext context)
             throws JobExecutionException {
-        System.out.println("Hello Quartz! 123");
+        System.out.println("Tarefa para limpar auditoria chamada");
         AuditoriaDAO ad = new AuditoriaDAO();
         ad.chamarFuncaoLimpaAuditoria();
     }

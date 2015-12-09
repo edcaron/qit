@@ -16,6 +16,7 @@ public class PacoteSocket implements Serializable {
 
     private int id;
     private int tipo;
+    private int idTabelaRelacao;
     private ArrayList<Maquina> listaMaquinas;
     private ArrayList<Tarefa> listaTarefas;
 
@@ -25,6 +26,14 @@ public class PacoteSocket implements Serializable {
 
     public ArrayList<Maquina> getListaMaquinas() {
         return listaMaquinas;
+    }
+
+    public int getIdTabelaRelacao() {
+        return idTabelaRelacao;
+    }
+
+    public void setIdTabelaRelacao(int idTabelaRelacao) {
+        this.idTabelaRelacao = idTabelaRelacao;
     }
 
     public void setListaMaquinas(ArrayList<Maquina> listaMaquinas) {

@@ -23,10 +23,10 @@ import java.util.Date;
  */
 public class Util {
 
-    
     /**
      * Converter uma string com uma marca de data e hora para um objeto date
-     * @param dtParametro string no formato dd/MM/yyyy HH:mm:ss 
+     *
+     * @param dtParametro string no formato dd/MM/yyyy HH:mm:ss
      * @return objeto Date
      */
     public static Date stringParaDate(String dtParametro) {
@@ -39,6 +39,22 @@ public class Util {
             e.printStackTrace();
         }
         return dtRetorno;
+    }
+
+    /**
+     * Método para converter data para string com formato brasileiro
+     *
+     * @return String dia/mes/ano hora:mins:secs
+     */
+    public static String dateToString(Date d) {
+        String retorno = "";
+        try {
+            retorno = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(d);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return retorno;
     }
 
     /**

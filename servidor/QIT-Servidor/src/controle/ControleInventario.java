@@ -43,10 +43,12 @@ public class ControleInventario {
         Maquina maquina = inventario.getMaquina();
         maquina = maqDAO.procurarDuplicado(maquina);
         maquina.setDtUltimaDeteccao(Util.stringParaDate(inventario.getDataAtual()));
+        maquina.setAtivo(Boolean.TRUE);
         if (maquina.getId() == 0) {
 //caso esta maquina ainda não esteja gravada no banco, marcamos como detectado para esta maquina na data que foi feito o inventario
             maquina.setDtPrimeiraDeteccao(Util.stringParaDate(inventario.getDataAtual()));
         }
+        
         Sala s = new Sala();
         s.setId(1);
         maquina.setSala(s);

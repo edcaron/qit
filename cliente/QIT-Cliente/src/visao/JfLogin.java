@@ -23,6 +23,8 @@ public class JfLogin extends javax.swing.JFrame {
         initComponents();
         this.setTitle("QIT - Login");
         this.setLocation(400, 200);
+        jftLogin.setText("user3");
+        jpfSenha.setText("user3");
 
 //        thread para captura de logs 
 //        CapturarSERR log = new CapturarSERR();
@@ -138,7 +140,6 @@ public class JfLogin extends javax.swing.JFrame {
         ret = cu.logar(usuario);
         if (ret) {
 //        consultar demais colunas do usuário    
-
             usuario = cu.consultar(usuario);
 
             new JfMain(usuario).setVisible(true);

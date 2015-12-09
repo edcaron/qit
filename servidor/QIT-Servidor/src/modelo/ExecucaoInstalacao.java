@@ -29,6 +29,7 @@ public class ExecucaoInstalacao implements java.io.Serializable {
     private InstalacaoSoftware instalacaoSoftware;
     private Usuario usuario;
     private Date dt;
+    private Boolean executado;
     private Set<MaquinasExecucaoInstalacao> maquinasExecucaoInstalacaos = new HashSet<MaquinasExecucaoInstalacao>(0);
 
     public ExecucaoInstalacao() {
@@ -38,11 +39,12 @@ public class ExecucaoInstalacao implements java.io.Serializable {
         this.id = id;
     }
 
-    public ExecucaoInstalacao(int id, InstalacaoSoftware instalacaoSoftware, Usuario usuario, Date dt, Set<MaquinasExecucaoInstalacao> maquinasExecucaoInstalacaos) {
+    public ExecucaoInstalacao(int id, InstalacaoSoftware instalacaoSoftware, Usuario usuario, Date dt, Boolean executado, Set<MaquinasExecucaoInstalacao> maquinasExecucaoInstalacaos) {
         this.id = id;
         this.instalacaoSoftware = instalacaoSoftware;
         this.usuario = usuario;
         this.dt = dt;
+        this.executado = executado;
         this.maquinasExecucaoInstalacaos = maquinasExecucaoInstalacaos;
     }
 
@@ -86,6 +88,15 @@ public class ExecucaoInstalacao implements java.io.Serializable {
 
     public void setDt(Date dt) {
         this.dt = dt;
+    }
+
+    @Column(name = "executado")
+    public Boolean getExecutado() {
+        return this.executado;
+    }
+
+    public void setExecutado(Boolean executado) {
+        this.executado = executado;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "execucaoInstalacao")

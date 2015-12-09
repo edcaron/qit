@@ -28,9 +28,10 @@ public class ScriptDAO {
 
     public boolean salvar(Script predio) {
         boolean retorno = false;
+        Transaction t = null;
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
-            Transaction t = sessao.beginTransaction();
+            t = sessao.beginTransaction();
 
             sessao.saveOrUpdate(predio);
             t.commit();
@@ -38,6 +39,7 @@ public class ScriptDAO {
         } catch (HibernateException he) {
             he.printStackTrace();
             System.out.println("erro foi " + he);
+            t.rollback();
         } finally {
             sessao.close();
         }
@@ -83,28 +85,24 @@ public class ScriptDAO {
 
     public Script consultar(Script script) {
         List resultado = null;
-        Script user_local = new Script();
+        Script obj_local = new Script();
 
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            org.hibernate.Query q = sessao.createQuery("from Script s inner join s.tipo where s.id = " + script.getId());
+            org.hibernate.Query q = sessao.createQuery("from Script s inner join s.tipo as t left join s.dependencias as d where s.id = " + script.getId());
 
-            //org.hibernate.Query q = sessao.createQuery("from Usuario u inner join u.grupo where u.id = " + usuario.getId());
             resultado = q.list();
 
             for (Object o : resultado) {
-
-                user_local = ((Script) ((Object[]) o)[0]);
-
+                obj_local = ((Script) ((Object[]) o)[0]);
             }
-
         } catch (HibernateException he) {
             he.printStackTrace();
         } finally {
             sessao.close();
         }
-        return user_local;
+        return obj_local;
     }
 
 }

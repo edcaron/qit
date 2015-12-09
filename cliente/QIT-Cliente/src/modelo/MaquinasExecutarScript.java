@@ -59,7 +59,7 @@ public class MaquinasExecutarScript implements java.io.Serializable {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_executar_script", nullable = false)
     public ExecucaoScript getExecucaoScript() {
         return this.execucaoScript;
@@ -69,7 +69,7 @@ public class MaquinasExecutarScript implements java.io.Serializable {
         this.execucaoScript = execucaoScript;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_maquina", nullable = false)
     public Maquina getMaquina() {
         return this.maquina;

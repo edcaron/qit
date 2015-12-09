@@ -5,7 +5,6 @@
  */
 package controle;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
@@ -17,7 +16,6 @@ import modelo.Tarefa;
  * @author eduar_000
  */
 public class TrataCliente extends Thread {
-  
 
     private Socket client;
 
@@ -42,35 +40,18 @@ public class TrataCliente extends Thread {
                         break;
                     case 3:
                         System.out.println("Recebemos ordem de fazer a tarefa " + tarefa.getOperacao());
-                        Tarefas.executarScript(pacoteRecebido);
+                        Tarefas.executarScript(pacoteRecebido, client.getOutputStream());
                         break;
                     default:
                         System.out.println("numero de tarefa desconhecido");
                         break;
                 }
-
             }
 
 //            client.close();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();            
+            e.printStackTrace();
         }
-    }
-
-    private static Object deserializar(byte[] objectAsByte) {
-        Object obj = null;
-        ByteArrayInputStream bis = null;
-        ObjectInputStream ois = null;
-        try {
-            bis = new ByteArrayInputStream(objectAsByte);
-            ois = new ObjectInputStream(bis);
-            obj = ois.readObject();
-            bis.close();
-            ois.close();
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Erro em deserializar:\n" + e);
-        }
-        return obj;
     }
 
 }

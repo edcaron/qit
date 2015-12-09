@@ -15,18 +15,35 @@ import org.hibernate.Transaction;
  *
  * @author eduar_000
  */
-public class DAOPadrao {
+public abstract class DAOPadrao {
 
     public boolean salvar(IModelo m) {
         boolean retorno = false;
         Session sessao = null;
         Transaction t = null;
         try {
-
             sessao = HibernateUtil.getSessionFactory().openSession();
             t = sessao.beginTransaction();
-
             sessao.saveOrUpdate(m);
+            t.commit();
+            retorno = true;
+        } catch (HibernateException he) {
+            he.printStackTrace();
+            t.rollback();
+        } finally {
+            sessao.close();
+        }
+        return retorno;
+    }
+    
+    public boolean merge(IModelo m) {
+        boolean retorno = false;
+        Session sessao = null;
+        Transaction t = null;
+        try {
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            t = sessao.beginTransaction();
+            sessao.merge(m);
             t.commit();
             retorno = true;
         } catch (HibernateException he) {

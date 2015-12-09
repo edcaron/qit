@@ -42,6 +42,14 @@ public class TrataCliente extends Thread {
                         System.out.println("Recebemos ordem de fazer a operacao " + tarefa.getOperacao());
                         Tarefas.armazenaInventario(tarefa);
                         break;
+                    case 3:
+                        System.out.println("Recebemos ordem de fazer a operacao " + tarefa.getOperacao());
+//                        Tarefas.armazenaInventario(tarefa);
+                        break;
+                    case 4:
+                        System.out.println("Recebemos ordem de fazer a operacao " + tarefa.getOperacao());
+                        Tarefas.armazenaRetornoScript(pacoteRecebido);
+                        break;
                     default:
                         System.out.println("numero de tarefa desconhecido");
                         break;
@@ -50,12 +58,6 @@ public class TrataCliente extends Thread {
             }
 
             client.close();
-
-            System.out.println("isBound? " + client.isBound());
-            System.out.println("closed? " + client.isClosed());
-            System.out.println("connected? " + client.isConnected());
-            System.out.println("input Shutd? " + client.isInputShutdown());
-            System.out.println("outpShut? " + client.isOutputShutdown());
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             System.exit(1);

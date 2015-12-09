@@ -87,6 +87,8 @@ public class JfMain extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jmExecucaoScript = new javax.swing.JMenuItem();
+        jmResultadosExecucaoScript = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
 
@@ -244,6 +246,22 @@ public class JfMain extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem7);
 
+        jmExecucaoScript.setText("Execução de Script");
+        jmExecucaoScript.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmExecucaoScriptActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jmExecucaoScript);
+
+        jmResultadosExecucaoScript.setText("Resultados Execução de Script");
+        jmResultadosExecucaoScript.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmResultadosExecucaoScriptActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jmResultadosExecucaoScript);
+
         jMenuBar1.add(jMenu5);
 
         jMenu6.setText("Auditoria");
@@ -305,7 +323,7 @@ public class JfMain extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
-   
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -337,8 +355,8 @@ public class JfMain extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-     new JfRelatorioSoftware(usuario);
-  
+        new JfRelatorioSoftware(usuario);
+
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
@@ -346,8 +364,16 @@ public class JfMain extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-     new JfAuditoria(usuario);       
+        new JfAuditoria(usuario);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jmExecucaoScriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmExecucaoScriptActionPerformed
+        new JfExecutarScript(usuario);
+    }//GEN-LAST:event_jmExecucaoScriptActionPerformed
+
+    private void jmResultadosExecucaoScriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmResultadosExecucaoScriptActionPerformed
+        new JfMaquinasExecutarScript(usuario, 0);
+    }//GEN-LAST:event_jmResultadosExecucaoScriptActionPerformed
 
     /**
      * @param args the command line arguments
@@ -420,7 +446,9 @@ public class JfMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem jimSala;
     private javax.swing.JMenuItem jimSoftware;
     private javax.swing.JMenuItem jimUsuario;
+    private javax.swing.JMenuItem jmExecucaoScript;
     private javax.swing.JMenu jmInventario;
+    private javax.swing.JMenuItem jmResultadosExecucaoScript;
     private javax.swing.JMenu jmUsuario;
     // End of variables declaration//GEN-END:variables
 }

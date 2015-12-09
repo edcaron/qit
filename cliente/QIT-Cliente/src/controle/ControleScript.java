@@ -32,8 +32,6 @@ public class ControleScript implements IControle {
         return sdao.salvar(script);
     }
 
-
-
     public Script consultar(Script script) {
 
         Script scriptLocal = new Script();
@@ -49,26 +47,22 @@ public class ControleScript implements IControle {
     @Override
     public Object[][] popularTabela(JTable tabela, IModelo modelo, boolean isModal) {
 
-           sdao = new ScriptDAO();
+        sdao = new ScriptDAO();
         Object[][] dadosTabela = null;
         try {
-            int colunasTabela = 3;
+            int colunasTabela = 2;
 
-            if (!isModal) {
-                colunasTabela = 5;
+            if (isModal) {
+                colunasTabela = 2;
             } else {
-                colunasTabela = 3; //se modal for verdadeiro, a tabela vai ter 3 colunas para ser usado no JDialog para consulta
+                colunasTabela = 2; //se modal for verdadeiro, a tabela vai ter 3 colunas para ser usado no JDialog para consulta
             }
 
             Object[] cabecalho = new Object[colunasTabela];
 
             cabecalho[0] = "Cód";
-            cabecalho[1] = "Nome";
-            cabecalho[2] = "Tipo";
-            if (!isModal) { //se modal for verdadeiro, a tabela vai ter 3 colunas para ser usado no JDialog para consulta
-                cabecalho[3] = "Data Criação";
-                cabecalho[4] = "Script";
-            }
+            cabecalho[1] = "Nome";            
+            
 
             // cria matriz de acordo com nº de registros da tabela
             ArrayList<Script> listaSalas = sdao.listar(modelo);
@@ -78,11 +72,7 @@ public class ControleScript implements IControle {
             for (int i = 0; i < listaSalas.size(); i++) {
                 dadosTabela[i][0] = listaSalas.get(i).getId();
                 dadosTabela[i][1] = listaSalas.get(i).getNome();
-                dadosTabela[i][2] = listaSalas.get(i).getTipo().getNome();
-                if (!isModal) { //se modal for verdadeiro, a tabela vai ter 3 colunas para ser usado no JDialog para consulta
-                    dadosTabela[i][3] = listaSalas.get(i).getDtCriacao();
-                    dadosTabela[i][4] = listaSalas.get(i).getTexto();
-                }
+             
             }
             // configuracoes adicionais no componente tabela
             tabela.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
@@ -113,10 +103,8 @@ public class ControleScript implements IControle {
             centralizado.setHorizontalAlignment(SwingConstants.CENTER);
             direita.setHorizontalAlignment(SwingConstants.RIGHT);
 
-            tabela.getColumnModel().getColumn(0).setCellRenderer(direita);
-            tabela.getColumnModel().getColumn(1).setCellRenderer(direita);
-            tabela.getColumnModel().getColumn(2).setCellRenderer(direita);
-            tabela.getTableHeader().setResizingAllowed(true);
+            tabela.getColumnModel().getColumn(0).setCellRenderer(esquerda);
+            tabela.getColumnModel().getColumn(1).setCellRenderer(esquerda);
 
             // redimensiona as colunas de uma tabela
             TableColumn column = null;

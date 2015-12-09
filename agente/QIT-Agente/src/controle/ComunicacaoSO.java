@@ -79,21 +79,44 @@ public class ComunicacaoSO {
      */
     public static String executarComando(String comando, String parametro) {
         String output = "";
-        try {
-
-//            // executar comando no cmd
-//            String cmd = comando + parametro;
-//            System.out.println("comando: " + cmd);
-//            Process process = Runtime.getRuntime().exec(cmd);
-//
-//            StreamReader reader = new StreamReader(process.getInputStream());
-//            reader.start();
-//            process.waitFor();
-//            reader.join();
-//            String output = reader.getResult();
-            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando);            
+        try {            
+            System.out.println("comando:" + comando);
+            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando);
             builder.redirectErrorStream(true);
-            Process p = builder.start();           
+            Process p = builder.start();
+            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while (true) {
+                line = r.readLine();
+                if (line == null) {
+                    break;
+                }
+                output += line;
+                output += "\n";
+            }
+            return output;
+        } catch (IOException e) {
+            System.err.println("erro em executarComando /n" + e);
+            return null;
+        }
+    }
+
+    /**
+     * Funcao para executar script no CMD do windows.
+     * e necessario passar o caminho completo do arquivo a ser chamado
+     *
+     * @param comando programa ou comando a ser executado
+     * @param parametro parametros adicionais para o comando enviado
+     * anteriormente
+     * @return String com o retorno dado pelo cmd
+     */
+    public static String executarScripts(String comando, String parametro) {
+        String output = "";
+        try {            
+            System.out.println("comando:" + comando);
+            ProcessBuilder builder = new ProcessBuilder(comando);
+            builder.redirectErrorStream(true);
+            Process p = builder.start();
             BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String line;
             while (true) {

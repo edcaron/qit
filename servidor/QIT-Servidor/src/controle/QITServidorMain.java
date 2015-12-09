@@ -6,8 +6,9 @@
 package controle;
 
 import java.util.ArrayList;
-import modelo.PacoteSocket;
-import modelo.Tarefa;
+import modelo.ExecucaoScript;
+import modelo.Maquina;
+import modelo.MaquinasExecutarScript;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -31,22 +32,29 @@ public class QITServidorMain {
 //            System.out.println("Erro ao tentar aceitar conexao\n" + e);
 //        }
         
-        PacoteSocket pacote = new PacoteSocket();
-        Tarefa tarefa = new Tarefa();
-        tarefa.setOperacao(1);
-        ArrayList<Tarefa> listaTarefas = new ArrayList<>();
-        listaTarefas.add(tarefa);
-        pacote.setListaTarefas(listaTarefas);
-                
+//        PacoteSocket pacote = new PacoteSocket();
+//        Tarefa tarefa = new Tarefa();
+//        tarefa.setOperacao(1);
+//        ArrayList<Tarefa> listaTarefas = new ArrayList<>();
+//        listaTarefas.add(tarefa);
+//        pacote.setListaTarefas(listaTarefas);
+//        PacoteSocket pacote = new PacoteSocket();
+//        pacote.setId(1);
+//        pacote.setTipo(2);        
+//        Tarefa tarefa = new Tarefa();
+//        tarefa.setOperacao(3);        
+//        tarefa.setComando("\"C:\\Program Files (x86)\\Notepad++\\notepad++.exe\" \"C:\\QIT\\QIT-Agente\\softwares\\10\\qit.backup\"");        
+//        ArrayList<Tarefa> listaTarefas = new ArrayList<>();
+//        listaTarefas.add(tarefa);
+//        pacote.setListaTarefas(listaTarefas);
+//                
 //        ClienteSocket cs1 = new ClienteSocket("localhost", 1234);
-//        cs1.enviarObjeto(pacote);
+//        cs1.enviarObjeto(pacote);        
 //        cs1.pegarRetorno();
-        
-        ClienteSocket cs2 = new ClienteSocket("10.3.9.20", 1234);
-        cs2.enviarObjeto(pacote);
-        cs2.pegarRetorno();
-
-
+//        cs1.fecharConexao();
+//        ClienteSocket cs2 = new ClienteSocket("10.3.9.20", 1234);
+//        cs2.enviarObjeto(pacote);
+//        cs2.pegarRetorno();
 //        chamarTarefasAutomatizadas();
 //        Inventario inventario = null;
 //
@@ -55,29 +63,62 @@ public class QITServidorMain {
 //        inventario = (Inventario) x.fromXML(arquivoXml);
 //        
 //        ControleInventario ci = new ControleInventario();
-//        ci.gravarInventario(inventario);
+//        ci.gravarInventario(inventario);         
+        
+        chamarTarefasAutomatizadas();
     }
 
     public static void chamarTarefasAutomatizadas() {
-
         try {
-            JobDetail job = JobBuilder.newJob(TarefaLimpaAuditoria.class)
+//            tarefa para limpar auditoria
+            JobDetail tarefaLimpaAuditoria = JobBuilder.newJob(TarefaLimpaAuditoria.class)
                     .withIdentity("tarefaLimpaAuditoria", "grupo1").build();
 
             // executa a cada 24 horas
-            Trigger trigger = TriggerBuilder
+            Trigger triggerTarefaLimpaAuditoria = TriggerBuilder
                     .newTrigger()
                     .withIdentity("gatilhoLimpaAuditoria", "grupo1")
                     .withSchedule(
                             SimpleScheduleBuilder.simpleSchedule()
                             .withIntervalInHours(24).repeatForever())
-                    //                            .withIntervalInSeconds(2).repeatForever())
+                    .build();
+            
+            
+            
+//            tarefa executar scripts
+            JobDetail tarefaExecutaScrits = JobBuilder.newJob(TarefaExecutaScripts.class)
+                    .withIdentity("tarefaExecutaScrits", "grupo1").build();
+
+            // executa a cada 1 minuto
+            Trigger triggerExecutaScrits = TriggerBuilder
+                    .newTrigger()
+                    .withIdentity("triggerExecutaScrits", "grupo1")
+                    .withSchedule(
+                            SimpleScheduleBuilder.simpleSchedule()
+                            .withIntervalInMinutes(1).repeatForever())
+                    .build();
+            
+            
+//            tarefa para executar inventario
+            JobDetail tarefaExecutaInventario = JobBuilder.newJob(TarefaExecutaInventario.class)
+                    .withIdentity("tarefaExecutaInventario", "grupo1").build();
+
+            // executa a cada 2 horas
+            Trigger triggerExecutaInventario = TriggerBuilder
+                    .newTrigger()
+                    .withIdentity("triggerExecutaInventario", "grupo1")
+                    .withSchedule(
+                            SimpleScheduleBuilder.simpleSchedule()
+                            .withIntervalInMinutes(1).repeatForever())
                     .build();
 
-            // schedule it
+            
+            // agendar as tarefas
             Scheduler scheduler = new StdSchedulerFactory().getScheduler();
             scheduler.start();
-            scheduler.scheduleJob(job, trigger);
+//            scheduler.scheduleJob(tarefaLimpaAuditoria, triggerTarefaLimpaAuditoria);
+//            scheduler.scheduleJob(tarefaExecutaScrits, triggerExecutaScrits);
+            scheduler.scheduleJob(tarefaExecutaInventario, triggerExecutaInventario);
         } catch (Exception e) {
             System.err.println(e);
         }

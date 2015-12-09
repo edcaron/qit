@@ -8,6 +8,7 @@ package dao;
 import java.util.List;
 import modelo.Maquina;
 import controle.HibernateUtil;
+import java.util.ArrayList;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -19,7 +20,8 @@ import org.hibernate.Session;
 public class MaquinaDAO extends DAOPadrao{
 
     Session sessao = null;
-
+   
+    
     public MaquinaDAO() {
         sessao = HibernateUtil.getSessionFactory().openSession();
     }
@@ -71,5 +73,33 @@ public class MaquinaDAO extends DAOPadrao{
             he.printStackTrace();
         }
         return maquinaLocal;
+    }
+    
+    public ArrayList<Maquina> listar(String criterio) {
+        List resultado = null;
+
+        ArrayList<Maquina> lista = new ArrayList<>();
+        try {
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+            String sql = "from Maquina  "
+                    + "where 1=1 "
+                    + criterio
+                    + " order by id desc";
+     
+            org.hibernate.Query q = sessao.createQuery(sql);
+            resultado = q.list();
+
+            for (Object o : resultado) {
+                Maquina s = ((Maquina) ((Object) o));
+                lista.add(s);
+            }
+
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        } finally {
+            sessao.close();
+        }
+        return lista;
     }
 }

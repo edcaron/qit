@@ -3,7 +3,6 @@ package visao;
 import controle.ControlePredio;
 import controle.ITela;
 import controle.ControleSala;
-import controle.ControleUsuario;
 import controle.ProxyTelas;
 import dao.SalaDAO;
 import javax.swing.JOptionPane;
@@ -335,9 +334,7 @@ public class JfSala extends javax.swing.JFrame implements ITela {
                 this.editar();
             }
         } else {
-
         }
-
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btConsultarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarTabelaActionPerformed

@@ -36,15 +36,15 @@ public class Tarefas {
         }
 
         PacoteSocket pacote = new PacoteSocket();
-        
-        ArrayList<Tarefa> listaTarefas = new ArrayList<>();                
+
+        ArrayList<Tarefa> listaTarefas = new ArrayList<>();
         Tarefa tarefa = new Tarefa();
         tarefa.setOperacao(2);
-        
-        ArrayList<byte[]> listaArquivos = new ArrayList<>();        
+
+        ArrayList<byte[]> listaArquivos = new ArrayList<>();
         File inventario = new File("C:\\QIT\\QIT-Agente\\inventario.xml");
         byte[] inventarioEmBytes = Util.fileToByteArray(inventario);
-        
+
         listaArquivos.add(inventarioEmBytes);
         tarefa.setListaArquivos(listaArquivos);
         listaTarefas.add(tarefa);
@@ -53,11 +53,36 @@ public class Tarefas {
 //        Devolve dados (inventario) para o servidor
         ClienteSocket cs = new ClienteSocket(os);
         cs.enviarObjeto(pacote);
-
 //        cs.fecharConexao();                  
     }
 
-    public static void executarScript(PacoteSocket pacoteRecebido) {
+    public static void executarScript(PacoteSocket pacoteRecebido, OutputStream os) {
+        String retornoScript = "";
 
+        //fazer download de arquivos deste script
+        ControleSamba.getFiles(pacoteRecebido.getTipo(), pacoteRecebido.getId());
+
+        //executar tarefa
+        for (Tarefa tarefa : pacoteRecebido.getListaTarefas()) {
+            String comando = tarefa.getComando();
+            retornoScript += Util.getCurrentTimestamp() + "tarefa iniciada \n";
+
+            retornoScript += ComunicacaoSO.executarScripts(tarefa.getComando(), null);            
+
+            retornoScript += Util.getCurrentTimestamp() + "tarefa concluída \n";
+        }
+
+//        preparar pacote com o retorno do script
+        PacoteSocket pacote = pacoteRecebido;
+        ArrayList<Tarefa> listaTarefas = new ArrayList<>();
+        Tarefa tarefa = new Tarefa();
+        tarefa.setOperacao(4);
+        tarefa.setComando(retornoScript);
+        listaTarefas.add(tarefa);
+        pacote.setListaTarefas(listaTarefas);
+
+//        Devolve dados (resultado so script) para o servidor
+        ClienteSocket cs = new ClienteSocket(os);
+        cs.enviarObjeto(pacote);
     }
 }

@@ -49,7 +49,6 @@ public class MaquinasExecutarScript implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "id", unique = true, nullable = false)
     public int getId() {
         return this.id;
@@ -59,7 +58,7 @@ public class MaquinasExecutarScript implements java.io.Serializable {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_executar_script", nullable = false)
     public ExecucaoScript getExecucaoScript() {
         return this.execucaoScript;
@@ -69,7 +68,7 @@ public class MaquinasExecutarScript implements java.io.Serializable {
         this.execucaoScript = execucaoScript;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_maquina", nullable = false)
     public Maquina getMaquina() {
         return this.maquina;
