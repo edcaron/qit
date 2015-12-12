@@ -641,6 +641,7 @@ public class JfMaquina extends javax.swing.JFrame implements ITela {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         jftfNomePredio1.setText("");
         qftfIdSala.setText("");
+        atualizarTabela();
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
