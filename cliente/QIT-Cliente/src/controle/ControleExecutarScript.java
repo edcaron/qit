@@ -72,7 +72,7 @@ public class ControleExecutarScript implements IControle {
         return objLocal;
     }
 
-    @Override
+    
     public Object[][] popularTabela(JTable tabela, IModelo ec, boolean isModal) {
         Object[][] dadosTabela = null;
         try {
@@ -92,6 +92,7 @@ public class ControleExecutarScript implements IControle {
 
             // cria matriz de acordo com nº de registros da tabela
             ArrayList<ExecucaoScript> listaObj = esdao.listar(ec);
+                        
 
             dadosTabela = new Object[listaObj.size()][colunasTabela];
 
@@ -140,6 +141,7 @@ public class ControleExecutarScript implements IControle {
 
         } catch (Exception e) {
             System.err.println("Erro ao popular tabela: " + e + "\n" + e.getCause());
+            e.printStackTrace();
         }
         return dadosTabela;
     }
@@ -160,4 +162,5 @@ public class ControleExecutarScript implements IControle {
 //        retorno = this.salvar(objLocal);
 //        return retorno;
 //    }
+    
 }

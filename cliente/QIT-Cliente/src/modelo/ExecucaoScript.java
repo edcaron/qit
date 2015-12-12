@@ -115,6 +115,7 @@ public class ExecucaoScript implements java.io.Serializable, IModelo {
     @Override
     @Transient
     public String getNome() {
+        System.out.println("getNome não suportado");
         return this.getScript().getNome();
     }
 

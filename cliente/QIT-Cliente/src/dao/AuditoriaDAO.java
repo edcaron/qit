@@ -6,18 +6,18 @@
 package dao;
 
 import controle.HibernateUtil;
-import java.io.Serializable;
+import controle.IModelo;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import modelo.Auditoria;
-import modelo.Usuario;
+import modelo.Sala;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Expression;
 
 /**
@@ -31,33 +31,38 @@ public class AuditoriaDAO {
     public AuditoriaDAO() {
         sessao = HibernateUtil.getSessionFactory().openSession();
     }
+    
+    
+    
+     public ArrayList<Auditoria> listar(String parametros) {
+        List resultado = null;
 
+        ArrayList<Auditoria> lista = new ArrayList<>();
+        Transaction t = null;
+        try {
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            t = sessao.beginTransaction();
+            
+            String sql = "from Auditoria"
+                    + " where 1=1 "
+                    + parametros 
+                    + " order by dt desc";
 
+            org.hibernate.Query q = sessao.createQuery(sql);
+            resultado = q.list();
 
-    public List listaTodos(Date minDate, Date maxDate) {
+            for (Object o : resultado) {
+                Auditoria s = (Auditoria) ((Object) o);
+                lista.add(s);
+            }
 
-        Query query = sessao.createQuery("from Auditoria");
-        List listaUs = query.list();
-        Criteria ct = sessao.createCriteria(Auditoria.class);
-        //ct.add(Restrictions.gt("id", (4)));
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-YYYY");
-        String myDate = "17-04-2011";
-        // Create date 17-04-2011 - 00h00
+        } catch (HibernateException he) {
+            he.printStackTrace();            
+            t.rollback();
+        } finally {
+            sessao.close();
+        }
 
-        // Create date 18-04-2011 - 00h00 
-        // -> We take the 1st date and add it 1 day in millisecond thanks to a useful and not so known class
-        ct.add(Expression.ge("dt", minDate)); //maior que minDate
-        ct.add(Expression.le("dt", maxDate)); //maior que maxDate
-//        Conjunction and = Restrictions.conjunction();
-//        // The order date must be >= 17-04-2011 - 00h00
-//        and.add(Restrictions.ge("dt_criacao", minDate));
-//        // And the order date must be < 18-04-2011 - 00h00
-//        and.add(Restrictions.lt("dt_criacao ", maxDate));
-//        ct.add(and);
-
-        listaUs = ct.list();
-
-        return listaUs;
-
-    }
+        return lista;
+    }   
 }

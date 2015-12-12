@@ -29,7 +29,7 @@ public class JfMaquinasExecutarScript extends javax.swing.JFrame implements ITel
 
     public JfMaquinasExecutarScript(Usuario usuario, int idMaquinasExecutarScript) {
         initComponents();
-        this.setTitle("Executar Script");
+        this.setTitle("Resultados da Execução de Script");
         this.usuario = usuario;
         this.ces = new ControleExecutarScript();
         listaMaquinasExecutarScripts = new HashSet<>();
@@ -77,7 +77,7 @@ public class JfMaquinasExecutarScript extends javax.swing.JFrame implements ITel
         jtMaquinas = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtResultadoExecucao = new javax.swing.JTextArea();
+        jtaResultadoExecucao = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jtDataRetorno = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -86,6 +86,7 @@ public class JfMaquinasExecutarScript extends javax.swing.JFrame implements ITel
         jtNomeMaquinaSelecionada = new javax.swing.JTextField();
         jftfDataExecScript = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
+        btAtualzar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -130,11 +131,10 @@ public class JfMaquinasExecutarScript extends javax.swing.JFrame implements ITel
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel7.setText("Resultado na Máquina Selecionada:");
 
-        jtResultadoExecucao.setColumns(20);
-        jtResultadoExecucao.setRows(5);
-        jtResultadoExecucao.setEnabled(false);
-        jtResultadoExecucao.setFocusable(false);
-        jScrollPane1.setViewportView(jtResultadoExecucao);
+        jtaResultadoExecucao.setColumns(20);
+        jtaResultadoExecucao.setRows(5);
+        jtaResultadoExecucao.setEnabled(false);
+        jScrollPane1.setViewportView(jtaResultadoExecucao);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Data do retorno:");
@@ -155,6 +155,13 @@ public class JfMaquinasExecutarScript extends javax.swing.JFrame implements ITel
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Data:");
+
+        btAtualzar.setText("Atualizar");
+        btAtualzar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAtualzarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpCadastroLayout = new javax.swing.GroupLayout(jpCadastro);
         jpCadastro.setLayout(jpCadastroLayout);
@@ -181,7 +188,8 @@ public class JfMaquinasExecutarScript extends javax.swing.JFrame implements ITel
                                     .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel7)
                                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btAtualzar))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpCadastroLayout.createSequentialGroup()
                                         .addGap(373, 373, 373)
                                         .addComponent(jLabel5)
@@ -232,7 +240,9 @@ public class JfMaquinasExecutarScript extends javax.swing.JFrame implements ITel
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btCancelar1)
+                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btCancelar1)
+                    .addComponent(btAtualzar))
                 .addGap(0, 22, Short.MAX_VALUE))
         );
 
@@ -260,6 +270,7 @@ public class JfMaquinasExecutarScript extends javax.swing.JFrame implements ITel
             new JdlgGenerico(this, ctrlExecScript, execScriptModal, 1).setVisible(true);
         } catch (Exception e) {
             System.err.println("Erro " + e);
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btBuscarExecScriptActionPerformed
 
@@ -279,16 +290,24 @@ public class JfMaquinasExecutarScript extends javax.swing.JFrame implements ITel
                 MaquinasExecutarScript mes = it.next();
                 if (mes.getMaquina().getId() == idRegistroSelecionado && mes.getDtRetorno() != null) {
                     jtDataRetorno.setText(Util.dateToString(mes.getDtRetorno()));
-                    jtResultadoExecucao.setText(mes.getRetorno());
+                    jtaResultadoExecucao.setText(mes.getRetorno());
                     jtNomeMaquinaSelecionada.setText(mes.getMaquina().getHost());
                 }else if(mes.getMaquina().getId() == idRegistroSelecionado){
-                    jtResultadoExecucao.setText("Ainda nenhum resultado obtido");
+                    jtaResultadoExecucao.setText("Ainda nenhum resultado obtido");
                     jtNomeMaquinaSelecionada.setText(mes.getMaquina().getHost());
                     jtDataRetorno.setText("");
                 }
             }
         }
     }//GEN-LAST:event_jtMaquinasMouseClicked
+
+    private void btAtualzarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualzarActionPerformed
+        if(jtMaquinas.getRowCount() >0){
+            int linhaSelecionada = jtMaquinas.getSelectedRow();
+            popularCampos();
+            
+        }
+    }//GEN-LAST:event_btAtualzarActionPerformed
 
     @Override
     public boolean inserir() {
@@ -352,7 +371,7 @@ public class JfMaquinasExecutarScript extends javax.swing.JFrame implements ITel
         this.execScript = null;
         this.execScript = new ExecucaoScript();
         jtDataRetorno.setText(null);
-        jtResultadoExecucao.setText("");
+        jtaResultadoExecucao.setText("");
         jtMaquinas.clearSelection();
         listaMaquinasExecutarScripts.clear();
         popularTabela();
@@ -362,6 +381,8 @@ public class JfMaquinasExecutarScript extends javax.swing.JFrame implements ITel
     @Override
     public void popularCampos() {
         try {
+            jtaResultadoExecucao.setText("");
+            
             ExecucaoScript exsPesquisa = new ExecucaoScript();
             exsPesquisa.setId(Integer.parseInt(qftfIdExecScript.getText()));
             execScript = new ControleExecutarScript().consultar(exsPesquisa);
@@ -481,6 +502,7 @@ public class JfMaquinasExecutarScript extends javax.swing.JFrame implements ITel
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btAtualzar;
     private javax.swing.JButton btBuscarExecScript;
     private javax.swing.JButton btCancelar1;
     private javax.swing.JLabel jLabel1;
@@ -498,7 +520,7 @@ public class JfMaquinasExecutarScript extends javax.swing.JFrame implements ITel
     private javax.swing.JTextField jtDataRetorno;
     private javax.swing.JTable jtMaquinas;
     private javax.swing.JTextField jtNomeMaquinaSelecionada;
-    private javax.swing.JTextArea jtResultadoExecucao;
+    private javax.swing.JTextArea jtaResultadoExecucao;
     private qitjftf.QITJFormattedTextField qftfIdExecScript;
     // End of variables declaration//GEN-END:variables
 

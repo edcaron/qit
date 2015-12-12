@@ -21,7 +21,7 @@ public class ClienteSocket {
 
     public ClienteSocket(String enderecoRemoto, int porta) {
         this.enderecoRemoto = enderecoRemoto;
-        this.porta = porta;
+        this.porta = porta;       
         try {
             socketCliente = new Socket(this.enderecoRemoto, this.porta);
             System.out.println("Cliente inciado e enviando para: " + this.enderecoRemoto + ":" + this.porta);

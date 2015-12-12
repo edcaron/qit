@@ -55,7 +55,9 @@ public class GrupoDAO {
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            String sql = "from Grupo g where lower(g.nome) like lower('%" + grupo.getNome() + "%') order by g.id desc";
+            String sql = "from Grupo g "
+                    + "where lower(g.nome) like lower('%" + grupo.getNome() + "%') "
+                    + "order by g.id desc";
 
             if (grupo.getNome().equals("")) {
                 sql = "from Grupo g order by g.id desc";

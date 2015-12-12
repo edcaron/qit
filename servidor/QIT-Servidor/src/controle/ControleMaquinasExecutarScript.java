@@ -5,6 +5,7 @@
  */
 package controle;
 
+import dao.DAOPadrao;
 import dao.MaquinasExecutarScriptDAO;
 import java.util.ArrayList;
 import javax.swing.JTable;
@@ -18,15 +19,20 @@ import modelo.MaquinasExecutarScript;
  *
  * @author eduar_000
  */
-public class ControleMaquinasExecutarScript  {
-    
+public class ControleMaquinasExecutarScript {
+
     MaquinasExecutarScriptDAO mesdao;
 
-    public ControleMaquinasExecutarScript() {        
+    public ControleMaquinasExecutarScript() {
         mesdao = new MaquinasExecutarScriptDAO();
     }
-   
-    
+
+    public boolean salvar(MaquinasExecutarScript obj) {
+
+        return mesdao.salvar(obj);
+
+    }
+
     public Object[][] popularTabela(JTable tabela, MaquinasExecutarScript ec, boolean isModal) {
         Object[][] dadosTabela = null;
         try {
@@ -39,7 +45,7 @@ public class ControleMaquinasExecutarScript  {
             }
 
             Object[] cabecalho = new Object[colunasTabela];
-            
+
             cabecalho[0] = "Cód.";
             cabecalho[1] = "Máquinas";
             cabecalho[2] = "So";
@@ -54,7 +60,7 @@ public class ControleMaquinasExecutarScript  {
                 dadosTabela[i][1] = listaObj.get(i).getMaquina().getNome();
                 dadosTabela[i][2] = listaObj.get(i).getMaquina().getSo();
             }
-                                 
+
             // configuracoes adicionais no componente tabela
             tabela.setModel(new DefaultTableModel(dadosTabela, cabecalho) {
                 @Override

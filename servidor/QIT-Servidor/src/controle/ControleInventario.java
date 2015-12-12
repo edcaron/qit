@@ -44,14 +44,17 @@ public class ControleInventario {
         maquina = maqDAO.procurarDuplicado(maquina);
         maquina.setDtUltimaDeteccao(Util.stringParaDate(inventario.getDataAtual()));
         maquina.setAtivo(Boolean.TRUE);
-        if (maquina.getId() == 0) {
-//caso esta maquina ainda não esteja gravada no banco, marcamos como detectado para esta maquina na data que foi feito o inventario
+        if (maquina.getId() != 0) {
+            Maquina maquinaDoBando = maqDAO.consultar(maquina);
+            maquina.setAtivo(maquinaDoBando.getAtivo());
+            maquina.setSala(maquinaDoBando.getSala());
+            maquina.setDtPrimeiraDeteccao(maquinaDoBando.getDtPrimeiraDeteccao());
+            maquina.setObservacao(maquinaDoBando.getObservacao());
+        } else {
+            //caso esta maquina ainda não esteja gravada no banco, marcamos como detectado para esta maquina na data que foi feito o inventario
             maquina.setDtPrimeiraDeteccao(Util.stringParaDate(inventario.getDataAtual()));
         }
         
-        Sala s = new Sala();
-        s.setId(1);
-        maquina.setSala(s);
         maqDAO.salvar(maquina);
 
 //        gravar placa de rede        

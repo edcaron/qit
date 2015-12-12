@@ -6,6 +6,7 @@
 package dao;
 
 import controle.HibernateUtil;
+import java.util.List;
 import modelo.Dependencia;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -27,17 +28,26 @@ public class DependenciaDAO {
         boolean retorno = false;
         Transaction t = null;
         try {
+            Dependencia d = new Dependencia();
+            String parametros = " and nome = '" + obj.getNome() + "' and script.id = "+obj.getScript().getId();                                            
+            d = new DependenciaDAO().consultar(parametros);
+            
+//            verificar a existencia no bd de uma dependencia com o mesmo nome no script atual, para que não fique duplicada
+            if (d.getId() != 0) {
+                obj.setId(d.getId());               
+            }
+            
             sessao = HibernateUtil.getSessionFactory().openSession();
-            t = sessao.beginTransaction();
-
+            t = sessao.beginTransaction();           
             sessao.saveOrUpdate(obj);
+
             t.commit();
             retorno = true;
         } catch (HibernateException he) {
             he.printStackTrace();
             t.rollback();
         } finally {
-            sessao.close();
+            sessao.close();            
         }
         return retorno;
     }
@@ -59,6 +69,30 @@ public class DependenciaDAO {
             sessao.close();
         }
         return retorno;
+    }
+
+    public Dependencia consultar(String parametros) {
+        List resultado = null;
+        Dependencia objLocal = new Dependencia();        
+        try {
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+            org.hibernate.Query q = sessao.createQuery("from Dependencia "
+                    + "where 1=1 "
+                    + parametros
+                    + " ");
+            resultado = q.list();
+
+            for (Object resultado1 : resultado) {
+                objLocal = (Dependencia) resultado1;
+            }            
+
+        } catch (HibernateException he) {
+            System.err.println("Erro em consultar \n" + he);            
+        } finally {
+            sessao.close();
+        }
+        return objLocal;
     }
 
 }

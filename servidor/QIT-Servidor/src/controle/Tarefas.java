@@ -10,6 +10,7 @@ import dao.MaquinasExecutarScriptDAO;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import modelo.ExecucaoScript;
 import modelo.Inventario;
 import modelo.MaquinasExecutarScript;
 import modelo.PacoteSocket;
@@ -46,12 +47,17 @@ public class Tarefas {
     public static void armazenaRetornoScript(PacoteSocket pacote) {
         try {
             MaquinasExecutarScript mes = new MaquinasExecutarScript();
+            ExecucaoScript es = new ExecucaoScript();
             for (Tarefa t : pacote.getListaTarefas()) {
                 mes.setId(pacote.getIdTabelaRelacao());
                 mes = new MaquinasExecutarScriptDAO().consultar(mes);
                 mes.setDtRetorno(Util.getCurrentDate());
                 mes.setRetorno(t.getComando());
-                new MaquinasExecutarScriptDAO().salvar(mes);
+                new ControleMaquinasExecutarScript().salvar(mes);
+
+                es = mes.getExecucaoScript();
+                es.setExecutado(Boolean.TRUE);
+                new ControleExecutarScript().salvar(es);
             }
         } catch (Exception e) {
             System.err.println("Erro ao armazernarRetorno do script" + e);
