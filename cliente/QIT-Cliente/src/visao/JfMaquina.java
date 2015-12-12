@@ -542,19 +542,12 @@ public class JfMaquina extends javax.swing.JFrame implements ITela {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        if (controle.Formatacao.verificarNulos(jpCadastro)) {
-            Sala s = new Sala();
-            s.setId(Integer.parseInt(qftfIdSala1.getText()));
-            maquina.setSala(s);
-            if (this.maquina.getId() == 0) {
-                // nunca vai cair aki
-                this.inserir();
-            } else {
-                this.editar();
-            }
-        } else {
+        Sala s = new Sala();
+        int idsala = Integer.parseInt(qftfIdSala1.getText());
+        s.setId(idsala);
+        maquina.setSala(s);
+        this.editar();
 
-        }
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelar1ActionPerformed
@@ -842,6 +835,7 @@ public class JfMaquina extends javax.swing.JFrame implements ITela {
     public void limparCampos() {
 
         new controle.Formatacao().limparCampos(jpCadastro);
+        jtpMain.setSelectedIndex(0);
 
     }
 
