@@ -111,6 +111,7 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
         jpConsulta = new javax.swing.JPanel();
         btCancelar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -187,6 +188,13 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
         ));
         jScrollPane3.setViewportView(jTable1);
 
+        jButton1.setText("Limpar campos");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpCadastroLayout = new javax.swing.GroupLayout(jpCadastro);
         jpCadastro.setLayout(jpCadastroLayout);
         jpCadastroLayout.setHorizontalGroup(
@@ -197,7 +205,9 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
                     .addGroup(jpCadastroLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
                         .addComponent(btCancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jpCadastroLayout.createSequentialGroup()
                         .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -253,7 +263,8 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
                 .addGap(3, 3, 3)
                 .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btCancelar1)
-                    .addComponent(btSalvar))
+                    .addComponent(btSalvar)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -371,57 +382,36 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
 
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-//        if (controle.Formatacao.verificarNulos(jpCadastro)) {
-//            if (btBuscarGrupo.isEnabled()) {
-//                grupo.setId(Integer.parseInt(qftfIdGrupo.getText()));
-//            } else {
-//                grupo = null;
-//
-//            }
-//
-//            if (btBuscarUsuario.isEnabled()) {
-//                usuarioselecionado.setId(Integer.parseInt(qftfIdUsuario.getText()));
-//            } else {
-//                usuarioselecionado = null;
-//
-//            }
-//
-//            telaselecionada.setId(Integer.parseInt(qftfIdTela.getText()));
-//            permissao.setGrupo(grupo);
-//            permissao.setTela(tela);
-//            permissao.setUsuarioByIdUsuarioModificador(usuario);
-//            permissao.setUsuarioByIdUsuario(usuarioselecionado);
-//
-//            if (JcbEditar.isSelected()) {
-//                permissao.setEditar(true);
-//            } else {
-//                permissao.setEditar(false);
-//            }
-//            if (JcbInativar.isSelected()) {
-//                permissao.setInativar(true);
-//            } else {
-//                permissao.setInativar(false);
-//            }
-//            if (JcbInserir.isSelected()) {
-//                permissao.setInserir(true);
-//            } else {
-//                permissao.setInserir(false);
-//            }
-//            if (JcbVisualisar.isSelected()) {
-//                permissao.setLer(true);
-//            } else {
-//            }
-//
-//            if (permissao.getId() == 0) {
-//                this.inserir();
-//                limparCampos();
-//            } else {
-//                this.editar();
-//                limparCampos();
-//            }
-//        } else {
-//
-//        }
+        if (controle.Formatacao.verificarNulos(jpCadastro)) {
+            if (btBuscarGrupo.isEnabled()) {
+                grupo.setId(Integer.parseInt(qftfIdGrupo.getText()));
+            } else {
+                grupo = null;
+
+            }
+            if (btBuscarUsuario.isEnabled()) {
+                usuarioselecionado.setId(Integer.parseInt(qftfIdUsuario.getText()));
+            } else {
+                usuarioselecionado = null;
+
+            }
+            int numerodelinhas = jTable1.getRowCount();
+            for (int i = 0; i < numerodelinhas; i++) {
+                telaselecionada.setId(Integer.parseInt(String.valueOf(jTable1.getValueAt(i, 0))));
+                permissao.setGrupo(grupo);
+                permissao.setTela(tela);
+                permissao.setUsuarioByIdUsuarioModificador(usuario);
+                permissao.setUsuarioByIdUsuario(usuarioselecionado);
+                permissao.setId(Integer.parseInt(String.valueOf(jTable1.getValueAt(i, 7))));
+
+                this.editar();
+            }
+
+            limparCampos();
+
+        } else {
+
+        }
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelar1ActionPerformed
@@ -582,6 +572,10 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
 
             qftfIdGrupo.setText(id);
             jftfNomeGrupo.setText(nome);
+            int idg = Integer.parseInt(id);
+            Grupo g = new Grupo();
+            g.setId(idg);
+            controlePermissao.popularTabela(jTable1, g);
 
         } catch (Exception e) {
             System.err.println("Erro em setRelacionado1: " + e);
@@ -620,6 +614,12 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
     private void qftfIdGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qftfIdGrupoActionPerformed
         // TODO add your handling code here:6
     }//GEN-LAST:event_qftfIdGrupoActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        limparCampos();
+        btBuscarGrupo.setEnabled(true);
+        btBuscarUsuario.setEnabled(true);       // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public class BooleanTableModel extends AbstractTableModel {
 
@@ -710,6 +710,7 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
     private javax.swing.JButton btInativar;
     private javax.swing.JButton btSalvar;
     private javax.swing.JButton btVerEditar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

@@ -56,9 +56,11 @@ public class TelaDAO {
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            String sql = "from Tela t where lower(t.nome) like lower('%" + tela.getNome() + "%') order by t.id desc";
+            String sql = "";
+            if (tela != null) {
+                sql = "from Tela t where lower(t.nome) like lower('%" + tela.getNome() + "%') order by t.id desc";
+            } else {
 
-            if (tela.getNome().equals("")) {
                 sql = "from Tela t order by t.id desc";
             }
 
@@ -77,7 +79,5 @@ public class TelaDAO {
         }
         return lista;
     }
-
-
 
 }
