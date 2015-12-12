@@ -112,4 +112,31 @@ public class PermissaoDAO {
         return lista;
     }
 
+    public ArrayList<Permissao> listar(Usuario usuario) {
+
+        List resultado = null;
+
+        ArrayList<Permissao> lista = new ArrayList<>();
+        try {
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+            String sql = "from Permissao p inner join p.usuarioByIdUsuario as u inner join p.tela where u.id = " + usuario.getId() + " order by p.id ";
+
+            org.hibernate.Query q = sessao.createQuery(sql);
+            resultado = q.list();
+
+            for (Object o : resultado) {
+                Permissao s = ((Permissao) ((Object[]) o)[0]);
+                lista.add(s);
+            }
+
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        } finally {
+            sessao.close();
+        }
+        return lista;
+
+    }
+
 }

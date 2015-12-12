@@ -54,11 +54,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Maquinas"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jimMaquinasActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jimSoftware">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Software"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jimSoftwareActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jimPredio">
               <Properties>

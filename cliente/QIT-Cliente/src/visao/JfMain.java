@@ -148,9 +148,19 @@ public class JfMain extends javax.swing.JFrame {
         jmInventario.setText("Inventário");
 
         jimMaquinas.setText("Maquinas");
+        jimMaquinas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jimMaquinasActionPerformed(evt);
+            }
+        });
         jmInventario.add(jimMaquinas);
 
         jimSoftware.setText("Software");
+        jimSoftware.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jimSoftwareActionPerformed(evt);
+            }
+        });
         jmInventario.add(jimSoftware);
 
         jimPredio.setText("Prédio");
@@ -314,7 +324,7 @@ public class JfMain extends javax.swing.JFrame {
     }//GEN-LAST:event_jimGrupoUsuarioActionPerformed
 
     private void jimPermissaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jimPermissaoActionPerformed
-        new JfPermissao(usuario);
+        new JfPermissaoNew2(usuario);
     }//GEN-LAST:event_jimPermissaoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -374,6 +384,14 @@ public class JfMain extends javax.swing.JFrame {
     private void jmResultadosExecucaoScriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmResultadosExecucaoScriptActionPerformed
         new JfMaquinasExecutarScript(usuario, 0);
     }//GEN-LAST:event_jmResultadosExecucaoScriptActionPerformed
+
+    private void jimMaquinasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jimMaquinasActionPerformed
+        new JfMaquina(usuario);
+    }//GEN-LAST:event_jimMaquinasActionPerformed
+
+    private void jimSoftwareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jimSoftwareActionPerformed
+        new JfSoftware(usuario);        // TODO add your handling code here:
+    }//GEN-LAST:event_jimSoftwareActionPerformed
 
     /**
      * @param args the command line arguments
