@@ -398,13 +398,12 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-      if (!jPsenha.isVisible())
-      {
-          jPsenha.setText(usuario.getSenha());
-      }
-        
+        if (!jPsenha.isVisible()) {
+            jPsenha.setText(usuario.getSenha());
+        }
+
         if (controle.Formatacao.verificarNulos(jpCadastro) && jPsenha.getText().length() > 3) {
-        
+
             usuariocadastrado.setNome(qftfNome.getText());
             usuariocadastrado.setLogin(qtfLogin.getText());
 
@@ -425,7 +424,7 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
                 usuariocadastrado.setAtivo(false);
             }
             usuariocadastrado.setDtCriacao(new Date(System.currentTimeMillis()));
-          
+
             //  System.out.println("a data de hoje e" + usuariocadastrado.getDtCriacao());
             usuariocadastrado.setUsuario(usuario);
             if (usuariocadastrado.getId() == 0) {
@@ -448,14 +447,13 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
 //                usuariocadastrado.setSoftwares(null);
 //                usuariocadastrado.setTelas(null);
 //                usuariocadastrado.setUsuarios(null);
-
                 this.inserir();
             } else {
 
                 this.editar();
             }
         } else {
-            if (jPsenha.getText().length() <= 3 ) {
+            if (jPsenha.getText().length() <= 3) {
                 JOptionPane.showMessageDialog(null, "Campo senha é deve ter no minimo 4 caracteres");
             }
         }
@@ -506,24 +504,28 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
     }//GEN-LAST:event_btInativarActionPerformed
 
     private void btVerEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVerEditarActionPerformed
-        try {
-            limparCampos();
-            if (jtResultados.getSelectedRowCount() != 0) {
-                int idRegistroSelecionado = (int) jtResultados.getValueAt(jtResultados.getSelectedRow(), 0);
-                usuariocadastrado.setId(idRegistroSelecionado);
-                jLabelSenha.setVisible(false);
-                jPsenha.setVisible(false);
-            } else {
-                JOptionPane.showMessageDialog(null, "Selecione um registro da tabela");
+        if (podeeditar()) {
+            try {
+                limparCampos();
+                if (jtResultados.getSelectedRowCount() != 0) {
+                    int idRegistroSelecionado = (int) jtResultados.getValueAt(jtResultados.getSelectedRow(), 0);
+                    usuariocadastrado.setId(idRegistroSelecionado);
+                    jLabelSenha.setVisible(false);
+                    jPsenha.setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecione um registro da tabela");
+                }
+
+                usuariocadastrado = controleUsuario.consultarPesquisa(usuariocadastrado);
+
+                popularCampos();
+                jtpMain.setSelectedIndex(0);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Problemas ao selecionar!\nMensagem técnica:\n" + e);
+                System.out.println("" + e);
             }
-
-            usuariocadastrado = controleUsuario.consultarPesquisa(usuariocadastrado);
-
-            popularCampos();
-            jtpMain.setSelectedIndex(0);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Problemas ao selecionar!\nMensagem técnica:\n" + e);
-            System.out.println("" + e);
+        } else {
+            JOptionPane.showMessageDialog(null, "Voce nao possui permissao para essa operacao");
         }
     }//GEN-LAST:event_btVerEditarActionPerformed
 
@@ -647,6 +649,12 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
         return true;
     }
 
+    public boolean podeeditar() {
+        boolean permissaoUser = proxy.editar();
+
+        return permissaoUser;
+    }
+
     @Override
     public boolean editar() {
         boolean permissaoUser = proxy.editar();
@@ -728,7 +736,8 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
     }
 
     @Override
-    public void setRelacionado1(String id, String nome) {
+    public void setRelacionado1(String id, String nome
+    ) {
         try {
             qftfIdGrupo.setText(id);
             jftfNomeGrupo.setText(nome);
@@ -738,12 +747,14 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
     }
 
     @Override
-    public void setRelacionado2(String id, String nome) {
+    public void setRelacionado2(String id, String nome
+    ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void setRelacionado3(String id, String nome) {
+    public void setRelacionado3(String id, String nome
+    ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
