@@ -455,11 +455,9 @@ public class JfScript extends javax.swing.JFrame implements ITela {
                             for (Dependencia d : script.getDependencias()) {
                                 retorno = new ControleDependência().salvar(d);
                             }
-                        } else {
-                            JOptionPane.showMessageDialog(rootPane, "Não foi posssíel realizar esta operação, consulte o log de erros");
                         }
                     }
-                } else {                    
+                } else {
                     retorno = true;
                 }
                 if (retorno) {
@@ -472,7 +470,7 @@ public class JfScript extends javax.swing.JFrame implements ITela {
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Não foi posssíel realizar esta operação, consulte o log de erros");
             }
-        } 
+        }
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btConsultarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarTabelaActionPerformed

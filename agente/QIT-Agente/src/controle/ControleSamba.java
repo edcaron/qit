@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import jcifs.smb.NtlmPasswordAuthentication;
 import jcifs.smb.SmbFile;
 import jcifs.smb.SmbFileOutputStream;
@@ -158,54 +159,79 @@ public class ControleSamba {
     }
 
     /**
-     * Fazer o download dos arquivos 
+     * Fazer o download dos arquivos
+     *
      * @param tipo 1 softwares, 2 scripts
      * @param id id do script ou do software
-     * @return 
+     * @return
      */
     public static boolean getFiles(int tipo, int id) {
-
         boolean retorno = false;
-        String caminhoArquivo = "";
+        FileOutputStream fileOutputStream;
+        InputStream fileInputStream;
+        byte[] buf;
+        int len;
+        String caminhoArquivoServidor = "";
+        SmbFile diretorioServidor = null;
+        SmbFile arquivoOrigem = null;
+        String dirPastaDestino = "";
+        String dirArquivoDestino = "";
+        File pastaLocal = null;
 
         try {
+//            monta a url da pasta dos arquivos no servidor
             if (tipo == 1) {
-                caminhoArquivo = "\\\\QIT-SERVER\\qit\\softwares\\" + id + "\\";
+                caminhoArquivoServidor = SOFTWARES_PATH + id + "/";
             } else if (tipo == 2) {
-                caminhoArquivo = "\\\\QIT-SERVER\\qit\\scripts\\" + id + "\\";
+                caminhoArquivoServidor = SCRIPTS_PATH + id + "/";
             }
 
-            File diretorio = new File(caminhoArquivo);
+//              monta a url local da pasta e do arquivo que sera gravado
+            if (tipo == 1) {
+                dirPastaDestino = ("C:\\QIT\\QIT-Agente\\softwares\\" + id + "\\");
+            } else if (tipo == 2) {
+                dirPastaDestino = ("C:\\QIT\\QIT-Agente\\scripts\\" + id + "\\");
 
-            for (String nomeDoArquivo : diretorio.list()) {//listar os arquivos no diretario do servidor
-                System.out.println("nome:" + nomeDoArquivo);
-                byte[] bFile = fileToByteArray(new File(diretorio.getPath() + "\\" + nomeDoArquivo));
-
-                FileOutputStream fos = null;
-                File pasta = null;
-                File arquivo = null;
-//salvar os arquivos localmente
-
-                if (tipo == 1) {
-                    pasta = new File("C:\\QIT\\QIT-Agente\\softwares\\" + id + "\\");
-                    arquivo = new File("C:\\QIT\\QIT-Agente\\softwares\\" + id + "\\" + nomeDoArquivo);
-                } else if (tipo == 2) {
-                    pasta = new File("C:\\QIT\\QIT-Agente\\scripts\\" + id + "\\");
-                    arquivo = new File("C:\\QIT\\QIT-Agente\\scripts\\" + id + "\\" + nomeDoArquivo);
-                }
-
-                if (pasta.exists() == false) {
-                    pasta.mkdir();
-                }
-
-                fos = new FileOutputStream(arquivo);
-                fos.write(bFile);
-                fos.close();
-                System.out.println("Arquivos gravados localmente!");
             }
+
+//                verifica e cria a pasta local para armazenamento de arquivos
+            pastaLocal = new File(dirPastaDestino);
+            if (pastaLocal.exists() == false) {
+                pastaLocal.mkdir();
+                System.out.println("Pasta local criada");
+            }
+
+            diretorioServidor = new SmbFile(caminhoArquivoServidor, AUTHENTICATION);
+
+            for (String nomeDoArquivo : diretorioServidor.list()) {//listar os arquivos no diretario do servidor
+                System.out.println("gravando o arquivo:" + nomeDoArquivo);
+
+//                arquivo removo, que vai ser gravado localmente a seguir
+                String t = caminhoArquivoServidor + nomeDoArquivo;
+                arquivoOrigem = new SmbFile(t, AUTHENTICATION);
+
+                dirArquivoDestino = ("C:\\QIT\\QIT-Agente\\softwares\\" + id + "\\" + nomeDoArquivo);
+
+                dirArquivoDestino = (dirPastaDestino + nomeDoArquivo);
+
+//                grava o arquivo
+                fileOutputStream = new FileOutputStream(dirArquivoDestino);
+//                arquivoOrigem.
+                fileInputStream = arquivoOrigem.getInputStream();
+
+                buf = new byte[16 * 1024 * 1024];
+                while ((len = fileInputStream.read(buf)) > 0) {
+                    fileOutputStream.write(buf, 0, len);
+                }
+                fileInputStream.close();
+                fileOutputStream.close();
+            }
+
+            System.out.println("Arquivos gravados localmente!");
             retorno = true;
         } catch (Exception e) {
-            System.err.println("Erro ao salvar arquivos:" + e.getMessage() + " " + e.getCause() + " " + e.getLocalizedMessage() + "" + e.getStackTrace());
+            System.err.println("Erro ao salvar arquivos:");
+            e.printStackTrace();
         }
         return retorno;
     }

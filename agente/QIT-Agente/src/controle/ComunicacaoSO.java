@@ -6,6 +6,7 @@
 package controle;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -79,7 +80,7 @@ public class ComunicacaoSO {
      */
     public static String executarComando(String comando, String parametro) {
         String output = "";
-        try {            
+        try {
             System.out.println("comando:" + comando);
             ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando);
             builder.redirectErrorStream(true);
@@ -96,26 +97,27 @@ public class ComunicacaoSO {
             }
             return output;
         } catch (IOException e) {
-            System.err.println("erro em executarComando /n" + e);
-            return null;
+            System.err.println("erro em executarComando \n" + e);
+            return "Erro ao executar comandos \n" + e;
         }
     }
 
     /**
-     * Funcao para executar script no CMD do windows.
-     * e necessario passar o caminho completo do arquivo a ser chamado
+     * Funcao para executar script no CMD do windows. e necessario passar o
+     * caminho completo do arquivo a ser chamado
      *
      * @param comando programa ou comando a ser executado
      * @param parametro parametros adicionais para o comando enviado
      * anteriormente
      * @return String com o retorno dado pelo cmd
      */
-    public static String executarScripts(String comando, String parametro) {
+    public static String executarScripts(String comando, String parametro, File caminhoDaPasta) {
         String output = "";
-        try {            
+        try {
             System.out.println("comando:" + comando);
-            ProcessBuilder builder = new ProcessBuilder(comando);
+            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando);
             builder.redirectErrorStream(true);
+            builder.directory(caminhoDaPasta);
             Process p = builder.start();
             BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String line;
@@ -129,8 +131,8 @@ public class ComunicacaoSO {
             }
             return output;
         } catch (IOException e) {
-            System.err.println("erro em executarComando /n" + e);
-            return null;
+            System.err.println("erro em executarComando \n" + e);
+            return "Erro ao executar comandos \n" + e;
         }
     }
 

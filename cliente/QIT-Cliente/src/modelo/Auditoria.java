@@ -1,13 +1,14 @@
 package modelo;
-// Generated 17/10/2015 22:43:46 by Hibernate Tools 4.3.1
+// Generated 11/12/2015 23:47:41 by Hibernate Tools 4.3.1
 
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,8 +22,8 @@ import javax.persistence.TemporalType;
 public class Auditoria implements java.io.Serializable {
 
     private int id;
+    private Usuario usuario;
     private String tabela;
-    private Integer idUsuario;
     private Boolean alteradoSistema;
     private char operacao;
     private String alteracoes;
@@ -41,10 +42,10 @@ public class Auditoria implements java.io.Serializable {
         this.idConteudo = idConteudo;
     }
 
-    public Auditoria(int id, String tabela, Integer idUsuario, Boolean alteradoSistema, char operacao, String alteracoes, Date dt, int idConteudo, String valoresNovos, String valoresAntigos) {
+    public Auditoria(int id, Usuario usuario, String tabela, Boolean alteradoSistema, char operacao, String alteracoes, Date dt, int idConteudo, String valoresNovos, String valoresAntigos) {
         this.id = id;
+        this.usuario = usuario;
         this.tabela = tabela;
-        this.idUsuario = idUsuario;
         this.alteradoSistema = alteradoSistema;
         this.operacao = operacao;
         this.alteracoes = alteracoes;
@@ -55,14 +56,24 @@ public class Auditoria implements java.io.Serializable {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)   
+
+    @Column(name = "id", unique = true, nullable = false)
     public int getId() {
         return this.id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_usuario")
+    public Usuario getUsuario() {
+        return this.usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Column(name = "tabela", nullable = false, length = 45)
@@ -72,15 +83,6 @@ public class Auditoria implements java.io.Serializable {
 
     public void setTabela(String tabela) {
         this.tabela = tabela;
-    }
-
-    @Column(name = "id_usuario")
-    public Integer getIdUsuario() {
-        return this.idUsuario;
-    }
-
-    public void setIdUsuario(Integer idUsuario) {
-        this.idUsuario = idUsuario;
     }
 
     @Column(name = "alterado_sistema")
@@ -130,7 +132,6 @@ public class Auditoria implements java.io.Serializable {
     }
 
     @Column(name = "valores_novos")
-  
     public String getValoresNovos() {
         return this.valoresNovos;
     }
@@ -147,6 +148,5 @@ public class Auditoria implements java.io.Serializable {
     public void setValoresAntigos(String valoresAntigos) {
         this.valoresAntigos = valoresAntigos;
     }
-  
 
 }

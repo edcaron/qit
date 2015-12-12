@@ -5,10 +5,6 @@
  */
 package controle;
 
-import java.util.ArrayList;
-import modelo.ExecucaoScript;
-import modelo.Maquina;
-import modelo.MaquinasExecutarScript;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -31,7 +27,6 @@ public class QITServidorMain {
 //        } catch (Exception e) {
 //            System.out.println("Erro ao tentar aceitar conexao\n" + e);
 //        }
-        
 //        PacoteSocket pacote = new PacoteSocket();
 //        Tarefa tarefa = new Tarefa();
 //        tarefa.setOperacao(1);
@@ -60,11 +55,11 @@ public class QITServidorMain {
 //
 //        XStream x = new XStream();
 //        File arquivoXml = new File("C:\\QIT\\QIT-Agente\\inventario.xml");
-//        inventario = (Inventario) x.fromXML(arquivoXml);
-//        
+//        Inventario inventario = (Inventario) x.fromXML(arquivoXml);
+//
 //        ControleInventario ci = new ControleInventario();
-//        ci.gravarInventario(inventario);         
-        
+//        ci.gravarInventario(inventario);
+
         chamarTarefasAutomatizadas();
     }
 
@@ -82,9 +77,7 @@ public class QITServidorMain {
                             SimpleScheduleBuilder.simpleSchedule()
                             .withIntervalInHours(24).repeatForever())
                     .build();
-            
-            
-            
+
 //            tarefa executar scripts
             JobDetail tarefaExecutaScrits = JobBuilder.newJob(TarefaExecutaScripts.class)
                     .withIdentity("tarefaExecutaScrits", "grupo1").build();
@@ -97,8 +90,7 @@ public class QITServidorMain {
                             SimpleScheduleBuilder.simpleSchedule()
                             .withIntervalInMinutes(1).repeatForever())
                     .build();
-            
-            
+
 //            tarefa para executar inventario
             JobDetail tarefaExecutaInventario = JobBuilder.newJob(TarefaExecutaInventario.class)
                     .withIdentity("tarefaExecutaInventario", "grupo1").build();
@@ -112,13 +104,13 @@ public class QITServidorMain {
                             .withIntervalInMinutes(1).repeatForever())
                     .build();
 
-            
             // agendar as tarefas
             Scheduler scheduler = new StdSchedulerFactory().getScheduler();
-            scheduler.start();
 //            scheduler.scheduleJob(tarefaLimpaAuditoria, triggerTarefaLimpaAuditoria);
-//            scheduler.scheduleJob(tarefaExecutaScrits, triggerExecutaScrits);
+            scheduler.scheduleJob(tarefaExecutaScrits, triggerExecutaScrits);
             scheduler.scheduleJob(tarefaExecutaInventario, triggerExecutaInventario);
+
+            scheduler.start();
         } catch (Exception e) {
             System.err.println(e);
         }

@@ -58,18 +58,30 @@ public class Tarefas {
 
     public static void executarScript(PacoteSocket pacoteRecebido, OutputStream os) {
         String retornoScript = "";
+        String diretorioScript = "";        
+        String comandoParaProcesso = "";
 
         //fazer download de arquivos deste script
         ControleSamba.getFiles(pacoteRecebido.getTipo(), pacoteRecebido.getId());
 
         //executar tarefa
         for (Tarefa tarefa : pacoteRecebido.getListaTarefas()) {
-            String comando = tarefa.getComando();
-            retornoScript += Util.getCurrentTimestamp() + "tarefa iniciada \n";
+            retornoScript += Util.getCurrentTimestamp() + " tarefa iniciada \n";          
+            
+            diretorioScript = "C:\\QIT\\QIT-Agente\\scripts\\" + pacoteRecebido.getId() + "\\";            
+            comandoParaProcesso = diretorioScript + "Setup" + pacoteRecebido.getId() + ".bat";
 
-            retornoScript += ComunicacaoSO.executarScripts(tarefa.getComando(), null);            
+//            salva o comando especificado em um arquivo .bat
+            UtilArquivos.stringToFile(tarefa.getComando(), pacoteRecebido.getTipo(), pacoteRecebido.getId());
 
-            retornoScript += Util.getCurrentTimestamp() + "tarefa concluída \n";
+//            executa o comando, que vai ser gravado em um arquivo e entao chamado
+            retornoScript += ComunicacaoSO.executarScripts(comandoParaProcesso, null, new File(diretorioScript));
+
+            retornoScript += "\n" + Util.getCurrentTimestamp() + " tarefa concluída";
+            
+            retornoScript = retornoScript.replace(comandoParaProcesso, "");
+
+            System.out.println("retornoScript: " + retornoScript);
         }
 
 //        preparar pacote com o retorno do script

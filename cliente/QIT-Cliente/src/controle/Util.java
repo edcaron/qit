@@ -25,6 +25,24 @@ import javax.swing.JFrame;
 public class Util {
 
     /**
+     * Converter uma string com uma marca de data e hora para um objeto date
+     *
+     * @param dtParametro string no formato dd/MM/yyyy HH:mm:ss
+     * @return objeto Date
+     */
+    public static Date stringParaDate(String dtParametro) {
+        Date dtRetorno = null;
+        try {
+            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            dtRetorno = (Date) formatter.parse(dtParametro);
+        } catch (Exception e) {
+            System.err.println("Erro em stringParaDate");
+            e.printStackTrace();
+        }
+        return dtRetorno;
+    }
+
+    /**
      * Método para obter data e hora atual.
      *
      * @return String com data no formato dd/MM/yyyy HH:mm:ss

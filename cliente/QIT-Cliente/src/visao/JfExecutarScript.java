@@ -91,9 +91,6 @@ public class JfExecutarScript extends javax.swing.JFrame implements ITela {
         jLabel7 = new javax.swing.JLabel();
         jpConsulta = new javax.swing.JPanel();
         btCancelar = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        qftfConsultaNome = new qitjftf.QITJFormattedTextField();
-        btConsultarTabela = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtResultados = new javax.swing.JTable();
         btVerEditar = new javax.swing.JButton();
@@ -296,16 +293,6 @@ public class JfExecutarScript extends javax.swing.JFrame implements ITela {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel5.setText("Nome:");
-
-        btConsultarTabela.setText("Buscar");
-        btConsultarTabela.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btConsultarTabelaActionPerformed(evt);
-            }
-        });
-
         jtResultados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -339,14 +326,7 @@ public class JfExecutarScript extends javax.swing.JFrame implements ITela {
             .addGroup(jpConsultaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jpConsultaLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(qftfConsultaNome, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btConsultarTabela)
-                        .addGap(0, 264, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpConsultaLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -358,12 +338,7 @@ public class JfExecutarScript extends javax.swing.JFrame implements ITela {
             jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpConsultaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(qftfConsultaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btConsultarTabela))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btVerEditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -391,7 +366,7 @@ public class JfExecutarScript extends javax.swing.JFrame implements ITela {
         ExecucaoScript es = new ExecucaoScript();
         MaquinasExecutarScript mes = new MaquinasExecutarScript();
         Maquina ma = new Maquina();
-        ma.setNome(qftfConsultaNome.getText());
+        ma.setNome("");
         mes.setMaquina(ma);
         Set<MaquinasExecutarScript> setM = new HashSet<>();
         setM.add(mes);
@@ -478,10 +453,6 @@ public class JfExecutarScript extends javax.swing.JFrame implements ITela {
     private void btRemoverMaquinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverMaquinaActionPerformed
         removerNaTabela();
     }//GEN-LAST:event_btRemoverMaquinaActionPerformed
-
-    private void btConsultarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarTabelaActionPerformed
-
-    }//GEN-LAST:event_btConsultarTabelaActionPerformed
 
     @Override
     public boolean inserir() {
@@ -733,13 +704,11 @@ public class JfExecutarScript extends javax.swing.JFrame implements ITela {
     private javax.swing.JButton btBuscarScript;
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btCancelar1;
-    private javax.swing.JButton btConsultarTabela;
     private javax.swing.JButton btRemoverMaquina;
     private javax.swing.JButton btSalvar;
     private javax.swing.JButton btVerEditar;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -754,7 +723,6 @@ public class JfExecutarScript extends javax.swing.JFrame implements ITela {
     private javax.swing.JTable jtMaquinasAdicionadas;
     private javax.swing.JTable jtResultados;
     private javax.swing.JTabbedPane jtpMain;
-    private qitjftf.QITJFormattedTextField qftfConsultaNome;
     private qitjftf.QITJFormattedTextField qftfIdScript;
     // End of variables declaration//GEN-END:variables
 

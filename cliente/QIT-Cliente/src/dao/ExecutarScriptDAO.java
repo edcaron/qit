@@ -51,7 +51,7 @@ public class ExecutarScriptDAO {
             org.hibernate.Query q = sessao.createQuery("from ExecucaoScript e "
                     + "inner join e.script as script "
                     + "inner join e.maquinasExecutarScripts as mes "
-                    + "inner join mes.maquina as m "                    
+                    + "inner join mes.maquina as m "
                     + "where e.id = " + es.getId());
             resultado = q.list();
 
@@ -72,20 +72,22 @@ public class ExecutarScriptDAO {
 
         ArrayList<ExecucaoScript> lista = new ArrayList<>();
         try {
-        sessao = HibernateUtil.getSessionFactory().openSession();
-        sessao.beginTransaction();
-        String sql = "from ExecucaoScript t order by t.id desc";
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+            String sql = "from ExecucaoScript t"
+                    + " order by t.id desc";                    
 
-        org.hibernate.Query q = sessao.createQuery(sql);
-        resultado = q.list();
+            org.hibernate.Query q = sessao.createQuery(sql).setMaxResults(100);
+            resultado = q.list();
 
-        for (Object o : resultado) {
-            ExecucaoScript t = ((ExecucaoScript) ((Object) o));
-            lista.add(t);
-        }
+            for (Object o : resultado) {
+                ExecucaoScript t = ((ExecucaoScript) ((Object) o));
+                lista.add(t);
+            }
 
-        } catch (HibernateException he) {
-            he.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Erro ao realizar a consulta" + e);
+            e.printStackTrace();
         } finally {
             sessao.close();
         }

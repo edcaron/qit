@@ -114,7 +114,7 @@ public class Maquina implements java.io.Serializable, IModelo {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_sala")
     public Sala getSala() {
         return this.sala;

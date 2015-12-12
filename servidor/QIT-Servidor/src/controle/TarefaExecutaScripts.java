@@ -12,6 +12,7 @@ public class TarefaExecutaScripts implements Job {
     @Override
     public void execute(JobExecutionContext context)
             throws JobExecutionException {
+        System.out.println("Tarefa para mandar os clientes executarem scripts chamada");
         ControleExecutarScript ces = new ControleExecutarScript();
         ExecucaoScript es = new ExecucaoScript();
         ArrayList<ExecucaoScript> lista = ces.listar(es, "and executado != true ");

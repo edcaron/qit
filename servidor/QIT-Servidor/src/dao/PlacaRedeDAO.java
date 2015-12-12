@@ -61,8 +61,6 @@ public class PlacaRedeDAO extends DAOPadrao{
             org.hibernate.Query q = sessao.createQuery("from PlacaRede pr where pr.id" + obj.getId());            
             resultado = q.list();
 
-            System.out.println("ponto de interr ");
-            
             for (Object o : resultado) {
                 objLocal = ((PlacaRede) ((Object[]) o)[0]);
             }
