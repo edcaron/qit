@@ -321,6 +321,7 @@ String parametros = "";
         if (!textoCombo.equalsIgnoreCase("todas")) {
             textoCombo = textoCombo.toLowerCase();
             parametros += " and tabela = '" + textoCombo + "'"; 
+
         }
 
 //        adiciona filtros para data inicial
@@ -379,30 +380,32 @@ String parametros = "";
 
     private void jbVerDadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVerDadosActionPerformed
         if (jtResultados.getSelectedRowCount() != 0) {
-            Auditoria a = new Auditoria();            
-            int id = (int) jtResultados.getValueAt(jtResultados.getSelectedRow(), 0);                        
+            Auditoria a = new Auditoria();
+            int id = (int) jtResultados.getValueAt(jtResultados.getSelectedRow(), 0);
             a.setId(id);
+
             a = new ControleAuditoria().consultar(a);                        
                                     
             new JfDadosAuditoria(formataJson(a.getValoresAntigos()), formataJson(a.getValoresNovos()), Util.dateToString(a.getDt()), a.getTabela());
+           
+            
         }
     }//GEN-LAST:event_jbVerDadosActionPerformed
 
-    protected String formataJson(String json){
+    protected String formataJson(String json) {
         String retorno = "";
-        try {                        
+        try {
             json = json.replace("{", "");
             json = json.replaceAll("}", "");
             json = json.replaceAll("\"", "");
-            json = json.replaceAll(",", "\n");  
+            json = json.replaceAll(",", "\n");
             retorno = json;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return retorno;
     }
-            
-    
+
     /**
      * @param args the command line arguments
      */
@@ -520,11 +523,10 @@ String parametros = "";
     ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public void setRelacionado4(String id, String nome) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-      
 
 }

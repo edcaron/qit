@@ -59,7 +59,7 @@ public class UsuarioDAO {
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             sessao.beginTransaction();
-            String sql = "from Usuario u where lower(u.nome) like lower('%" + usuario.getNome() + "%') order by u.id desc";
+            String sql = "from Usuario u inner join u.grupo where lower(u.nome) like lower('%" + usuario.getNome() + "%') order by u.id desc";
 
             if (usuario.getNome().equals("")) {
                 sql = "from Usuario u inner join u.grupo order by u.id desc";

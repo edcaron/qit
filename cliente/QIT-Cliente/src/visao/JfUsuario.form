@@ -334,12 +334,14 @@
                               <Component id="btConsultarTabela" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane2" alignment="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" alignment="0" pref="675" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="btCancelar" alignment="1" min="-2" pref="75" max="-2" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
+                                      <Component id="btVerEditar1" min="-2" pref="163" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                       <Component id="btVerEditar" min="-2" pref="163" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="btInativar" min="-2" max="-2" attributes="0"/>
@@ -361,11 +363,12 @@
                           <Component id="btConsultarTabela" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" pref="436" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" pref="408" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btInativar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btVerEditar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btVerEditar1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btCancelar" min="-2" max="-2" attributes="0"/>
@@ -442,6 +445,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btVerEditarActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btVerEditar1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Alterar senha"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btVerEditar1ActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

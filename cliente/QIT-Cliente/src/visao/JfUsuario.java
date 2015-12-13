@@ -112,6 +112,7 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
         jtResultados = new javax.swing.JTable();
         btInativar = new javax.swing.JButton();
         btVerEditar = new javax.swing.JButton();
+        btVerEditar1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -337,6 +338,13 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
             }
         });
 
+        btVerEditar1.setText("Alterar senha");
+        btVerEditar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btVerEditar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpConsultaLayout = new javax.swing.GroupLayout(jpConsulta);
         jpConsulta.setLayout(jpConsultaLayout);
         jpConsultaLayout.setHorizontalGroup(
@@ -351,12 +359,14 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btConsultarTabela)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 675, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpConsultaLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpConsultaLayout.createSequentialGroup()
+                                .addComponent(btVerEditar1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btVerEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btInativar)))))
@@ -371,11 +381,12 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
                     .addComponent(qftfConsultaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btConsultarTabela))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btInativar)
-                    .addComponent(btVerEditar))
+                    .addComponent(btVerEditar)
+                    .addComponent(btVerEditar1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btCancelar)
                 .addContainerGap())
@@ -548,6 +559,19 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
         controleUsuario.popularTabela(jtResultados, u, false);        // TODO add your handling code here:
     }//GEN-LAST:event_jtpMainFocusGained
 
+    private void btVerEditar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVerEditar1ActionPerformed
+        Usuario userAlterado = new Usuario();
+        if (jtResultados.getSelectedRowCount() != 0) {
+            int idRegistroSelecionado = (int) jtResultados.getValueAt(jtResultados.getSelectedRow(), 0);
+            userAlterado.setId(idRegistroSelecionado);
+            userAlterado = controleUsuario.consultarPesquisa(userAlterado);
+            new JfAlterarSenha(userAlterado);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um registro da tabela");
+        }
+    }//GEN-LAST:event_btVerEditar1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -591,6 +615,7 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
     private javax.swing.JButton btInativar;
     private javax.swing.JButton btSalvar;
     private javax.swing.JButton btVerEditar;
+    private javax.swing.JButton btVerEditar1;
     private javax.swing.JComboBox jCBAtivo;
     private javax.swing.JComboBox jCBPermissao;
     private javax.swing.JLabel jLabel1;
