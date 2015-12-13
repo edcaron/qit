@@ -11,6 +11,9 @@ import controle.ControleUsuario;
 import controle.ITela;
 import controle.ProxyTelas;
 import controle.ControlePermissao;
+import controle.Util;
+import dao.PermissaoDAO;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import modelo.Grupo;
@@ -112,6 +115,10 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        btBuscarUsuario1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        btBuscarGrupo1 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
         jpConsulta = new javax.swing.JPanel();
         btCancelar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -195,6 +202,24 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
             }
         });
 
+        btBuscarUsuario1.setText("Buscar");
+        btBuscarUsuario1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBuscarUsuario1ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Selecione um usuario para importar permissões:");
+
+        btBuscarGrupo1.setText("Buscar");
+        btBuscarGrupo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btBuscarGrupo1ActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Selecione um grupo para importar permissões:");
+
         javax.swing.GroupLayout jpCadastroLayout = new javax.swing.GroupLayout(jpCadastro);
         jpCadastro.setLayout(jpCadastroLayout);
         jpCadastroLayout.setHorizontalGroup(
@@ -210,33 +235,41 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
                         .addGap(18, 18, 18)
                         .addComponent(btCancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jpCadastroLayout.createSequentialGroup()
-                        .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 577, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jpCadastroLayout.createSequentialGroup()
-                                    .addGap(1, 1, 1)
-                                    .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jLabelGrupo))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(jpCadastroLayout.createSequentialGroup()
-                                            .addComponent(qftfIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jftfNomeUsuario)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(btBuscarUsuario))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCadastroLayout.createSequentialGroup()
-                                            .addComponent(qftfIdGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jftfNomeGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(btBuscarGrupo))))
-                                .addComponent(jLabel1)
-                                .addGroup(jpCadastroLayout.createSequentialGroup()
+                        .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 577, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpCadastroLayout.createSequentialGroup()
                                     .addGap(482, 482, 482)
-                                    .addComponent(jLabel4))))
-                        .addGap(0, 77, Short.MAX_VALUE)))
+                                    .addComponent(jLabel4)))
+                            .addGroup(jpCadastroLayout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabelGrupo))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jpCadastroLayout.createSequentialGroup()
+                                        .addComponent(qftfIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jftfNomeUsuario)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btBuscarUsuario))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCadastroLayout.createSequentialGroup()
+                                        .addComponent(qftfIdGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jftfNomeGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btBuscarGrupo)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel7))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btBuscarGrupo1)
+                                    .addComponent(btBuscarUsuario1)))
+                            .addComponent(jLabel1))
+                        .addGap(0, 13, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jpCadastroLayout.setVerticalGroup(
@@ -249,16 +282,25 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
                     .addComponent(btBuscarUsuario)
                     .addComponent(jLabel3)
                     .addComponent(qftfIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jftfNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jftfNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btBuscarGrupo1)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btBuscarGrupo)
-                    .addComponent(jLabelGrupo)
-                    .addComponent(qftfIdGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jftfNomeGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpCadastroLayout.createSequentialGroup()
+                        .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btBuscarGrupo)
+                            .addComponent(jLabelGrupo)
+                            .addComponent(qftfIdGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jftfNomeGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCadastroLayout.createSequentialGroup()
+                        .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btBuscarUsuario1)
+                            .addComponent(jLabel7))
+                        .addGap(8, 8, 8)))
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 188, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(3, 3, 3)
                 .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -382,31 +424,55 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
 
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+        boolean temgrupo = false;
+        boolean temusuario = false;
+        boolean editou = false;
         if (controle.Formatacao.verificarNulos(jpCadastro)) {
             if (btBuscarGrupo.isEnabled()) {
                 grupo.setId(Integer.parseInt(qftfIdGrupo.getText()));
+                temgrupo = true;
             } else {
-                grupo = null;
 
             }
             if (btBuscarUsuario.isEnabled()) {
                 usuarioselecionado.setId(Integer.parseInt(qftfIdUsuario.getText()));
+                temusuario = true;
+
             } else {
-                usuarioselecionado = null;
+                usuarioselecionado = new Usuario();
+                usuarioselecionado.setId(0);
 
             }
+
             int numerodelinhas = jTable1.getRowCount();
             for (int i = 0; i < numerodelinhas; i++) {
+
+                permissao = new Permissao();
                 telaselecionada.setId(Integer.parseInt(String.valueOf(jTable1.getValueAt(i, 0))));
-                permissao.setGrupo(grupo);
-                permissao.setTela(tela);
+                if (temgrupo) {
+                    permissao.setGrupo(grupo);
+                }
+                permissao.setTela(telaselecionada);
                 permissao.setUsuarioByIdUsuarioModificador(usuario);
-                permissao.setUsuarioByIdUsuario(usuarioselecionado);
-                permissao.setId(Integer.parseInt(String.valueOf(jTable1.getValueAt(i, 7))));
+                if (temusuario) {
+                    permissao.setUsuarioByIdUsuario(usuarioselecionado);
+                }
 
-                this.editar();
+                permissao.setId(Integer.parseInt(String.valueOf(jTable1.getValueAt(i, 6))));
+                String inserir = (String.valueOf(jTable1.getValueAt(i, 3)));
+                String editar = (String.valueOf(jTable1.getValueAt(i, 4)));
+                String inativar = (String.valueOf(jTable1.getValueAt(i, 5)));
+                String ler = (String.valueOf(jTable1.getValueAt(i, 2)));
+                permissao.setInserir(Util.stringParaBinario(inserir));
+                permissao.setEditar(Util.stringParaBinario(editar));
+                permissao.setInativar(Util.stringParaBinario(inativar));
+                permissao.setLer(Util.stringParaBinario(ler));
+
+                editou = this.editar();
             }
-
+            if (editou) {
+                JOptionPane.showMessageDialog(rootPane, "Operação Realizada com sucesso");
+            }
             limparCampos();
 
         } else {
@@ -530,7 +596,21 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
 
     @Override
     public boolean editar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean permissaoUser = proxy.editar();
+
+        System.out.println("Permisssao desse cara: " + permissaoUser);
+        if (permissaoUser) {
+            boolean retorno = new PermissaoDAO().salvar(permissao);
+            if (retorno) {
+                //JOptionPane.showMessageDialog(rootPane, "Operação Realizada com sucesso");
+                // this.limparCampos();
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Não foi posssíel realizar esta operação, consulte o log de erros");
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Você não possui permissão para realizar essa operação");
+        }
+        return true;
     }
 
     @Override
@@ -575,7 +655,7 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
             int idg = Integer.parseInt(id);
             Grupo g = new Grupo();
             g.setId(idg);
-            controlePermissao.popularTabela(jTable1, g);
+            controlePermissao.popularTabela(jTable1, g, false);
 
         } catch (Exception e) {
             System.err.println("Erro em setRelacionado1: " + e);
@@ -593,7 +673,7 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
             int idusuario = Integer.parseInt(id);
             Usuario u = new Usuario();
             u.setId(idusuario);
-            controlePermissao.popularTabela(jTable1, u);
+            controlePermissao.popularTabela(jTable1, u, false);
 
         } catch (Exception e) {
             System.err.println("Erro em setRelacionado2: " + e);
@@ -603,9 +683,10 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
     @Override
     public void setRelacionado3(String id, String nome) {
         try {
-//
-//            qftfIdTela.setText(id);
-//            jftfNomeTela.setText(nome);
+            int idusuario = Integer.parseInt(id);
+            Usuario u = new Usuario();
+            u.setId(idusuario);
+            controlePermissao.popularTabela(jTable1, u, true);
         } catch (Exception e) {
             System.err.println("Erro em setRelacionado3: " + e);
         }
@@ -620,6 +701,38 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
         btBuscarGrupo.setEnabled(true);
         btBuscarUsuario.setEnabled(true);       // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btBuscarUsuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarUsuario1ActionPerformed
+        try {
+            Grupo usuarioPModal = new Grupo();
+            ControleGrupo cPPModal = new ControleGrupo();
+            new JdlgGenerico(this, cPPModal, usuarioPModal, 4).setVisible(true);
+        } catch (Exception e) {
+            System.err.println("Erro em btBuscarUsuarioActionPerformed " + e);
+        }        // TODO add your handling code here:        // TODO add your handling code here:
+    }//GEN-LAST:event_btBuscarUsuario1ActionPerformed
+
+    private void btBuscarGrupo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarGrupo1ActionPerformed
+        try {
+            Usuario usuarioPModal = new Usuario();
+            ControleUsuario cPPModal = new ControleUsuario();
+            new JdlgGenerico(this, cPPModal, usuarioPModal, 3).setVisible(true);
+        } catch (Exception e) {
+            System.err.println("Erro em btBuscarUsuarioActionPerformed " + e);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_btBuscarGrupo1ActionPerformed
+
+    @Override
+    public void setRelacionado4(String id, String nome) {
+        try {
+            int idg = Integer.parseInt(id);
+            Grupo g = new Grupo();
+            g.setId(idg);
+            controlePermissao.popularTabela(jTable1, g, true);
+        } catch (Exception e) {
+            System.err.println("Erro em setRelacionado3: " + e);
+        }
+    }
 
     public class BooleanTableModel extends AbstractTableModel {
 
@@ -703,7 +816,9 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBuscarGrupo;
+    private javax.swing.JButton btBuscarGrupo1;
     private javax.swing.JButton btBuscarUsuario;
+    private javax.swing.JButton btBuscarUsuario1;
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btCancelar1;
     private javax.swing.JButton btConsultarTabela;
@@ -712,9 +827,11 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
     private javax.swing.JButton btVerEditar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelGrupo;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

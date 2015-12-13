@@ -524,4 +524,9 @@ public class JfMaquinasExecutarScript extends javax.swing.JFrame implements ITel
     private qitjftf.QITJFormattedTextField qftfIdExecScript;
     // End of variables declaration//GEN-END:variables
 
+    @Override
+    public void setRelacionado4(String id, String nome) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

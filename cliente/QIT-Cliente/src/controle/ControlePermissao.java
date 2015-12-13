@@ -92,7 +92,7 @@ public class ControlePermissao implements IModelo {
         return listaPermisaoretorno;
     }
 
-    public boolean popularTabela(JTable tabela, Usuario usuario) {
+    public boolean popularTabela(JTable tabela, Usuario usuario, boolean copia) {
         Object[][] dadosTabela = null;
 
         try {
@@ -101,7 +101,7 @@ public class ControlePermissao implements IModelo {
             Object[] cabecalho = new Object[colunasTabela];
             cabecalho[0] = "Id Tela";
             cabecalho[1] = "Tela";
-            cabecalho[2] = "Visualisar";
+            cabecalho[2] = "Visualizar";
             cabecalho[3] = "Inserir";
             cabecalho[4] = "Editar";
             cabecalho[5] = "Inativar";
@@ -134,7 +134,11 @@ public class ControlePermissao implements IModelo {
                 } else {
                     dadosTabela[i][5] = false;
                 }
-                dadosTabela[i][6] = listaPermisao.get(i).getId();
+                if (!copia) {
+                    dadosTabela[i][6] = listaPermisao.get(i).getId();
+                } else {
+                    dadosTabela[i][6] = tabela.getValueAt(i, 6);//manter o id do registro na tabela de permissao
+                }
             }
 
             // configuracoes adicionais no componente tabela
@@ -143,7 +147,7 @@ public class ControlePermissao implements IModelo {
                 // quando retorno for FALSE, a tabela nao é editavel
                 public boolean isCellEditable(int row, int column) {
 
-                    if (column == 2) {
+                    if (column == 2 || column == 3 || column == 4 || column == 5) {
                         return true;
                     } else {
                         return false;
@@ -213,7 +217,7 @@ public class ControlePermissao implements IModelo {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public boolean popularTabela(JTable tabela, Grupo g) {
+    public boolean popularTabela(JTable tabela, Grupo grupo, boolean copia) {
         Object[][] dadosTabela = null;
 
         try {
@@ -222,14 +226,14 @@ public class ControlePermissao implements IModelo {
             Object[] cabecalho = new Object[colunasTabela];
             cabecalho[0] = "Id Tela";
             cabecalho[1] = "Tela";
-            cabecalho[2] = "Visualisar";
+            cabecalho[2] = "Visualizar";
             cabecalho[3] = "Inserir";
             cabecalho[4] = "Editar";
             cabecalho[5] = "Inativar";
             cabecalho[6] = "Cod";
-            // cria matriz de acordo com nº de registros da tabela
-            ArrayList<Permissao> listaPermisao = joinTelasPermissoes(g);
 
+            // cria matriz de acordo com nº de registros da tabela
+            ArrayList<Permissao> listaPermisao = joinTelasPermissoes(grupo);
             dadosTabela = new Object[listaPermisao.size()][colunasTabela];
 
             for (int i = 0; i < listaPermisao.size(); i++) {
@@ -255,7 +259,11 @@ public class ControlePermissao implements IModelo {
                 } else {
                     dadosTabela[i][5] = false;
                 }
-                dadosTabela[i][6] = listaPermisao.get(i).getId();
+                if (!copia) {
+                    dadosTabela[i][6] = listaPermisao.get(i).getId();
+                } else {
+                    dadosTabela[i][6] = tabela.getValueAt(i, 6);//manter o id do registro na tabela de permissao
+                }
             }
 
             // configuracoes adicionais no componente tabela
@@ -264,7 +272,7 @@ public class ControlePermissao implements IModelo {
                 // quando retorno for FALSE, a tabela nao é editavel
                 public boolean isCellEditable(int row, int column) {
 
-                    if (column == 2) {
+                    if (column == 2 || column == 3 || column == 4 || column == 5) {
                         return true;
                     } else {
                         return false;

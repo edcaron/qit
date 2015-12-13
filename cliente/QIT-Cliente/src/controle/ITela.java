@@ -28,4 +28,6 @@ public interface ITela {
     public void setRelacionado2(String id, String nome);
 
     public void setRelacionado3(String id, String nome);
+
+    public void setRelacionado4(String id, String nome);
 }

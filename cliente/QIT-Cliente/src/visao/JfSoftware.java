@@ -841,4 +841,9 @@ jtpMain.setSelectedIndex(1);        // TODO add your handling code here:
     public void setRelacionado3(String id, String nome) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void setRelacionado4(String id, String nome) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
