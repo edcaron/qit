@@ -23,14 +23,25 @@ import java.util.Date;
  */
 public class Util {
 
-    public static byte[] fileToByteArray(File file) {        
+    /**
+     * Método para obter data atual
+     *
+     * @return String com data no formato dd-MM-yyyy
+     */
+    public static String getCurrentWindowsFormatDate() {
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date dt = new Date();
+        return dateFormat.format(dt);
+    }
+
+    public static byte[] fileToByteArray(File file) {
         try {
             FileInputStream fileInputStream = null;
-            byte[] bFile = new byte[(int) file.length()];           
+            byte[] bFile = new byte[(int) file.length()];
             fileInputStream = new FileInputStream(file);
             fileInputStream.read(bFile);
             fileInputStream.close();
-            return  bFile;
+            return bFile;
         } catch (IOException e) {
             System.err.println("Erro em fileToByteArray:" + e);
         }

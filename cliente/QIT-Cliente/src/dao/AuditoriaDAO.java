@@ -31,10 +31,8 @@ public class AuditoriaDAO {
     public AuditoriaDAO() {
         sessao = HibernateUtil.getSessionFactory().openSession();
     }
-    
-    
-    
-     public ArrayList<Auditoria> listar(String parametros) {
+
+    public ArrayList<Auditoria> listar(String parametros) {
         List resultado = null;
 
         ArrayList<Auditoria> lista = new ArrayList<>();
@@ -42,10 +40,10 @@ public class AuditoriaDAO {
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
             t = sessao.beginTransaction();
-            
+
             String sql = "from Auditoria"
-                    + " where 1=1 "
-                    + parametros 
+                    + " where usuario.id != 0 "
+                    + parametros
                     + " order by dt desc";
 
             org.hibernate.Query q = sessao.createQuery(sql);
@@ -57,12 +55,36 @@ public class AuditoriaDAO {
             }
 
         } catch (HibernateException he) {
-            he.printStackTrace();            
+            he.printStackTrace();
             t.rollback();
         } finally {
             sessao.close();
         }
 
         return lista;
-    }   
+    }
+
+    public Auditoria consultar(Auditoria obj) {
+        List resultado = null;
+        Auditoria objLocal = new Auditoria();
+        Transaction t = null;
+        try {
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            t = sessao.beginTransaction();
+            org.hibernate.Query q = sessao.createQuery("from Auditoria where id = " + obj.getId());
+            resultado = q.list();
+
+            for (Object resultado1 : resultado) {
+                objLocal = (Auditoria) resultado1;
+            }            
+
+        } catch (HibernateException he) {
+            t.rollback();
+            System.err.println("Erro em consultar  \n" + he);
+            he.printStackTrace();
+        } finally {
+            sessao.close();
+        }
+        return objLocal;
+    }
 }

@@ -23,6 +23,17 @@ import java.util.Date;
  */
 public class Util {
 
+    
+     /**
+     * Método para obter data atual
+     *
+     * @return String com data no formato dd-MM-yyyy 
+     */
+    public static String getCurrentWindowsFormatDate() {
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date dt = new Date();
+        return dateFormat.format(dt);
+    }
     /**
      * Converter uma string com uma marca de data e hora para um objeto date
      *

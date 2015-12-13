@@ -5,7 +5,10 @@
  */
 package visao;
 
+import controle.CapturarSERR;
 import controle.ControleUsuario;
+import java.awt.Image;
+import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import modelo.Usuario;
@@ -26,9 +29,17 @@ public class JfLogin extends javax.swing.JFrame {
         jftLogin.setText("user3");
         jpfSenha.setText("user3");
 
-//        thread para captura de logs 
-//        CapturarSERR log = new CapturarSERR();
-//        log.run();
+//         captura de logs 
+        CapturarSERR log = new CapturarSERR();
+        
+        try {
+            String[] s = new String[2];
+            s[4] = "hehehe";
+        } catch (Exception e) {
+            System.err.println("Erro proposital");
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -49,6 +60,7 @@ public class JfLogin extends javax.swing.JFrame {
         jbEntrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Login:");

@@ -7,18 +7,12 @@ package controle;
 
 import dao.AuditoriaDAO;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.control.TableColumn;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import modelo.Auditoria;
-import modelo.ExecucaoScript;
-import org.hibernate.Criteria;
 
 /**
  *
@@ -28,6 +22,17 @@ public class ControleAuditoria {
 
     private AuditoriaDAO dao;
 
+    public Auditoria consultar(Auditoria obj) {
+        Auditoria objLocal = new Auditoria();
+        try {
+            objLocal = dao.consultar(obj);
+        } catch (Exception e) {
+            System.err.println("" + e);
+            e.printStackTrace();
+        }
+        return objLocal;
+    }
+    
     public ControleAuditoria() {
         this.dao = new AuditoriaDAO();
     }

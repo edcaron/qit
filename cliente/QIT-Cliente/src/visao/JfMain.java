@@ -5,27 +5,11 @@
  */
 package visao;
 
-import Modelo.ConexaoBD;
 import controle.ControleUsuario;
-import controle.HibernateUtil;
-import dao.UsuarioDAO;
-import java.sql.Connection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import java.awt.Image;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 import modelo.Usuario;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -44,9 +28,21 @@ public class JfMain extends javax.swing.JFrame {
         this.usuario = usuario;
         controleUsuario = new ControleUsuario();
         initComponents();
+        aplicaIcones();
         this.setLocation(0, 0);
 
         this.setTitle("QIT - User: " + usuario.getLogin());
+
+    }
+
+    private void aplicaIcones() {
+
+        btMaquinas.setIcon(new ImageIcon("src/visao/img/ico_pc.png"));
+        btMaquinas.setToolTipText("Máquinas");
+        btSoftwares.setIcon(new ImageIcon("src/visao/img/ico_sw.png"));
+        btSoftwares.setToolTipText("Softwares");
+        btScripts.setIcon(new ImageIcon("src/visao/img/ico_cmd.png"));
+        btScripts.setToolTipText("Scripts");
     }
 
     /**
@@ -60,9 +56,9 @@ public class JfMain extends javax.swing.JFrame {
 
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
-        jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btMaquinas = new javax.swing.JButton();
+        btSoftwares = new javax.swing.JButton();
+        btScripts = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jmUsuario = new javax.swing.JMenu();
         jimUsuario = new javax.swing.JMenuItem();
@@ -99,21 +95,21 @@ public class JfMain extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btMaquinas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btMaquinasActionPerformed(evt);
             }
         });
 
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btSoftwares.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btSoftwaresActionPerformed(evt);
             }
         });
 
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btScripts.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btScriptsActionPerformed(evt);
             }
         });
 
@@ -294,11 +290,11 @@ public class JfMain extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btMaquinas, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btSoftwares, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btScripts, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(1102, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -306,9 +302,9 @@ public class JfMain extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btMaquinas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btScripts, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                    .addComponent(btSoftwares, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -327,18 +323,18 @@ public class JfMain extends javax.swing.JFrame {
         new JfPermissaoNew2(usuario);
     }//GEN-LAST:event_jimPermissaoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new JfAuditoria(usuario);        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btMaquinasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMaquinasActionPerformed
+        new JfMaquina(usuario);        // TODO add your handling code here:
+    }//GEN-LAST:event_btMaquinasActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btSoftwaresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSoftwaresActionPerformed
+        new JfSoftware(usuario);
 
+    }//GEN-LAST:event_btSoftwaresActionPerformed
 
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void btScriptsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btScriptsActionPerformed
+        new JfScript(usuario);
+    }//GEN-LAST:event_btScriptsActionPerformed
 
     private void jimPredioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jimPredioActionPerformed
         new JfPredio(usuario);
@@ -435,9 +431,9 @@ public class JfMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton btMaquinas;
+    private javax.swing.JButton btScripts;
+    private javax.swing.JButton btSoftwares;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

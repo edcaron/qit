@@ -9,6 +9,7 @@ import controle.ControleAuditoria;
 import controle.ControleUsuario;
 import controle.ITela;
 import controle.ProxyTelas;
+import controle.Util;
 import javax.swing.JOptionPane;
 import modelo.Auditoria;
 import modelo.Tela;
@@ -40,6 +41,9 @@ public class JfAuditoria extends javax.swing.JFrame implements ITela {
         this.controleAuditoria = new ControleAuditoria();
         this.usuarioselecionado = new Usuario();
 
+        qftfIdUsuario.setEditable(false);
+        jtfNomeUsuario.setEditable(false);
+
         this.qftfDataInicial.setDataType("date");
         this.qftfDataInicial.applyMask();
 
@@ -51,6 +55,7 @@ public class JfAuditoria extends javax.swing.JFrame implements ITela {
         this.ler();
 
         controle.Util.definePadroesJFrame(this);
+        new ControleAuditoria().popularTabela(jtResultados, "", false);
     }
 
     private JfAuditoria() {
@@ -83,6 +88,7 @@ public class JfAuditoria extends javax.swing.JFrame implements ITela {
         jScrollPane2 = new javax.swing.JScrollPane();
         jtResultados = new javax.swing.JTable();
         btLimparFiltros = new javax.swing.JButton();
+        jbVerDados = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -173,6 +179,13 @@ public class JfAuditoria extends javax.swing.JFrame implements ITela {
             }
         });
 
+        jbVerDados.setText("Dados Alterados");
+        jbVerDados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbVerDadosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpCadastroLayout = new javax.swing.GroupLayout(jpCadastro);
         jpCadastro.setLayout(jpCadastroLayout);
         jpCadastroLayout.setHorizontalGroup(
@@ -182,7 +195,8 @@ public class JfAuditoria extends javax.swing.JFrame implements ITela {
                 .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
                     .addGroup(jpCadastroLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jbVerDados)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btCancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jpCadastroLayout.createSequentialGroup()
                         .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -248,7 +262,9 @@ public class JfAuditoria extends javax.swing.JFrame implements ITela {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btCancelar1)
+                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btCancelar1)
+                    .addComponent(jbVerDados))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -299,7 +315,7 @@ public class JfAuditoria extends javax.swing.JFrame implements ITela {
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         String parametros = "";
-       
+
 //        adiciona filtros para tabela
         String textoCombo = jcbTabela.getSelectedItem().toString();
         if (!textoCombo.equalsIgnoreCase("todas")) {
@@ -349,13 +365,44 @@ public class JfAuditoria extends javax.swing.JFrame implements ITela {
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btLimparFiltrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimparFiltrosActionPerformed
-        // TODO add your handling code here:
+        jcbTabela.setSelectedIndex(0);
+        jcbOperacao.setSelectedIndex(0);
+        qftfDataFinal.setText("  /  /    ");
+        qftfDataInicial.setText("  /  /    ");
+        qftfIdUsuario.setText("");
+        jtfNomeUsuario.setText("");
     }//GEN-LAST:event_btLimparFiltrosActionPerformed
 
     private void jcbTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTabelaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jcbTabelaActionPerformed
 
+    private void jbVerDadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbVerDadosActionPerformed
+        if (jtResultados.getSelectedRowCount() != 0) {
+            Auditoria a = new Auditoria();            
+            int id = (int) jtResultados.getValueAt(jtResultados.getSelectedRow(), 0);                        
+            a.setId(id);
+            a = new ControleAuditoria().consultar(a);                        
+                                    
+            new JfDadosAuditoria(formataJson(a.getValoresNovos()), formataJson(a.getValoresNovos()), Util.dateToString(a.getDt()), a.getTabela());
+        }
+    }//GEN-LAST:event_jbVerDadosActionPerformed
+
+    protected String formataJson(String json){
+        String retorno = "";
+        try {                        
+            json = json.replace("{", "");
+            json = json.replaceAll("}", "");
+            json = json.replaceAll("\"", "");
+            json = json.replaceAll(",", "\n");  
+            retorno = json;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return retorno;
+    }
+            
+    
     /**
      * @param args the command line arguments
      */
@@ -402,6 +449,7 @@ public class JfAuditoria extends javax.swing.JFrame implements ITela {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton jbVerDados;
     private javax.swing.JComboBox jcbOperacao;
     private javax.swing.JComboBox jcbTabela;
     private javax.swing.JPanel jpCadastro;
@@ -470,6 +518,11 @@ public class JfAuditoria extends javax.swing.JFrame implements ITela {
     @Override
     public void setRelacionado3(String id, String nome
     ) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public void setRelacionado4(String id, String nome) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

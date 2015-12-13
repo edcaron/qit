@@ -51,7 +51,8 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jScrollPane2" pref="680" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="jbVerDados" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="btCancelar1" min="-2" pref="75" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
@@ -136,7 +137,10 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane2" min="-2" pref="318" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="btCancelar1" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btCancelar1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jbVerDados" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -284,6 +288,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btLimparFiltrosActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jbVerDados">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Dados Alterados"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbVerDadosActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
