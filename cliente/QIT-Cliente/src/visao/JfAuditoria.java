@@ -314,13 +314,13 @@ public class JfAuditoria extends javax.swing.JFrame implements ITela {
     }//GEN-LAST:event_btCancelar1ActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        String parametros = "";
+String parametros = "";
 
 //        adiciona filtros para tabela
         String textoCombo = jcbTabela.getSelectedItem().toString();
         if (!textoCombo.equalsIgnoreCase("todas")) {
             textoCombo = textoCombo.toLowerCase();
-            parametros += " and tabela = " + textoCombo;
+            parametros += " and tabela = '" + textoCombo + "'"; 
         }
 
 //        adiciona filtros para data inicial
@@ -361,7 +361,7 @@ public class JfAuditoria extends javax.swing.JFrame implements ITela {
 
         System.out.println("parametros:" + parametros);
 
-        new ControleAuditoria().popularTabela(jtResultados, parametros, false);
+        new ControleAuditoria().popularTabela(jtResultados, parametros, false); 
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btLimparFiltrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimparFiltrosActionPerformed
@@ -384,7 +384,7 @@ public class JfAuditoria extends javax.swing.JFrame implements ITela {
             a.setId(id);
             a = new ControleAuditoria().consultar(a);                        
                                     
-            new JfDadosAuditoria(formataJson(a.getValoresNovos()), formataJson(a.getValoresNovos()), Util.dateToString(a.getDt()), a.getTabela());
+            new JfDadosAuditoria(formataJson(a.getValoresAntigos()), formataJson(a.getValoresNovos()), Util.dateToString(a.getDt()), a.getTabela());
         }
     }//GEN-LAST:event_jbVerDadosActionPerformed
 
@@ -525,10 +525,6 @@ public class JfAuditoria extends javax.swing.JFrame implements ITela {
     public void setRelacionado4(String id, String nome) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public void setRelacionado4(String id, String nome) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+      
 
 }

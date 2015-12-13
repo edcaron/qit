@@ -40,7 +40,7 @@ public class ControleParticao {
             cabecalho[0] = "Nome";
             cabecalho[1] = "Letra:";
             cabecalho[2] = "Formato:";
-            cabecalho[3] = "Espaço GB:";
+            cabecalho[3] = "Tamanho GB:";
             cabecalho[4] = "Espaço Livre GB:";
 
             // cria matriz de acordo com nº de registros da tabela
@@ -52,8 +52,8 @@ public class ControleParticao {
                 dadosTabela[i][0] = listaPerticao.get(i).getNome();
                 dadosTabela[i][1] = listaPerticao.get(i).getLetra();
                 dadosTabela[i][2] = listaPerticao.get(i).getFormato();
-                dadosTabela[i][3] = listaPerticao.get(i).getEspacoMb() / 1000; // conversao para gb
-                dadosTabela[i][4] = listaPerticao.get(i).getEspacoLivreMb() / 1000; // conversao para gb
+                dadosTabela[i][3] = String.format("%.2f",(listaPerticao.get(i).getEspacoMb() / 1024)); // conversao para gb e 2 casas decimais
+                dadosTabela[i][4] = String.format("%.2f",(listaPerticao.get(i).getEspacoLivreMb() / 1024)); // conversao para gb gb e 2 casas decimais
 
             }
 
