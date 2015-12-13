@@ -35,7 +35,7 @@ public class JdlgGenerico extends javax.swing.JDialog {
         this.controlePai = controle;
         this.modeloPai = modelo;
         this.relacionado = relacionado;
-        
+
         modeloPai.setNome("");
         controlePai.popularTabela(tabela, modeloPai, true);
 
@@ -201,8 +201,11 @@ public class JdlgGenerico extends javax.swing.JDialog {
                 case 3:
                     telaPai.setRelacionado3(id, nome);
                     break;
+                case 4:
+                    telaPai.setRelacionado4(id, nome);
+                    break;
             }
-            
+
             this.dispose();
         } catch (Exception e) {
             System.out.println("Erro ao selecionar: \n " + e);

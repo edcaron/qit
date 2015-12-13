@@ -11,6 +11,7 @@ import controle.HibernateUtil;
 import controle.IModelo;
 import java.util.ArrayList;
 import java.util.Date;
+import modelo.Grupo;
 import modelo.Permissao;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -137,6 +138,31 @@ public class PermissaoDAO {
         }
         return lista;
 
+    }
+
+    public ArrayList<Permissao> listar(Grupo g) {
+        List resultado = null;
+
+        ArrayList<Permissao> lista = new ArrayList<>();
+        try {
+            sessao = HibernateUtil.getSessionFactory().openSession();
+            sessao.beginTransaction();
+            String sql = "from Permissao p inner join p.grupo as g inner join p.tela where g.id = " + g.getId() + " order by p.id ";
+
+            org.hibernate.Query q = sessao.createQuery(sql);
+            resultado = q.list();
+
+            for (Object o : resultado) {
+                Permissao s = ((Permissao) ((Object[]) o)[0]);
+                lista.add(s);
+            }
+
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        } finally {
+            sessao.close();
+        }
+        return lista;
     }
 
 }

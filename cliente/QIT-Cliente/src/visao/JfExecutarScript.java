@@ -40,7 +40,7 @@ public class JfExecutarScript extends javax.swing.JFrame implements ITela {
         listaMaquinasExecutarScripts = new HashSet<>();
         this.tela = new Tela();
 
-        tela.setId(101);
+        tela.setId(11);
 
         script = new Script();
         execScript = new ExecucaoScript();
@@ -725,5 +725,10 @@ public class JfExecutarScript extends javax.swing.JFrame implements ITela {
     private javax.swing.JTabbedPane jtpMain;
     private qitjftf.QITJFormattedTextField qftfIdScript;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void setRelacionado4(String id, String nome) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

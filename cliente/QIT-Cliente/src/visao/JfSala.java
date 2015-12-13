@@ -543,4 +543,9 @@ public class JfSala extends javax.swing.JFrame implements ITela {
     private qitjftf.QITJFormattedTextField qftfNome;
     // End of variables declaration//GEN-END:variables
 
+    @Override
+    public void setRelacionado4(String id, String nome) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

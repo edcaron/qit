@@ -35,7 +35,7 @@ public class JfMaquinasExecutarScript extends javax.swing.JFrame implements ITel
         listaMaquinasExecutarScripts = new HashSet<>();
         this.tela = new Tela();
 
-        tela.setId(101);
+        tela.setId(12);
         execScript = new ExecucaoScript();
 
         qftfIdExecScript.setEditable(false);
@@ -523,5 +523,10 @@ public class JfMaquinasExecutarScript extends javax.swing.JFrame implements ITel
     private javax.swing.JTextArea jtaResultadoExecucao;
     private qitjftf.QITJFormattedTextField qftfIdExecScript;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void setRelacionado4(String id, String nome) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

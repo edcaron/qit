@@ -205,9 +205,11 @@ public class Util {
      */
     public static boolean stringParaBinario(String parametro) {
         boolean retorno = true;
-        if (parametro.equals("Inativo")) {
+        if (parametro.equals("Inativo") || parametro.equals("false")) {
             retorno = false;
         }
         return retorno;
     }
+
+
 }

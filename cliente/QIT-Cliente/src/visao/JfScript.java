@@ -43,7 +43,7 @@ public class JfScript extends javax.swing.JFrame implements ITela {
         this.listaAdicionarArquivos = new File[0];
         tipo = new Tipo();
         tipo.setId(1);
-        tela.setId(1);
+        tela.setId(10);
         controleScript = new ControleScript();
 
         qftfIdTipo.setEditable(false);
@@ -792,5 +792,10 @@ public class JfScript extends javax.swing.JFrame implements ITela {
     private qitjftf.QITJFormattedTextField qftfIdTipo;
     private qitjftf.QITJFormattedTextField qftfNome;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void setRelacionado4(String id, String nome) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

@@ -47,7 +47,7 @@ public class JfSoftware extends javax.swing.JFrame implements ITela {
         controleSoftware = new ControleSoftware();
 
         maquina = new Maquina();
-        tela.setId(3);
+        tela.setId(7);
         JtfMaquina.setEditable(false);
         jTFnumerosoftware.setEditable(false);
 
@@ -839,6 +839,11 @@ jtpMain.setSelectedIndex(1);        // TODO add your handling code here:
 
     @Override
     public void setRelacionado3(String id, String nome) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setRelacionado4(String id, String nome) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

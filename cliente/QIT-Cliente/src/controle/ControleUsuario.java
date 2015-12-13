@@ -90,6 +90,8 @@ public class ControleUsuario implements IControle {
     }
 
     public boolean verificarPermissao(Usuario usuario, Tela tela, String operacao) {
+        ControleUsuario cu = new ControleUsuario();
+        usuario = cu.consultar(usuario);
         boolean temPermissao = false;
         Set lista = null;
         System.out.println("o tipo de permissao é " + usuario.getTipoPermissao());

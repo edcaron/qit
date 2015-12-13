@@ -48,7 +48,7 @@ public class JfMaquina extends javax.swing.JFrame implements ITela {
         controleParticao = new ControleParticao();
         controlePlaca = new ControlePlacarede();
         maquina = new Maquina();
-        tela.setId(3);
+        tela.setId(8);
         jTFHost.setEditable(false);
         jTFDominio.setEditable(false);
         jTFCput.setEditable(false);
@@ -885,6 +885,11 @@ public class JfMaquina extends javax.swing.JFrame implements ITela {
 
     @Override
     public void setRelacionado3(String id, String nome) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setRelacionado4(String id, String nome) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
