@@ -7,6 +7,7 @@ package visao;
 
 import controle.ControleConfiguracao;
 import controle.ControleSala;
+import controle.ControleUsuario;
 import controle.ITela;
 import controle.ProxyTelas;
 import dao.ConfiguracaoDAO;
@@ -31,12 +32,13 @@ public class JfConfiguracao extends javax.swing.JFrame implements ITela {
     protected Configuracao configuracao;
     protected ControleConfiguracao controleConfiguracao;
 
+
     public JfConfiguracao(Usuario usuario) {
         initComponents();
         this.setTitle("Configuração");
         this.usuario = usuario;
         this.tela = new Tela();
-        tela.setId(1);
+        tela.setId(9);
         this.sala = new Sala();
         this.predio = new Predio();
         configuracao = new Configuracao();

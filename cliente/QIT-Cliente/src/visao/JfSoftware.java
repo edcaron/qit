@@ -47,7 +47,7 @@ public class JfSoftware extends javax.swing.JFrame implements ITela {
         controleSoftware = new ControleSoftware();
 
         maquina = new Maquina();
-        tela.setId(3);
+        tela.setId(7);
         JtfMaquina.setEditable(false);
         jTFnumerosoftware.setEditable(false);
 

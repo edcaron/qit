@@ -43,7 +43,7 @@ public class JfScript extends javax.swing.JFrame implements ITela {
         this.listaAdicionarArquivos = new File[0];
         tipo = new Tipo();
         tipo.setId(1);
-        tela.setId(1);
+        tela.setId(10);
         controleScript = new ControleScript();
 
         qftfIdTipo.setEditable(false);

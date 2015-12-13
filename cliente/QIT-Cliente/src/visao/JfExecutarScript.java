@@ -40,7 +40,7 @@ public class JfExecutarScript extends javax.swing.JFrame implements ITela {
         listaMaquinasExecutarScripts = new HashSet<>();
         this.tela = new Tela();
 
-        tela.setId(101);
+        tela.setId(11);
 
         script = new Script();
         execScript = new ExecucaoScript();

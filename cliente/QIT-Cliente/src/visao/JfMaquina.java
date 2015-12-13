@@ -48,7 +48,7 @@ public class JfMaquina extends javax.swing.JFrame implements ITela {
         controleParticao = new ControleParticao();
         controlePlaca = new ControlePlacarede();
         maquina = new Maquina();
-        tela.setId(3);
+        tela.setId(8);
         jTFHost.setEditable(false);
         jTFDominio.setEditable(false);
         jTFCput.setEditable(false);

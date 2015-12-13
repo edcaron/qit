@@ -35,7 +35,7 @@ public class JfMaquinasExecutarScript extends javax.swing.JFrame implements ITel
         listaMaquinasExecutarScripts = new HashSet<>();
         this.tela = new Tela();
 
-        tela.setId(101);
+        tela.setId(12);
         execScript = new ExecucaoScript();
 
         qftfIdExecScript.setEditable(false);
