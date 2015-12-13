@@ -33,7 +33,7 @@ public class JfSoftware extends javax.swing.JFrame implements ITela {
 
     public JfSoftware(Usuario usuario) {
         initComponents();
-        this.setTitle("Maquina");
+        this.setTitle("Softwares");
         this.usuario = usuario;
         this.tela = new Tela();
         controleMaquina = new ControleMaquina();

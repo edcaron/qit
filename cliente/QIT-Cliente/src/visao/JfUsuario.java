@@ -561,14 +561,20 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
 
     private void btVerEditar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVerEditar1ActionPerformed
         Usuario userAlterado = new Usuario();
-        if (jtResultados.getSelectedRowCount() != 0) {
-            int idRegistroSelecionado = (int) jtResultados.getValueAt(jtResultados.getSelectedRow(), 0);
-            userAlterado.setId(idRegistroSelecionado);
-            userAlterado = controleUsuario.consultarPesquisa(userAlterado);
-            new JfAlterarSenha(userAlterado);
+        boolean permissaoUser = proxy.editar();
+        if (permissaoUser) {
 
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um registro da tabela");
+            if (jtResultados.getSelectedRowCount() != 0) {
+                int idRegistroSelecionado = (int) jtResultados.getValueAt(jtResultados.getSelectedRow(), 0);
+                userAlterado.setId(idRegistroSelecionado);
+                userAlterado = controleUsuario.consultarPesquisa(userAlterado);
+                new JfAlterarSenha(userAlterado);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecione um registro da tabela");
+            }
+        }else {
+                      JOptionPane.showMessageDialog(null, "Voce não possui permissao");
         }
     }//GEN-LAST:event_btVerEditar1ActionPerformed
 
