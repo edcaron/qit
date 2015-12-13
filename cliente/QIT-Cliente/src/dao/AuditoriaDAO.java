@@ -45,7 +45,7 @@ public class AuditoriaDAO {
                     + " where usuario.id != 0 "
                     + parametros
                     + " order by dt desc";
-
+            //System.out.println("o hql foi: "+sql);
             org.hibernate.Query q = sessao.createQuery(sql);
             resultado = q.list();
 

@@ -32,7 +32,6 @@ public class JfConfiguracao extends javax.swing.JFrame implements ITela {
     protected Configuracao configuracao;
     protected ControleConfiguracao controleConfiguracao;
 
-
     public JfConfiguracao(Usuario usuario) {
         initComponents();
         this.setTitle("Configuração");
@@ -47,6 +46,11 @@ public class JfConfiguracao extends javax.swing.JFrame implements ITela {
         controleConfiguracao = new ControleConfiguracao();
         configuracao = controleConfiguracao.consultar(configuracao);
         JcNivel.setSelectedIndex(Integer.parseInt(configuracao.getValor()));
+
+        Configuracao configuracao2 = new Configuracao();
+        configuracao2.setId(2);
+        configuracao2 = controleConfiguracao.consultar(configuracao2);
+        jTFTempo.setText(configuracao2.getValor());
         this.controleConfiguracao = new ControleConfiguracao();
 
         proxy = new ProxyTelas(this, this.usuario, this.tela);
@@ -83,6 +87,9 @@ public class JfConfiguracao extends javax.swing.JFrame implements ITela {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         btSalvar = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        jTFTempo = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -155,6 +162,12 @@ public class JfConfiguracao extends javax.swing.JFrame implements ITela {
             }
         });
 
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel10.setText("Tempo para limpar:");
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel11.setText("Tempo para limpar é o prazo em dias que ficaram salvo os registros de auditoria. (recomendado = 60)");
+
         javax.swing.GroupLayout jpConsultaLayout = new javax.swing.GroupLayout(jpConsulta);
         jpConsulta.setLayout(jpConsultaLayout);
         jpConsultaLayout.setHorizontalGroup(
@@ -169,15 +182,21 @@ public class JfConfiguracao extends javax.swing.JFrame implements ITela {
                         .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jpConsultaLayout.createSequentialGroup()
                         .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jpConsultaLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addComponent(JcNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel6)
                             .addComponent(jLabel7)
                             .addComponent(jLabel8)
-                            .addComponent(jLabel9))
-                        .addGap(0, 298, Short.MAX_VALUE)))
+                            .addComponent(jLabel9)
+                            .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpConsultaLayout.createSequentialGroup()
+                                    .addComponent(jLabel10)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jTFTempo))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpConsultaLayout.createSequentialGroup()
+                                    .addComponent(jLabel5)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(JcNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel11))
+                        .addGap(0, 28, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jpConsultaLayout.setVerticalGroup(
@@ -189,13 +208,19 @@ public class JfConfiguracao extends javax.swing.JFrame implements ITela {
                 .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(JcNivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTFTempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
                 .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btCancelar)
                     .addComponent(btSalvar))
@@ -235,6 +260,12 @@ public class JfConfiguracao extends javax.swing.JFrame implements ITela {
             this.inserir();
         } else {
             this.editar();
+            configuracao.setId(2); // id da configuracao de tempo para limpar auditoria 
+            configuracao.setValor("" + jTFTempo.getText());
+            configuracao.setUsuario(usuario);
+            if (this.editar()) {
+                JOptionPane.showMessageDialog(rootPane, "Operação Realizada com sucesso");
+            }
         }
         controleConfiguracao.salvar(configuracao);
 // TODO add your handling code here:
@@ -284,12 +315,15 @@ public class JfConfiguracao extends javax.swing.JFrame implements ITela {
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btSalvar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JTextField jTFTempo;
     private javax.swing.JPanel jpCadastro;
     private javax.swing.JPanel jpConsulta;
     private javax.swing.JTabbedPane jtpMain;
@@ -336,7 +370,7 @@ public class JfConfiguracao extends javax.swing.JFrame implements ITela {
         if (permissaoUser) {
             boolean retorno = new ConfiguracaoDAO().salvar(configuracao);
             if (retorno) {
-                JOptionPane.showMessageDialog(rootPane, "Operação Realizada com sucesso");
+//                JOptionPane.showMessageDialog(rootPane, "Operação Realizada com sucesso");
                 this.limparCampos();
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Não foi posssíel realizar esta operação, consulte o log de erros");

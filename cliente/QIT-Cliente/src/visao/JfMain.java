@@ -64,6 +64,7 @@ public class JfMain extends javax.swing.JFrame {
         jimUsuario = new javax.swing.JMenuItem();
         jimGrupoUsuario = new javax.swing.JMenuItem();
         jimPermissao = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jmInventario = new javax.swing.JMenu();
         jimMaquinas = new javax.swing.JMenuItem();
         jimSoftware = new javax.swing.JMenuItem();
@@ -138,6 +139,14 @@ public class JfMain extends javax.swing.JFrame {
             }
         });
         jmUsuario.add(jimPermissao);
+
+        jMenuItem5.setText("Alterar senha");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jmUsuario.add(jMenuItem5);
 
         jMenuBar1.add(jmUsuario);
 
@@ -389,6 +398,10 @@ public class JfMain extends javax.swing.JFrame {
         new JfSoftware(usuario);        // TODO add your handling code here:
     }//GEN-LAST:event_jimSoftwareActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        new JfAlterarSenha(usuario);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -449,6 +462,7 @@ public class JfMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
