@@ -85,7 +85,7 @@ public class ComunicacaoSO {
             ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando);
             builder.redirectErrorStream(true);
             Process p = builder.start();
-            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream(), "ISO-8859-1"));
             String line;
             while (true) {
                 line = r.readLine();

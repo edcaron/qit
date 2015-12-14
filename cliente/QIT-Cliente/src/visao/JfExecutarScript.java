@@ -48,7 +48,7 @@ public class JfExecutarScript extends javax.swing.JFrame implements ITela {
         qftfIdScript.setEditable(false);
         qftfIdScript.setDataType("integer");
         qftfIdScript.setNotNull(true);
-        qftfIdScript.setMaxLenght(1000);
+        qftfIdScript.setMaxLenght(100);
 
         jftfNomeScript.setEditable(false);
         jftfNomeScript.setFocusable(false);
@@ -96,7 +96,6 @@ public class JfExecutarScript extends javax.swing.JFrame implements ITela {
         btVerEditar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(700, 540));
         setResizable(false);
 
         jtpMain.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -140,7 +139,7 @@ public class JfExecutarScript extends javax.swing.JFrame implements ITela {
 
             },
             new String [] {
-                "Código", "Nome", "Ip", "So"
+                "Código", "Nome", "So"
             }
         ));
         jtMaquinasAdicionadas.getTableHeader().setReorderingAllowed(false);
@@ -150,13 +149,16 @@ public class JfExecutarScript extends javax.swing.JFrame implements ITela {
             }
         });
         jScrollPane3.setViewportView(jtMaquinasAdicionadas);
+        if (jtMaquinasAdicionadas.getColumnModel().getColumnCount() > 0) {
+            jtMaquinasAdicionadas.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         jtMaquinas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Código", "Nome", "Ip", "SO"
+                "Código", "Nome", "SO"
             }
         ));
         jtMaquinas.getTableHeader().setReorderingAllowed(false);
@@ -395,22 +397,23 @@ public class JfExecutarScript extends javax.swing.JFrame implements ITela {
     }//GEN-LAST:event_btCancelar1ActionPerformed
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        qftfIdScript.validate();
-        if (qftfIdScript.isValid() && jtMaquinasAdicionadas.getRowCount() != 0) {
-            System.out.println("Id do script:" + Integer.parseInt(qftfIdScript.getText()));
-            script.setId(Integer.parseInt(qftfIdScript.getText()));
-            execScript.setData(Util.getCurrentDate());
-            execScript.setScript(script);
-            execScript.setUsuario(usuario);
-            execScript.setMaquinasExecutarScripts(listaMaquinasExecutarScripts);
-            execScript.setExecutado(false);
-            if (execScript.getId() == 0) {
-                this.inserir();
-            } else {
-                this.editar();
+        if (controle.Formatacao.verificarNulos(jpCadastro)) {
+            if (jtMaquinasAdicionadas.getRowCount() != 0) {
+                System.out.println("Id do script:" + Integer.parseInt(qftfIdScript.getText()));
+                script.setId(Integer.parseInt(qftfIdScript.getText()));
+                execScript.setData(Util.getCurrentDate());
+                execScript.setScript(script);
+                execScript.setUsuario(usuario);
+                execScript.setMaquinasExecutarScripts(listaMaquinasExecutarScripts);
+                execScript.setExecutado(false);
+                if (execScript.getId() == 0) {
+                    this.inserir();
+                } else {
+                    this.editar();
+                }
             }
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Preencha todos os campos obrigatórios");
+            JOptionPane.showMessageDialog(rootPane, "Adicione uma máquina a execução");
         }
 
     }//GEN-LAST:event_btSalvarActionPerformed

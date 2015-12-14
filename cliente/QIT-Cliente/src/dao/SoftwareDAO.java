@@ -13,6 +13,7 @@ import modelo.Software;
 import modelo.SoftwaresMaquina;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -30,9 +31,10 @@ public class SoftwareDAO {
         List resultado = null;
 
         ArrayList<SoftwaresMaquina> lista = new ArrayList<>();
+        Transaction t = null;
         try {
             sessao = HibernateUtil.getSessionFactory().openSession();
-            sessao.beginTransaction();
+            t = sessao.beginTransaction();
             //String sql = "from Software s where s.id =" + m.getId() + " order by s.id desc";
             String sql = "";
             if (nome.equals("")) {
@@ -50,12 +52,13 @@ public class SoftwareDAO {
 
         } catch (HibernateException he) {
             he.printStackTrace();
+            t.rollback();
         } finally {
             sessao.close();
         }
         return lista;
     }
-
+    
     public Software consultar(Software software) {
         List resultado = null;
 

@@ -58,6 +58,10 @@ public class Tarefas {
                 es = mes.getExecucaoScript();
                 es.setExecutado(Boolean.TRUE);
                 new ControleExecutarScript().salvar(es);
+                
+//                despois de executar, manda o cliente fazer inventário
+                
+//                  new ChamaAgenteSocket().executarInventarioNoCliente(mes.getMaquina());
             }
         } catch (Exception e) {
             System.err.println("Erro ao armazernarRetorno do script" + e);

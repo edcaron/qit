@@ -26,19 +26,12 @@ public class JfLogin extends javax.swing.JFrame {
         initComponents();
         this.setTitle("QIT - Login");
         this.setLocation(400, 200);
-        jftLogin.setText("user3");
-        jpfSenha.setText("user3");
+        jftLogin.setText("admin");
+        jpfSenha.setText("admin");
 
 //         captura de logs 
         CapturarSERR log = new CapturarSERR();
-        
-        try {
-            String[] s = new String[2];
-            s[4] = "hehehe";
-        } catch (Exception e) {
-            System.err.println("Erro proposital");
-            e.printStackTrace();
-        }
+            
 
     }
 

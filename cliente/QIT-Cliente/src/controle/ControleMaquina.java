@@ -31,27 +31,29 @@ public class ControleMaquina implements IControle {
         Object[][] dadosTabela = null;
         //   System.out.println("populando tabela");
         try {
-            int colunasTabela = 2;
+            int colunasTabela = 3;
 
             if (isModal) {
-                colunasTabela = 2; //se modal for verdadeiro, a tabela vai ter so 2 colunas para ser usado no JDialog para consulta
+                colunasTabela = 3; //se modal for verdadeiro, a tabela vai ter so 2 colunas para ser usado no JDialog para consulta
             } else {
-                colunasTabela = 2;
+                colunasTabela = 3;
             }
 
             Object[] cabecalho = new Object[colunasTabela];
 
             cabecalho[0] = "Cód.";
-            cabecalho[1] = "Grupo";
+            cabecalho[1] = "Nome";
+            cabecalho[2] = "SO";
 
             // cria matriz de acordo com n de registros da tabela
-            ArrayList<Maquina> listaPredio = dao.listar(modelo);
+            ArrayList<Maquina> lista = dao.listar(modelo);
 
-            dadosTabela = new Object[listaPredio.size()][colunasTabela];
+            dadosTabela = new Object[lista.size()][colunasTabela];
 
-            for (int i = 0; i < listaPredio.size(); i++) {
-                dadosTabela[i][0] = listaPredio.get(i).getId();
-                dadosTabela[i][1] = listaPredio.get(i).getNome();
+            for (int i = 0; i < lista.size(); i++) {
+                dadosTabela[i][0] = lista.get(i).getId();
+                dadosTabela[i][1] = lista.get(i).getNome();
+                dadosTabela[i][2] = lista.get(i).getSo();
 
             }
 
@@ -70,7 +72,7 @@ public class ControleMaquina implements IControle {
             });
 
             // permite seleção de apenas uma linha da tabela
-            tabela.setSelectionMode(0);
+//            tabela.setSelectionMode(0);
 
 //Desabilitar arrastar e soltar
             tabela.getTableHeader().setReorderingAllowed(false);
@@ -85,37 +87,11 @@ public class ControleMaquina implements IControle {
             direita.setHorizontalAlignment(SwingConstants.RIGHT);
 
             tabela.getColumnModel().getColumn(0).setCellRenderer(direita);
-            tabela.getColumnModel().getColumn(1).setCellRenderer(direita);
+            tabela.getColumnModel().getColumn(1).setCellRenderer(esquerda);
             tabela.getTableHeader().setResizingAllowed(true);
 
             // redimensiona as colunas de uma tabela
-            TableColumn column = null;
-//        for (int i = 0; i < tabela.getColumnCount(); i++) {
-//            column = tabela.getColumnModel().getColumn(i);
-//            switch (i) {
-//                case 0:
-//                    column.setPreferredWidth(30);
-//                    break;
-//                case 1:
-//                    column.setPreferredWidth(110);
-//                    break;
-//                case 2:
-//                    column.setPreferredWidth(40);
-//                    break;
-//                case 3:
-//                    column.setPreferredWidth(40);
-//                    break;
-//                case 8:
-//                    column.setPreferredWidth(40);
-//                    break;
-//                case 7:
-//                    column.setPreferredWidth(50);
-//                    break;
-//                case 9:
-//                    column.setPreferredWidth(40);
-//                    break;
-//            }
-//        }
+            TableColumn column = null;//        
 
         } catch (Exception e) {
             System.err.println("Erro ao popular tabela: " + e + "\n" + e.getCause());
@@ -183,7 +159,7 @@ public class ControleMaquina implements IControle {
             direita.setHorizontalAlignment(SwingConstants.RIGHT);
 
             jtResultados.getColumnModel().getColumn(0).setCellRenderer(direita);
-            jtResultados.getColumnModel().getColumn(1).setCellRenderer(direita);
+            
             jtResultados.getTableHeader().setResizingAllowed(true);
 
             // redimensiona as colunas de uma tabela

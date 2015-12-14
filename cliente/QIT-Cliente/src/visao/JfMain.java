@@ -67,7 +67,7 @@ public class JfMain extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jmInventario = new javax.swing.JMenu();
         jimMaquinas = new javax.swing.JMenuItem();
-        jimSoftware = new javax.swing.JMenuItem();
+        jimMasquinasSoftwares = new javax.swing.JMenuItem();
         jimPredio = new javax.swing.JMenuItem();
         jimSala = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
@@ -77,9 +77,6 @@ public class JfMain extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
@@ -160,13 +157,13 @@ public class JfMain extends javax.swing.JFrame {
         });
         jmInventario.add(jimMaquinas);
 
-        jimSoftware.setText("Software");
-        jimSoftware.addActionListener(new java.awt.event.ActionListener() {
+        jimMasquinasSoftwares.setText("Softwares");
+        jimMasquinasSoftwares.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jimSoftwareActionPerformed(evt);
+                jimMasquinasSoftwaresActionPerformed(evt);
             }
         });
-        jmInventario.add(jimSoftware);
+        jmInventario.add(jimMasquinasSoftwares);
 
         jimPredio.setText("Prédio");
         jimPredio.addActionListener(new java.awt.event.ActionListener() {
@@ -220,20 +217,6 @@ public class JfMain extends javax.swing.JFrame {
             }
         });
         jMenu4.add(jMenuItem8);
-
-        jMenuItem9.setText("Maquinas");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
-            }
-        });
-        jMenu4.add(jMenuItem9);
-
-        jMenuItem12.setText("Prédio");
-        jMenu4.add(jMenuItem12);
-
-        jMenuItem13.setText("Salas");
-        jMenu4.add(jMenuItem13);
 
         jMenu1.add(jMenu4);
 
@@ -329,7 +312,7 @@ public class JfMain extends javax.swing.JFrame {
     }//GEN-LAST:event_jimGrupoUsuarioActionPerformed
 
     private void jimPermissaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jimPermissaoActionPerformed
-        new JfPermissaoNew2(usuario);
+        new JfPermissao(usuario);
     }//GEN-LAST:event_jimPermissaoActionPerformed
 
     private void btMaquinasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMaquinasActionPerformed
@@ -337,7 +320,7 @@ public class JfMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btMaquinasActionPerformed
 
     private void btSoftwaresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSoftwaresActionPerformed
-        new JfSoftware(usuario);
+        new JfMasquinasSoftwares(usuario);
 
     }//GEN-LAST:event_btSoftwaresActionPerformed
 
@@ -374,10 +357,6 @@ public class JfMain extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
-
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         new JfAuditoria(usuario);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
@@ -394,9 +373,9 @@ public class JfMain extends javax.swing.JFrame {
         new JfMaquina(usuario);
     }//GEN-LAST:event_jimMaquinasActionPerformed
 
-    private void jimSoftwareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jimSoftwareActionPerformed
-        new JfSoftware(usuario);        // TODO add your handling code here:
-    }//GEN-LAST:event_jimSoftwareActionPerformed
+    private void jimMasquinasSoftwaresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jimMasquinasSoftwaresActionPerformed
+        new JfMasquinasSoftwares(usuario);        // TODO add your handling code here:
+    }//GEN-LAST:event_jimMasquinasSoftwaresActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         new JfAlterarSenha(usuario);
@@ -457,8 +436,6 @@ public class JfMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -466,13 +443,12 @@ public class JfMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenuItem jimGrupoUsuario;
     private javax.swing.JMenuItem jimMaquinas;
+    private javax.swing.JMenuItem jimMasquinasSoftwares;
     private javax.swing.JMenuItem jimPermissao;
     private javax.swing.JMenuItem jimPredio;
     private javax.swing.JMenuItem jimSala;
-    private javax.swing.JMenuItem jimSoftware;
     private javax.swing.JMenuItem jimUsuario;
     private javax.swing.JMenuItem jmExecucaoScript;
     private javax.swing.JMenu jmInventario;

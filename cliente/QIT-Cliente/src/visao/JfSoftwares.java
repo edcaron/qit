@@ -22,7 +22,7 @@ import modelo.Usuario;
  *
  * @author Tiago
  */
-public class JfSoftware extends javax.swing.JFrame implements ITela {
+public class JfSoftwares extends javax.swing.JFrame implements ITela {
 
     protected Usuario usuario;
     protected Tela tela;
@@ -31,9 +31,9 @@ public class JfSoftware extends javax.swing.JFrame implements ITela {
     protected ControleMaquina controleMaquina;
     protected ControleSoftware controleSoftware;
 
-    public JfSoftware(Usuario usuario) {
+    public JfSoftwares(Usuario usuario) {
         initComponents();
-        this.setTitle("Softwares");
+        this.setTitle("Maquinas e Softwares");
         this.usuario = usuario;
         this.tela = new Tela();
         controleMaquina = new ControleMaquina();
@@ -41,8 +41,7 @@ public class JfSoftware extends javax.swing.JFrame implements ITela {
 
         maquina = new Maquina();
         tela.setId(7);
-        JtfMaquina.setEditable(false);
-
+        
         jTFIdsoftware.setEditable(false);
         jTFNome.setEditable(false);
         jTFVersao.setEditable(false);
@@ -52,15 +51,8 @@ public class JfSoftware extends javax.swing.JFrame implements ITela {
         jTFSitesoftware.setEditable(false);
         jTFCriadomanualmente.setEditable(false);
         jTFDiretorioinstalado.setEditable(false);
-
-//        this.predio = new Predio();
-//        this.controlePredio = new ControlePredio();
-//
-//        qftfNome.setDataType("text");
-//        qftfNome.setMaxLenght(100);
-//        qftfNome.setNotNull(true);
         jftfNomePredio1.setEditable(false);
-        qftfIdSala.setEditable(false);
+        
 
         proxy = new ProxyTelas(this, this.usuario, this.tela);
 //        Verificar permissao da operacao ler
@@ -68,11 +60,14 @@ public class JfSoftware extends javax.swing.JFrame implements ITela {
 
         controle.Util.definePadroesJFrame(this);
 
+        jtpMain.setEnabledAt(1, false);
+        jtpMain.setEnabledAt(2, false);
+        
         atualizarTabela();
 
     }
 
-    private JfSoftware() {
+    private JfSoftwares() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -86,27 +81,25 @@ public class JfSoftware extends javax.swing.JFrame implements ITela {
     private void initComponents() {
 
         jtpMain = new javax.swing.JTabbedPane();
-        jpConsulta = new javax.swing.JPanel();
-        btCancelar = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jtResultados = new javax.swing.JTable();
-        btVerEditar = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        qftfIdSala = new qitjftf.QITJFormattedTextField();
-        jftfNomePredio1 = new javax.swing.JFormattedTextField();
-        btConsultarTabela1 = new javax.swing.JButton();
-        jBtPesquisar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jpCadastro = new javax.swing.JPanel();
+        jpSoftwares = new javax.swing.JPanel();
         btCancelar1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        JtfMaquina = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jTFbuscarSoftware = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        jpMaquinas = new javax.swing.JPanel();
+        btCancelar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtResultados = new javax.swing.JTable();
+        btVerEditar = new javax.swing.JButton();
+        jftfNomePredio1 = new javax.swing.JFormattedTextField();
+        btConsultarTabela1 = new javax.swing.JButton();
+        jBtPesquisar = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jpDetalhes = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -128,7 +121,6 @@ public class JfSoftware extends javax.swing.JFrame implements ITela {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1000, 400));
 
         jtpMain.setMinimumSize(new java.awt.Dimension(1000, 550));
         jtpMain.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -137,129 +129,7 @@ public class JfSoftware extends javax.swing.JFrame implements ITela {
             }
         });
 
-        jpConsulta.setMinimumSize(new java.awt.Dimension(995, 522));
-        jpConsulta.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jpConsultaFocusGained(evt);
-            }
-        });
-
-        btCancelar.setText("Cancelar");
-        btCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btCancelarActionPerformed(evt);
-            }
-        });
-
-        jtResultados.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jtResultados.getTableHeader().setReorderingAllowed(false);
-        jtResultados.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jtResultadosMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(jtResultados);
-
-        btVerEditar.setText("Consultar softwares");
-        btVerEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btVerEditarActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel7.setText("Sala:*");
-
-        qftfIdSala.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                qftfIdSalaActionPerformed(evt);
-            }
-        });
-
-        btConsultarTabela1.setText("Buscar");
-        btConsultarTabela1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btConsultarTabela1ActionPerformed(evt);
-            }
-        });
-
-        jBtPesquisar.setText("Pesquisar");
-        jBtPesquisar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtPesquisarActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("Limpar Filtro");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jpConsultaLayout = new javax.swing.GroupLayout(jpConsulta);
-        jpConsulta.setLayout(jpConsultaLayout);
-        jpConsultaLayout.setHorizontalGroup(
-            jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpConsultaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jpConsultaLayout.createSequentialGroup()
-                        .addComponent(btVerEditar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jpConsultaLayout.createSequentialGroup()
-                                .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jBtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jpConsultaLayout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(qftfIdSala, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jftfNomePredio1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btConsultarTabela1)))
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(388, Short.MAX_VALUE))
-        );
-        jpConsultaLayout.setVerticalGroup(
-            jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpConsultaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(qftfIdSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jftfNomePredio1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btConsultarTabela1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jBtPesquisar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btCancelar)
-                    .addComponent(btVerEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(153, Short.MAX_VALUE))
-        );
-
-        jtpMain.addTab("Seleção:", jpConsulta);
-
-        jpCadastro.setPreferredSize(new java.awt.Dimension(0, 0));
+        jpSoftwares.setPreferredSize(new java.awt.Dimension(0, 0));
 
         btCancelar1.setText("Cancelar");
         btCancelar1.addActionListener(new java.awt.event.ActionListener() {
@@ -298,47 +168,150 @@ public class JfSoftware extends javax.swing.JFrame implements ITela {
             }
         });
 
-        javax.swing.GroupLayout jpCadastroLayout = new javax.swing.GroupLayout(jpCadastro);
-        jpCadastro.setLayout(jpCadastroLayout);
-        jpCadastroLayout.setHorizontalGroup(
-            jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpCadastroLayout.createSequentialGroup()
+        javax.swing.GroupLayout jpSoftwaresLayout = new javax.swing.GroupLayout(jpSoftwares);
+        jpSoftwares.setLayout(jpSoftwaresLayout);
+        jpSoftwaresLayout.setHorizontalGroup(
+            jpSoftwaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpSoftwaresLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JtfMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jpCadastroLayout.createSequentialGroup()
+                .addGroup(jpSoftwaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpSoftwaresLayout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTFbuscarSoftware, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3))
-                    .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpCadastroLayout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btCancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 910, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(75, Short.MAX_VALUE))
+                    .addGroup(jpSoftwaresLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(534, 534, 534)
+                        .addComponent(btCancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jpCadastroLayout.setVerticalGroup(
-            jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCadastroLayout.createSequentialGroup()
-                .addComponent(JtfMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        jpSoftwaresLayout.setVerticalGroup(
+            jpSoftwaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpSoftwaresLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpSoftwaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(jTFbuscarSoftware, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jpSoftwaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(btCancelar1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jtpMain.addTab("Softwares:", jpCadastro);
+        jtpMain.addTab("Softwares:", jpSoftwares);
+
+        jpMaquinas.setMinimumSize(new java.awt.Dimension(995, 522));
+        jpMaquinas.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jpMaquinasFocusGained(evt);
+            }
+        });
+
+        btCancelar.setText("Cancelar");
+        btCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCancelarActionPerformed(evt);
+            }
+        });
+
+        jtResultados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jtResultados.getTableHeader().setReorderingAllowed(false);
+        jtResultados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtResultadosMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jtResultados);
+
+        btVerEditar.setText("Ver Detalhes");
+        btVerEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btVerEditarActionPerformed(evt);
+            }
+        });
+
+        btConsultarTabela1.setText("Buscar");
+        btConsultarTabela1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btConsultarTabela1ActionPerformed(evt);
+            }
+        });
+
+        jBtPesquisar.setText("Pesquisar");
+        jBtPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtPesquisarActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel13.setText("Máquinas onde o software está instalado:");
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel14.setText("Buscar:");
+
+        javax.swing.GroupLayout jpMaquinasLayout = new javax.swing.GroupLayout(jpMaquinas);
+        jpMaquinas.setLayout(jpMaquinasLayout);
+        jpMaquinasLayout.setHorizontalGroup(
+            jpMaquinasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpMaquinasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpMaquinasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpMaquinasLayout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jftfNomePredio1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btConsultarTabela1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpMaquinasLayout.createSequentialGroup()
+                        .addGap(423, 423, 423)
+                        .addComponent(btVerEditar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btCancelar))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING))
+                .addContainerGap(388, Short.MAX_VALUE))
+        );
+        jpMaquinasLayout.setVerticalGroup(
+            jpMaquinasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMaquinasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpMaquinasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jftfNomePredio1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btConsultarTabela1)
+                    .addComponent(jBtPesquisar)
+                    .addComponent(jLabel14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpMaquinasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btVerEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btCancelar))
+                .addContainerGap(51, Short.MAX_VALUE))
+        );
+
+        jtpMain.addTab("Máquinas:", jpMaquinas);
 
         jLabel2.setText("Id software:");
 
@@ -365,20 +338,20 @@ public class JfSoftware extends javax.swing.JFrame implements ITela {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jpDetalhesLayout = new javax.swing.GroupLayout(jpDetalhes);
+        jpDetalhes.setLayout(jpDetalhesLayout);
+        jpDetalhesLayout.setHorizontalGroup(
+            jpDetalhesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpDetalhesLayout.createSequentialGroup()
+                .addGroup(jpDetalhesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jpDetalhesLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(jpDetalhesLayout.createSequentialGroup()
                         .addGap(19, 19, 19)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jpDetalhesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpDetalhesLayout.createSequentialGroup()
+                                .addGroup(jpDetalhesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel4)
@@ -386,68 +359,68 @@ public class JfSoftware extends javax.swing.JFrame implements ITela {
                                     .addComponent(jLabel8)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jpDetalhesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jTFSitedesenvolvedore)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpDetalhesLayout.createSequentialGroup()
+                                        .addGroup(jpDetalhesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(jTFNome)
                                             .addComponent(jTFIdsoftware)
                                             .addComponent(jTFVersao, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addComponent(jTFDesenvolvedor)
                                     .addComponent(jTFComandoRemocao)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpDetalhesLayout.createSequentialGroup()
+                                .addGroup(jpDetalhesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel9)
                                     .addComponent(jLabel10)
                                     .addComponent(jLabel11))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jpDetalhesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTFDiretorioinstalado)
                                     .addComponent(jTFCriadomanualmente)
                                     .addComponent(jTFSitesoftware))))))
                 .addGap(458, 458, 458))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jpDetalhesLayout.setVerticalGroup(
+            jpDetalhesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpDetalhesLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jpDetalhesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpDetalhesLayout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(9, 9, 9))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(jpDetalhesLayout.createSequentialGroup()
+                        .addGroup(jpDetalhesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTFIdsoftware, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jpDetalhesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTFNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTFVersao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jpDetalhesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5)
                     .addComponent(jTFDesenvolvedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jpDetalhesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTFComandoRemocao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jpDetalhesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jTFSitedesenvolvedore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jpDetalhesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jTFSitesoftware, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jpDetalhesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jTFCriadomanualmente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jpDetalhesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(jTFDiretorioinstalado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(59, 59, 59)
@@ -455,13 +428,15 @@ public class JfSoftware extends javax.swing.JFrame implements ITela {
                 .addContainerGap(146, Short.MAX_VALUE))
         );
 
-        jtpMain.addTab("Detalhes:", jPanel1);
+        jtpMain.addTab("Detalhes:", jpDetalhes);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jtpMain, javax.swing.GroupLayout.PREFERRED_SIZE, 938, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jtpMain, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -547,19 +522,9 @@ public class JfSoftware extends javax.swing.JFrame implements ITela {
         atualizarTabela();
     }//GEN-LAST:event_jBtPesquisarActionPerformed
 
-    private void jpConsultaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jpConsultaFocusGained
+    private void jpMaquinasFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jpMaquinasFocusGained
         atualizarTabela();
-    }//GEN-LAST:event_jpConsultaFocusGained
-
-    private void qftfIdSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qftfIdSalaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_qftfIdSalaActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        jftfNomePredio1.setText("");
-        qftfIdSala.setText("");
-// TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jpMaquinasFocusGained
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 jtpMain.setSelectedIndex(1);        // TODO add your handling code here:
@@ -617,14 +582,18 @@ jtpMain.setSelectedIndex(1);        // TODO add your handling code here:
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JfSoftware.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JfSoftwares.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JfSoftware.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JfSoftwares.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JfSoftware.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JfSoftwares.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JfSoftware.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JfSoftwares.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -633,34 +602,32 @@ jtpMain.setSelectedIndex(1);        // TODO add your handling code here:
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JfSoftware().setVisible(true);
+                new JfSoftwares().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField JtfMaquina;
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btCancelar1;
     private javax.swing.JButton btConsultarTabela1;
     private javax.swing.JButton btVerEditar;
     private javax.swing.JButton jBtPesquisar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTFComandoRemocao;
@@ -675,11 +642,11 @@ jtpMain.setSelectedIndex(1);        // TODO add your handling code here:
     private javax.swing.JTextField jTFbuscarSoftware;
     private javax.swing.JTable jTable1;
     private javax.swing.JFormattedTextField jftfNomePredio1;
-    private javax.swing.JPanel jpCadastro;
-    private javax.swing.JPanel jpConsulta;
+    private javax.swing.JPanel jpDetalhes;
+    private javax.swing.JPanel jpMaquinas;
+    private javax.swing.JPanel jpSoftwares;
     private javax.swing.JTable jtResultados;
     private javax.swing.JTabbedPane jtpMain;
-    private qitjftf.QITJFormattedTextField qftfIdSala;
     // End of variables declaration//GEN-END:variables
 
     private void atualizarTabela() {
@@ -687,7 +654,7 @@ jtpMain.setSelectedIndex(1);        // TODO add your handling code here:
         Sala s = new Sala();
         int idsala = 0;
         try {
-            idsala = Integer.parseInt(qftfIdSala.getText());
+//            idsala = Integer.parseInt(qftfIdSala.getText());
         } catch (Exception e) {
         }
 
@@ -778,14 +745,14 @@ jtpMain.setSelectedIndex(1);        // TODO add your handling code here:
     @Override
     public void limparCampos() {
 
-        new controle.Formatacao().limparCampos(jpCadastro);
+        new controle.Formatacao().limparCampos(jpSoftwares);
 
     }
 
     @Override
     public void popularCampos() {
         try {
-            JtfMaquina.setText(jTable1.getRowCount() + " softwares instalados na maquina " + maquina.getId() + " "+ maquina.getHost());
+//            JtfMaquina.setText(jTable1.getRowCount() + " softwares instalados na maquina " + maquina.getId() + " "+ maquina.getHost());
             controleSoftware.popularTabelaSoftware(jTable1, maquina, "");            
 
         } catch (Exception e) {
@@ -805,7 +772,7 @@ jtpMain.setSelectedIndex(1);        // TODO add your handling code here:
     @Override
     public void setRelacionado2(String id, String nome) {
         try {
-            qftfIdSala.setText(id);
+//            qftfIdSala.setText(id);
             jftfNomePredio1.setText(nome);
 
         } catch (Exception e) {

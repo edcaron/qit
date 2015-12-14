@@ -37,8 +37,8 @@ public class ClienteSocket {
                 retorno = true;
             }
         } catch (Exception e) {
-            System.err.println("Erro ao vefiricar conexao " + e);
-            e.printStackTrace();
+//            System.err.println("Erro ao vefiricar conexao " + e);
+//            e.printStackTrace();
         }
         return retorno;
     }

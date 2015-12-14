@@ -5,6 +5,7 @@
  */
 package controle;
 
+import modelo.Maquina;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -59,8 +60,12 @@ public class QITServidorMain {
 //
 //        ControleInventario ci = new ControleInventario();
 //        ci.gravarInventario(inventario);
-
+        
+        
         chamarTarefasAutomatizadas();
+        
+//        descobreCliente("vmcaron-1");
+
     }
 
     public static void chamarTarefasAutomatizadas() {
@@ -101,12 +106,12 @@ public class QITServidorMain {
                     .withIdentity("triggerExecutaInventario", "grupo1")
                     .withSchedule(
                             SimpleScheduleBuilder.simpleSchedule()
-                            .withIntervalInMinutes(1).repeatForever())
+                            .withIntervalInHours(1).repeatForever())
                     .build();
 
             // agendar as tarefas
             Scheduler scheduler = new StdSchedulerFactory().getScheduler();
-//            scheduler.scheduleJob(tarefaLimpaAuditoria, triggerTarefaLimpaAuditoria);
+            scheduler.scheduleJob(tarefaLimpaAuditoria, triggerTarefaLimpaAuditoria);
             scheduler.scheduleJob(tarefaExecutaScrits, triggerExecutaScrits);
             scheduler.scheduleJob(tarefaExecutaInventario, triggerExecutaInventario);
 
@@ -116,4 +121,9 @@ public class QITServidorMain {
         }
     }
 
+    public static void descobreCliente(String host) {
+        Maquina m = new Maquina();
+        m.setHost(host);
+        new ChamaAgenteSocket().executarInventarioNoCliente(m);
+    }
 }

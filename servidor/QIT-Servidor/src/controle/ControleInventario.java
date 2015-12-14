@@ -53,6 +53,9 @@ public class ControleInventario {
         } else {
             //caso esta maquina ainda não esteja gravada no banco, marcamos como detectado para esta maquina na data que foi feito o inventario
             maquina.setDtPrimeiraDeteccao(Util.stringParaDate(inventario.getDataAtual()));
+            Sala s = new Sala();
+            s.setId(1);
+            maquina.setSala(s);
         }
         
         maqDAO.salvar(maquina);

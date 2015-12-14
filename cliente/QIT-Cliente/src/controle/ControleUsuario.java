@@ -42,14 +42,19 @@ public class ControleUsuario implements IControle {
 
         objLocal.setId(id);
 
-//        consulta o obj sala no banco de dados com o id que vem como paramentro na funcao
-        objLocal = this.consultar(objLocal);
+        try {
+            //        consulta o obj sala no banco de dados com o id que vem como paramentro na funcao
+            objLocal = this.consultar(objLocal);
 
 //        inverte o valor do status no obj que veio do banco
-        objLocal.setAtivo(controle.Util.inverteValorBinario(objLocal.isAtivo()));
+            objLocal.setAtivo(controle.Util.inverteValorBinario(objLocal.isAtivo()));
 
 //        salva novamente no banco
-        retorno = this.salvar(objLocal);
+            retorno = this.salvar(objLocal);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return retorno;
     }
 
@@ -246,7 +251,7 @@ public class ControleUsuario implements IControle {
         } catch (ParseException ex) {
             Logger.getLogger(ControleUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
-    return null;
+        return null;
     }
 
 }

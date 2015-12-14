@@ -536,7 +536,7 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
                 System.out.println("" + e);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Voce nao possui permissao para essa operacao");
+            JOptionPane.showMessageDialog(null, "Você não possui permissão para essa operação");
         }
     }//GEN-LAST:event_btVerEditarActionPerformed
 
@@ -574,7 +574,7 @@ public class JfUsuario extends javax.swing.JFrame implements ITela {
                 JOptionPane.showMessageDialog(null, "Selecione um registro da tabela");
             }
         }else {
-                      JOptionPane.showMessageDialog(null, "Voce não possui permissao");
+                      JOptionPane.showMessageDialog(null, "Você não possui permissão para essa operação");
         }
     }//GEN-LAST:event_btVerEditar1ActionPerformed
 

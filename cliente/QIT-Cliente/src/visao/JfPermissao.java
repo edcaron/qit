@@ -26,7 +26,7 @@ import modelo.Usuario;
  *
  * @author Tiago
  */
-public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
+public class JfPermissao extends javax.swing.JFrame implements ITela {
 
     protected Usuario usuario;
 
@@ -40,7 +40,7 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
     protected Tela tela;
     protected Tela telaselecionada;
 
-    public JfPermissaoNew2(Usuario usuario) {
+    public JfPermissao(Usuario usuario) {
         initComponents();
         this.usuario = usuario;
         this.setTitle("Permissões");
@@ -85,7 +85,7 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
         controle.Util.definePadroesJFrame(this);
     }
 
-    private JfPermissaoNew2() {
+    private JfPermissao() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -98,7 +98,6 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jtpMain = new javax.swing.JTabbedPane();
         jpCadastro = new javax.swing.JPanel();
         btSalvar = new javax.swing.JButton();
         btCancelar1 = new javax.swing.JButton();
@@ -119,20 +118,8 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
         jLabel2 = new javax.swing.JLabel();
         btBuscarGrupo1 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        jpConsulta = new javax.swing.JPanel();
-        btCancelar = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        qftfConsultaNome = new qitjftf.QITJFormattedTextField();
-        btConsultarTabela = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jtResultados = new javax.swing.JTable();
-        btInativar = new javax.swing.JButton();
-        btVerEditar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jtpMain.setMinimumSize(new java.awt.Dimension(60, 44));
-        jtpMain.setPreferredSize(new java.awt.Dimension(700, 550));
 
         jpCadastro.setMinimumSize(new java.awt.Dimension(700, 550));
         jpCadastro.setPreferredSize(new java.awt.Dimension(60, 44));
@@ -269,7 +256,7 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
                                     .addComponent(btBuscarGrupo1)
                                     .addComponent(btBuscarUsuario1)))
                             .addComponent(jLabel1))
-                        .addGap(0, 13, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jpCadastroLayout.setVerticalGroup(
@@ -297,7 +284,7 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
                         .addComponent(jLabel7)))
                 .addGap(8, 8, 8)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(3, 3, 3)
                 .addGroup(jpCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -307,113 +294,15 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
                 .addContainerGap())
         );
 
-        jtpMain.addTab("Cadastro", jpCadastro);
-
-        btCancelar.setText("Cancelar");
-        btCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btCancelarActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel5.setText("Nome:");
-
-        btConsultarTabela.setText("Buscar");
-        btConsultarTabela.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btConsultarTabelaActionPerformed(evt);
-            }
-        });
-
-        jtResultados.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jtResultados.getTableHeader().setReorderingAllowed(false);
-        jtResultados.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jtResultadosMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(jtResultados);
-
-        btInativar.setText("Ativar/Inativar selecionado");
-        btInativar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btInativarActionPerformed(evt);
-            }
-        });
-
-        btVerEditar.setText("Ver/Editar selecionado");
-        btVerEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btVerEditarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jpConsultaLayout = new javax.swing.GroupLayout(jpConsulta);
-        jpConsulta.setLayout(jpConsultaLayout);
-        jpConsultaLayout.setHorizontalGroup(
-            jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpConsultaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpConsultaLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(qftfConsultaNome, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btConsultarTabela)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpConsultaLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpConsultaLayout.createSequentialGroup()
-                                .addComponent(btVerEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btInativar)))))
-                .addContainerGap())
-        );
-        jpConsultaLayout.setVerticalGroup(
-            jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpConsultaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(qftfConsultaNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btConsultarTabela))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btInativar)
-                    .addComponent(btVerEditar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btCancelar)
-                .addContainerGap())
-        );
-
-        jtpMain.addTab("Consulta", jpConsulta);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jtpMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jpCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jtpMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jpCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -495,52 +384,6 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
             System.err.println("Erro em btBuscarUsuarioActionPerformed " + e);
         }
     }//GEN-LAST:event_btBuscarUsuarioActionPerformed
-
-    private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
-        btCancelar1ActionPerformed(evt);
-    }//GEN-LAST:event_btCancelarActionPerformed
-
-    private void btConsultarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarTabelaActionPerformed
-        Permissao p = new Permissao();
-//        p.setNome(qftfConsultaNome.getText());
-//        ControlePermissao.popularTabela(jtResultados, s, false);
-    }//GEN-LAST:event_btConsultarTabelaActionPerformed
-
-    private void jtResultadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtResultadosMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtResultadosMouseClicked
-
-    private void btInativarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInativarActionPerformed
-        if (jtResultados.getSelectedRowCount() != 0) { //verifica se tem 1 linha selecionada
-            int i = JOptionPane.showConfirmDialog(null, "Deseja alterar o status desde registro?", "Confirmar", JOptionPane.YES_NO_OPTION);
-            if (i == 0) { //confirma se o usuario realmente quer inativar
-                this.inativar();
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um registro da tabela");
-        }
-    }//GEN-LAST:event_btInativarActionPerformed
-
-    private void btVerEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVerEditarActionPerformed
-        try {
-            limparCampos();
-
-            if (jtResultados.getSelectedRowCount() != 0) {
-                int idRegistroSelecionado = (int) jtResultados.getValueAt(jtResultados.getSelectedRow(), 0);
-                permissao.setId(idRegistroSelecionado);
-            } else {
-                JOptionPane.showMessageDialog(null, "Selecione um registro da tabela");
-            }
-
-            permissao = controlePermissao.consultar(permissao);
-
-            popularCampos();
-            jtpMain.setSelectedIndex(0);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Problemas ao selecionar!\nMensagem técnica:\n" + e);
-            System.out.println("" + e);
-        }
-    }//GEN-LAST:event_btVerEditarActionPerformed
 
     private void btBuscarGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarGrupoActionPerformed
         try {
@@ -788,25 +631,27 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JfPermissaoNew2.class
+            java.util.logging.Logger.getLogger(JfPermissao.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JfPermissaoNew2.class
+            java.util.logging.Logger.getLogger(JfPermissao.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JfPermissaoNew2.class
+            java.util.logging.Logger.getLogger(JfPermissao.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JfPermissaoNew2.class
+            java.util.logging.Logger.getLogger(JfPermissao.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JfPermissaoNew2().setVisible(true);
+                new JfPermissao().setVisible(true);
             }
         });
     }
@@ -816,30 +661,20 @@ public class JfPermissaoNew2 extends javax.swing.JFrame implements ITela {
     private javax.swing.JButton btBuscarGrupo1;
     private javax.swing.JButton btBuscarUsuario;
     private javax.swing.JButton btBuscarUsuario1;
-    private javax.swing.JButton btCancelar;
     private javax.swing.JButton btCancelar1;
-    private javax.swing.JButton btConsultarTabela;
-    private javax.swing.JButton btInativar;
     private javax.swing.JButton btSalvar;
-    private javax.swing.JButton btVerEditar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelGrupo;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JFormattedTextField jftfNomeGrupo;
     private javax.swing.JFormattedTextField jftfNomeUsuario;
     private javax.swing.JPanel jpCadastro;
-    private javax.swing.JPanel jpConsulta;
-    private javax.swing.JTable jtResultados;
-    private javax.swing.JTabbedPane jtpMain;
-    private qitjftf.QITJFormattedTextField qftfConsultaNome;
     private qitjftf.QITJFormattedTextField qftfIdGrupo;
     private qitjftf.QITJFormattedTextField qftfIdUsuario;
     // End of variables declaration//GEN-END:variables

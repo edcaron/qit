@@ -37,21 +37,20 @@ public class ControleSoftware {
             System.err.println("" + e);
         }
         return s;
-
     }
 
     public void popularTabelaSoftware(JTable jtResultados, Maquina m, String nome) {
         Object[][] dadosTabela = null;
         //   System.out.println("populando tabela");
         try {
-            int colunasTabela = 5;
+            int colunasTabela = 4;
 
             Object[] cabecalho = new Object[colunasTabela];
             cabecalho[0] = "Id:";
             cabecalho[1] = "Nome:";
             cabecalho[2] = "Versão:";
             cabecalho[3] = "Desenvolvedor:";
-            cabecalho[4] = "Comando remoção:";
+//            cabecalho[4] = "Comando remoção:";
 
             // cria matriz de acordo com n de registros da tabela
             Sala s = new Sala();
@@ -66,8 +65,7 @@ public class ControleSoftware {
                 dadosTabela[i][1] = listaPredio.get(i).getSoftware().getNome();
                 dadosTabela[i][2] = listaPredio.get(i).getSoftware().getVersao();
                 dadosTabela[i][3] = listaPredio.get(i).getSoftware().getDesenvolvedor();
-                dadosTabela[i][4] = listaPredio.get(i).getSoftware().getComandoDesinstalacao();
-
+//                dadosTabela[i][4] = listaPredio.get(i).getSoftware().getComandoDesinstalacao();
             }
 
             // configuracoes adicionais no componente tabela
@@ -99,8 +97,11 @@ public class ControleSoftware {
             centralizado.setHorizontalAlignment(SwingConstants.CENTER);
             direita.setHorizontalAlignment(SwingConstants.RIGHT);
 
-            jtResultados.getColumnModel().getColumn(0).setCellRenderer(esquerda);
-            jtResultados.getColumnModel().getColumn(1).setCellRenderer(direita);
+            jtResultados.getColumnModel().getColumn(0).setCellRenderer(direita);
+            jtResultados.getColumnModel().getColumn(1).setCellRenderer(esquerda);
+            jtResultados.getColumnModel().getColumn(2).setCellRenderer(direita);
+            jtResultados.getColumnModel().getColumn(3).setCellRenderer(esquerda);
+//            jtResultados.getColumnModel().getColumn(4).setCellRenderer(esquerda);           
             jtResultados.getTableHeader().setResizingAllowed(true);
 
             // redimensiona as colunas de uma tabela
@@ -131,5 +132,5 @@ public class ControleSoftware {
         }
 
     }
-
+    
 }
